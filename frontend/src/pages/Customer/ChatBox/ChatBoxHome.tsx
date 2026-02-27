@@ -1132,34 +1132,34 @@ const ChatBoxHome = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full">
         {conversations.length === 0 ? (
-          <div className={`flex-1 flex flex-col items-center justify-center px-8 h-full ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+          <div className={`flex-1 flex flex-col items-center justify-center px-8 h-full ${isDarkMode ? 'bg-gray-900' : 'bg-[#edf5e1]'}`}>
             <div className="relative mb-8">
               <div className="flex items-center justify-center space-x-8">
                 <div className="relative">
-                  <div className="w-16 h-16 bg-[#4da6ff]/20 rounded-full flex items-center justify-center">
-                    <FaUser className="w-8 h-8 text-[#4da6ff]" />
+                  <div className="w-16 h-16 bg-[#5cdb95]/20 rounded-full flex items-center justify-center">
+                    <FaUser className="w-8 h-8 text-[#379683]" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#4da6ff]/40 rounded-full flex items-center justify-center">
-                    <FaCommentDots className="w-3 h-3 text-[#4da6ff]" />
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#5cdb95]/40 rounded-full flex items-center justify-center">
+                    <FaCommentDots className="w-3 h-3 text-[#379683]" />
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="w-16 h-16 bg-[#4da6ff]/20 rounded-full flex items-center justify-center">
-                    <FaUser className="w-8 h-8 text-[#4da6ff]" />
+                  <div className="w-16 h-16 bg-[#5cdb95]/20 rounded-full flex items-center justify-center">
+                    <FaUser className="w-8 h-8 text-[#379683]" />
                   </div>
-                  <div className="absolute -top-2 -left-2 w-6 h-6 bg-[#4da6ff]/40 rounded-full flex items-center justify-center">
-                    <FaCommentDots className="w-3 h-3 text-[#4da6ff]" />
+                  <div className="absolute -top-2 -left-2 w-6 h-6 bg-[#5cdb95]/40 rounded-full flex items-center justify-center">
+                    <FaCommentDots className="w-3 h-3 text-[#379683]" />
                   </div>
                 </div>
               </div>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <div className="w-4 h-4 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-4 h-4 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
               <div className="absolute -bottom-4 right-1/4">
-                <div className="w-3 h-3 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-3 h-3 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
               <div className="absolute -bottom-2 left-1/4">
-                <div className="w-2 h-2 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-2 h-2 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
             </div>
             <h2 className={`text-2xl font-bold mb-4 text-center ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -1170,7 +1170,7 @@ const ChatBoxHome = () => {
             </p>
             <Link
               to="/"
-              className="bg-[#4da6ff] hover:bg-[#4da6ff]/90 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-[#4da6ff]"
+              className="bg-[#379683] hover:bg-[#2f855a] text-[#edf5e1] font-semibold px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-[#379683]"
             >
               Về trang chủ
             </Link>
@@ -1201,34 +1201,34 @@ const ChatBoxHome = () => {
             />
           </>
         ) : (
-          <div className={`flex-1 flex flex-col items-center justify-center px-8 h-full ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+          <div className={`flex-1 flex flex-col items-center justify-center px-8 h-full ${isDarkMode ? 'bg-gray-900' : 'bg-[#edf5e1]'}`}>
             <div className="relative mb-8">
               <div className="flex items-center justify-center space-x-8">
                 <div className="relative">
-                  <div className="w-16 h-16 bg-[#4da6ff]/20 rounded-full flex items-center justify-center">
-                    <FaUser className="w-8 h-8 text-[#4da6ff]" />
+                  <div className="w-16 h-16 bg-[#5cdb95]/20 rounded-full flex items-center justify-center">
+                    <FaUser className="w-8 h-8 text-[#379683]" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#4da6ff]/40 rounded-full flex items-center justify-center">
-                    <FaCommentDots className="w-3 h-3 text-[#4da6ff]" />
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#5cdb95]/40 rounded-full flex items-center justify-center">
+                    <FaCommentDots className="w-3 h-3 text-[#379683]" />
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="w-16 h-16 bg-[#4da6ff]/20 rounded-full flex items-center justify-center">
-                    <FaUser className="w-8 h-8 text-[#4da6ff]" />
+                  <div className="w-16 h-16 bg-[#5cdb95]/20 rounded-full flex items-center justify-center">
+                    <FaUser className="w-8 h-8 text-[#379683]" />
                   </div>
-                  <div className="absolute -top-2 -left-2 w-6 h-6 bg-[#4da6ff]/40 rounded-full flex items-center justify-center">
-                    <FaCommentDots className="w-3 h-3 text-[#4da6ff]" />
+                  <div className="absolute -top-2 -left-2 w-6 h-6 bg-[#5cdb95]/40 rounded-full flex items-center justify-center">
+                    <FaCommentDots className="w-3 h-3 text-[#379683]" />
                   </div>
                 </div>
               </div>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <div className="w-4 h-4 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-4 h-4 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
               <div className="absolute -bottom-4 right-1/4">
-                <div className="w-3 h-3 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-3 h-3 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
               <div className="absolute -bottom-2 left-1/4">
-                <div className="w-2 h-2 bg-[#4da6ff]/40 rounded-full"></div>
+                <div className="w-2 h-2 bg-[#5cdb95]/40 rounded-full"></div>
               </div>
             </div>
             <h2 className={`text-2xl font-bold mb-4 text-center ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -1239,7 +1239,7 @@ const ChatBoxHome = () => {
             </p>
             <Link
               to="/"
-              className="bg-[#4da6ff] hover:bg-[#4da6ff]/90 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-[#4da6ff]"
+              className="bg-[#379683] hover:bg-[#2f855a] text-[#edf5e1] font-semibold px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-[#379683]"
             >
               Về trang chủ
             </Link>

@@ -30,7 +30,7 @@ const ConfirmRegister: React.FC = () => {
       try {
         await authService.registerConfirm(email, otp);
         setStatus("success");
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(error);
         setStatus("error");
       }
@@ -46,13 +46,13 @@ const ConfirmRegister: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#f5f5f5",
+        background: "#EDF5E1",
       }}
     >
       {status === "loading" && (
         <div style={{ textAlign: "center" }}>
           <Spin size="large" />
-          <p style={{ marginTop: 16 }}>Đang xác thực tài khoản...</p>
+          <p style={{ marginTop: 16, fontSize: "15px" }}>Đang xác thực tài khoản...</p>
         </div>
       )}
 

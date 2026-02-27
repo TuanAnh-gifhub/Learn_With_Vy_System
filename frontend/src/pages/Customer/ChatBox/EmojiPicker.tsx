@@ -30,7 +30,7 @@ const EmojiPicker = forwardRef<HTMLDivElement, EmojiPickerProps>(({ onEmojiSelec
           <button
             key={index}
             onClick={() => onEmojiSelect(emoji)}
-            className="text-2xl hover:bg-[#4da6ff]/10 rounded p-1 transition-colors"
+            className="text-2xl hover:bg-[#5cdb95]/15 rounded p-1 transition-colors"
             type="button"
           >
             {emoji}

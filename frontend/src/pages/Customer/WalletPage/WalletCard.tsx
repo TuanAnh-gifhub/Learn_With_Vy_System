@@ -17,13 +17,13 @@ const WalletCard = ({
 }: WalletCardProps) => {
     return (
         <div className="space-y-4">
-            {/* Main Account Card - 3D Premium Blue */}
+            {/* Main Account Card - 3D Premium Green */}
             <div className="group relative">
                 {/* Glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4da6ff] via-[#6bb5ff] to-[#4da6ff] rounded-xl opacity-20 group-hover:opacity-40 blur-xl transition-opacity duration-300"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5cdb95] via-[#8ee4af] to-[#5cdb95] rounded-xl opacity-20 group-hover:opacity-40 blur-xl transition-opacity duration-300"></div>
 
                 {/* Main card with 3D effect */}
-                <div className="relative bg-gradient-to-br from-[#4da6ff] via-[#3d8fdd] to-[#2d7fcb] rounded-xl p-6 text-white overflow-hidden shadow-2xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(77,166,255,0.4)] border border-white/20">
+                <div className="relative bg-gradient-to-br from-[#379683] via-[#5cdb95] to-[#379683] rounded-xl p-6 text-[#05386b] overflow-hidden shadow-2xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(92,219,149,0.4)] border border-white/20">
                     {/* Animated gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent"></div>
 
@@ -32,7 +32,7 @@ const WalletCard = ({
 
                     {/* Background Pattern - Enhanced */}
                     <div className="absolute top-0 right-0 w-48 h-40 opacity-15">
-                        <div className="absolute top-4 right-4 text-5xl font-black text-white/30 drop-shadow-lg tracking-tighter">EduRoom</div>
+                        <div className="absolute top-4 right-4 text-4xl font-black text-white/30 drop-shadow-lg tracking-tighter">Learn With Vy</div>
                     </div>
 
                     {/* Decorative circles */}
@@ -59,7 +59,7 @@ const WalletCard = ({
                                 </div>
                             </div>
                             <div className="text-right">
-                                <div className="text-4xl font-black text-white/30 mb-2 drop-shadow-2xl tracking-tight">EduRoom</div>
+                                <div className="text-3xl font-black text-white/30 mb-2 drop-shadow-2xl tracking-tight">Learn With Vy</div>
                                 <div className="relative">
                                     <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg border-2 border-white/30 transform group-hover:scale-110 transition-transform duration-300">
                                         <svg className="w-7 h-7 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>

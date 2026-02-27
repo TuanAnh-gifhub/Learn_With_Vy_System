@@ -221,8 +221,9 @@ const MessageList = ({ messages, messagesEndRef, showBackground = true, isDarkMo
                   messageIndex > 0 ? 'mt-1' : ''
                 }`}
                 style={(group.sender === 'user' && !isMedia) ? {
-                  backgroundColor: '#4da6ff',
-                  borderColor: '#4da6ff'
+                  backgroundColor: '#5cdb95',
+                  borderColor: '#5cdb95',
+                  color: '#05386b'
                 } : {}}
               >
                 {message.isVoice ? (

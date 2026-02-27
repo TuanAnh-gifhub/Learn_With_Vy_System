@@ -197,10 +197,10 @@ const ChatList = ({
             placeholder="Tìm kiếm trên ChatBox"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2 border rounded-full focus:ring-2 focus:ring-[#4da6ff] outline-none text-sm transition-colors ${
+            className={`w-full pl-10 pr-4 py-2 border rounded-full focus:ring-2 focus:ring-[#5cdb95] outline-none text-sm transition-colors ${
               isDarkMode 
-                ? 'bg-gray-800 text-white placeholder-gray-400 focus:bg-gray-700 border-gray-700 hover:border-[#4da6ff] focus:border-[#4da6ff]' 
-                : 'bg-gray-100 focus:bg-white text-gray-900 placeholder-gray-500 border-gray-300 hover:border-[#4da6ff] focus:border-[#4da6ff]'
+                ? 'bg-gray-800 text-white placeholder-gray-400 focus:bg-gray-700 border-gray-700 hover:border-[#5cdb95] focus:border-[#5cdb95]' 
+                : 'bg-gray-100 focus:bg-white text-gray-900 placeholder-gray-500 border-gray-300 hover:border-[#5cdb95] focus:border-[#5cdb95]'
             }`}
           />
         </div>
@@ -211,7 +211,7 @@ const ChatList = ({
             onClick={() => setActiveTab("all")}
             className={`px-3 py-1.5 rounded-full font-bold text-xs transition-colors ${
               activeTab === "all"
-                ? "bg-[#4da6ff]/20 text-[#4da6ff]"
+                ? "bg-[#5cdb95]/20 text-[#05386b]"
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -221,7 +221,7 @@ const ChatList = ({
             onClick={() => setActiveTab("unread")}
             className={`px-3 py-1.5 rounded-full font-bold text-xs transition-colors ${
               activeTab === "unread"
-                ? "bg-[#4da6ff]/20 text-[#4da6ff]"
+                ? "bg-[#5cdb95]/20 text-[#05386b]"
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -231,7 +231,7 @@ const ChatList = ({
             onClick={() => setActiveTab("group")}
             className={`px-3 py-1.5 rounded-full font-bold text-xs transition-colors ${
               activeTab === "group"
-                ? "bg-[#4da6ff]/20 text-[#4da6ff]"
+                ? "bg-[#5cdb95]/20 text-[#05386b]"
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -301,7 +301,7 @@ const ChatList = ({
       <div className="flex-1 overflow-y-auto px-4 pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 min-h-0">
         {loading ? (
           <div className="flex items-center justify-center py-8">
-            <FaSpinner className="w-6 h-6 text-[#4da6ff] animate-spin" />
+            <FaSpinner className="w-6 h-6 text-[#379683] animate-spin" />
             <span className={`ml-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Đang tải...</span>
           </div>
         ) : error ? (
@@ -322,7 +322,7 @@ const ChatList = ({
               }}
               className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-200 ${
                 (selectedChat && ('id' in selectedChat ? selectedChat.id === chat.id : selectedChat.conversationId === chat.id))
-                  ? isDarkMode ? "bg-gradient-to-r from-[#4da6ff]/20 to-[#4da6ff]/10 border border-[#4da6ff] shadow-sm" : "bg-gradient-to-r from-[#4da6ff]/20 to-[#4da6ff]/10 border border-[#4da6ff] shadow-sm"
+                  ? isDarkMode ? "bg-gradient-to-r from-[#5cdb95]/25 to-[#379683]/15 border border-[#5cdb95] shadow-sm" : "bg-gradient-to-r from-[#5cdb95]/25 to-[#379683]/15 border border-[#5cdb95] shadow-sm"
                   : isDarkMode 
                     ? "bg-gray-800 hover:bg-gray-700 border border-transparent hover:border-gray-600"
                     : "bg-gradient-to-r from-gray-100 to-gray-200 hover:bg-gradient-to-r hover:from-gray-200 hover:to-gray-300 border border-transparent hover:border-gray-300"
@@ -334,7 +334,7 @@ const ChatList = ({
                   alt={chat.name}
                   className={`w-12 h-12 rounded-full mr-3 ring-2 transition-all duration-200 ${
                     (selectedChat && ('id' in selectedChat ? selectedChat.id === chat.id : selectedChat.conversationId === chat.id))
-                      ? "ring-[#4da6ff] hover:ring-[#4da6ff]"
+                      ? "ring-[#5cdb95] hover:ring-[#379683]"
                       : "ring-gray-300 hover:ring-gray-400"
                   }`}
                 />
@@ -346,7 +346,7 @@ const ChatList = ({
                 <div className="flex items-center justify-between">
                   <h3 className={`text-sm font-semibold truncate transition-colors duration-200 ${
                     (selectedChat && ('id' in selectedChat ? selectedChat.id === chat.id : selectedChat.conversationId === chat.id))
-                      ? "text-[#4da6ff] hover:text-[#4da6ff]"
+                      ? "text-[#05386b]"
                       : isDarkMode ? "text-white hover:text-gray-200" : "text-gray-800 hover:text-gray-900"
                   }`}>
                     {chat.name}
@@ -354,7 +354,7 @@ const ChatList = ({
                   {chat.time && (
                     <span className={`text-xs ml-2 flex-shrink-0 transition-colors duration-200 ${
                       (selectedChat && ('id' in selectedChat ? selectedChat.id === chat.id : selectedChat.conversationId === chat.id))
-                        ? "text-[#4da6ff]"
+                        ? "text-[#379683]"
                         : isDarkMode ? "text-gray-400" : "text-gray-500"
                     }`}>
                       {chat.time}
@@ -364,7 +364,7 @@ const ChatList = ({
                 <div className="flex items-center justify-between">
                   <p className={`text-sm truncate mt-1 transition-colors duration-200 ${
                     (selectedChat && ('id' in selectedChat ? selectedChat.id === chat.id : selectedChat.conversationId === chat.id))
-                      ? "text-[#4da6ff] hover:text-[#4da6ff]"
+                      ? "text-[#05386b]"
                       : isDarkMode ? "text-gray-300 hover:text-gray-200" : "text-gray-600 hover:text-gray-700"
                   }`}>
                     {getMessagePreview(chat.lastMessage)}
@@ -377,15 +377,15 @@ const ChatList = ({
                 </div>
               </div>
               {!chat.isRead && (
-                <div className="w-3 h-3 bg-gradient-to-r from-[#4da6ff]/60 to-[#4da6ff] rounded-full ml-2 shadow-sm ring-2 ring-[#4da6ff]/20"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-[#5cdb95]/70 to-[#379683] rounded-full ml-2 shadow-sm ring-2 ring-[#5cdb95]/30"></div>
               )}
             </div>
             ))}
             
             {filteredChats.length === 0 && (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${isDarkMode ? 'bg-[#4da6ff]/20' : 'bg-[#4da6ff]/10'}`}>
-                  <FaCommentDots className={`w-8 h-8 ${isDarkMode ? 'text-[#4da6ff]' : 'text-[#4da6ff]'}`} />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${isDarkMode ? 'bg-[#5cdb95]/20' : 'bg-[#5cdb95]/10'}`}>
+                  <FaCommentDots className={`w-8 h-8 ${isDarkMode ? 'text-[#379683]' : 'text-[#379683]'}`} />
                 </div>
                 <h3 className={`text-sm font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                   {activeTab === "unread" ? "Không có tin nhắn chưa đọc" : 

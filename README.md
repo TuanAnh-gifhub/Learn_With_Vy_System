@@ -1,7 +1,7 @@
-# EduRoom
+# Learn With Vy
 
 ```
-SBA301_FE_ROOM/
+Learn_With_Vy/
 ├── frontend/          # Frontend (React + TypeScript + Vite)
 ├── backend/           # Backend Application ()
 ├── .gitignore

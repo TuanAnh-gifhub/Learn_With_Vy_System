@@ -2,23 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import { FiMessageCircle, FiMoon, FiSun } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-
-// Import components
 import LoginPage from "../../pages/Customer/LoginPage/LoginPage";
-import ScrambleText from "./ScrambleText";
-import AnimatedNavText from "./AnimatedNavText";
 import UserMenu from "./UserMenu";
-
-// --- QUAN TRỌNG: Import Hook từ AuthContext ---
 import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/logo.jpg";
 
-const logo =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%234da6ff'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='20' font-weight='bold' fill='white'%3EEduRoom%3C/text%3E%3C/svg%3E";
-
-const useScrollspy = () => ({ activeSection: "hero" });
-
-// Hàm check auth đơn giản (có thể nâng cấp sau để check isAuthenticated từ context)
 const useAuthCheck = () => {
   const { isAuthenticated } = useAuth();
   const requireAuth = (cb: () => void) => {
@@ -39,24 +27,20 @@ const useUnreadMessages = () => ({ unreadMessages: [], unreadCount: 0 });
 const HEADER_CONFIG = { MIN_HEIGHT: 64 } as const;
 
 const ICON_BUTTON_CLASS =
-  "relative w-9 h-9 md:w-10 md:h-10 grid place-items-center rounded-full border border-transparent hover:border-[#4da6ff] shadow-sm hover:shadow-md hover:scale-105 transition-transform duration-300 ease-in-out origin-center will-change-transform";
+  "relative w-9 h-9 md:w-10 md:h-10 grid place-items-center rounded-full border border-transparent hover:border-[#5cdb95] shadow-sm hover:shadow-md hover:scale-105 transition-transform duration-300 ease-in-out origin-center will-change-transform";
 const PRIMARY_BUTTON_CLASS =
-  "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border hover:border-[#4da6ff]";
+  "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border hover:border-[#5cdb95]";
 const BUTTON_TEXT_HOVER_CLASS =
   "text-[11px] md:text-xs whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
 
 const Header = () => {
-  // --- 1. LẤY DATA TỪ CONTEXT ---
   const { user, isAuthenticated, isLoading, logout } = useAuth();
-
-  const { activeSection } = useScrollspy();
   const { requireAuth } = useAuthCheck();
   const { unreadCount } = useUnreadMessages();
   const navigate = useNavigate();
   const location = useLocation();
   const [isHeaderTransparent, setIsHeaderTransparent] = useState<boolean>(false);
 
-  // --- 2. CÁC STATE UI (Giao diện) ---
   const [headerHeight, setHeaderHeight] = useState<number>(HEADER_CONFIG.MIN_HEIGHT);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -66,18 +50,13 @@ const Header = () => {
 
   const headerRef = useRef<HTMLElement>(null);
   const headerHeightClass = "md:h-16 py-1";
-  const logoSizeClass = "h-9 w-9 md:h-11 md:w-11";
-  const titleTextClass = "text-base md:text-2xl";
+  const logoSizeClass = "h-24 w-24 md:h-28 md:w-28";
 
-  // --- 3. XỬ LÝ LOGOUT ---
   const handleLogoutClick = async () => {
     await logout();
-    // Không cần reload trang thủ công vì Context sẽ tự cập nhật state -> Re-render Header
-    // Nhưng nếu muốn chắc chắn về trang chủ:
     navigate("/");
   };
 
-  // Logic đo chiều cao Header
   useEffect(() => {
     const updateHeaderHeight = () => {
       const h = headerRef.current
@@ -90,51 +69,54 @@ const Header = () => {
     return () => window.removeEventListener("resize", updateHeaderHeight);
   }, []);
 
-  // Make header transparent when user is at the very top (hero/video area on landing page)
+ 
   useEffect(() => {
     const isHome = location.pathname === "/";
+    
+    const shouldBeTransparent = isHome && window.scrollY < 40;
+    
+    const timeoutId = setTimeout(() => {
+      setIsHeaderTransparent(shouldBeTransparent);
+    }, 0);
     if (!isHome) {
-      // Khi KHÔNG ở trang chủ thì luôn đảm bảo header là dạng bình thường (không trong suốt)
-      setIsHeaderTransparent(false);
-      return;
+      return () => clearTimeout(timeoutId);
     }
 
     const onScroll = () => {
-      // Threshold to avoid flicker while still near the top
       setIsHeaderTransparent(window.scrollY < 40);
     };
 
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [location.pathname]);
 
-  // Chuẩn bị dữ liệu hiển thị cho UserMenu
-  // UserResponse currently exposes userName (no fullName)
   const displayUser = user ? {
     name: user.userName || "User",
-    // avatar: user.avatar // Nếu sau này có avatar thì thêm vào
   } : null;
 
   return (
     <>
       <header
         ref={headerRef}
-        className={`w-full fixed top-0 left-0 right-0 z-50 text-[#0e0e0e] text-base leading-[1.4] transition-colors duration-300 ${isHeaderTransparent
-          ? "border-b-0 shadow-none bg-transparent"
-          : "border-b-2 border-[#4da6ff] shadow-sm bg-[rgba(228,228,228,0.82)] backdrop-blur-[2px]"
+          className={`w-full fixed top-0 left-0 right-0 z-50 text-[#0e0e0e] text-base leading-[1.4] transition-colors duration-300 ${
+          isHeaderTransparent
+            ? "border-b-0 shadow-none bg-transparent"
+            : "border-b-2 border-[#5cdb95] shadow-sm bg-[rgba(237,245,225,0.9)] backdrop-blur-[2px]"
           }`}
         style={{ minHeight: `${HEADER_CONFIG.MIN_HEIGHT}px` }}
       >
         <div
           className={`w-full max-w-screen-2xl mx-auto px-2 md:px-4 flex flex-col items-center justify-center h-auto ${headerHeightClass}`}
         >
-          <div className="flex items-center justify-between w-full gap-2 md:gap-4">
-            {/* LOGO */}
-            <div className="flex items-center shrink-0 gap-1 md:gap-3">
+          <div className="flex items-center w-full gap-2 md:gap-4">
+            <div className="flex-1" />
+            <div className="flex items-center justify-center shrink-0">
               <Link
                 to="/"
-                className="flex items-center gap-1 md:gap-2"
+                className="flex items-center"
                 onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   if (window.location.pathname === "/chat") {
                     e.preventDefault();
@@ -144,73 +126,27 @@ const Header = () => {
               >
                 <img
                   src={logo}
-                  alt="EduRoom Logo"
-                  className={`${logoSizeClass} object-contain border-2 border-[#4da6ff] rounded-lg bg-white`}
+                  alt="Learn With Vy Logo"
+                  className={`${logoSizeClass} object-contain transform scale-125 md:scale-150`}
                 />
-                {activeSection === "hero" ? (
-                  <span
-                    className={`relative ${titleTextClass} font-extrabold tracking-tight text-black select-none`}
-                    style={{ letterSpacing: 2, marginLeft: "6px" }}
-                  >
-                    <motion.span
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.5, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="absolute -left-2 -top-1 text-[#4da6ff] font-extrabold"
-                      style={{ fontWeight: 900, fontSize: "1.5rem" }}
-                    >
-                      ⌜
-                    </motion.span>
-                    <span className="relative z-10 inline-block">
-                      <ScrambleText
-                        text="EduRoom"
-                        triggerKey={activeSection}
-                        className="inline-block"
-                      />
-                    </span>
-                    <motion.span
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.5, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="absolute -right-2 -bottom-1 text-[#4da6ff] font-extrabold"
-                      style={{ fontWeight: 900, fontSize: "1.5rem" }}
-                    >
-                      ⌟
-                    </motion.span>
-                  </span>
-                ) : (
-                  <span
-                    className={`${titleTextClass} font-extrabold tracking-tight text-black select-none`}
-                    style={{
-                      letterSpacing: 2,
-                      marginLeft: "6px",
-                      fontWeight: 900,
-                    }}
-                  >
-                    EduRoom
-                  </span>
-                )}
               </Link>
             </div>
 
-            {/* RIGHT ACTIONS */}
-            <div className="flex items-center gap-0.5 md:gap-1 shrink-0">
+           
+            <div className="flex-1 flex items-center justify-end gap-0.5 md:gap-1 shrink-0">
               {(() => {
                 const iconBgClass = isHeaderTransparent
                   ? "bg-transparent hover:bg-white/10"
                   : "";
                 const wishlistBgClass = isHeaderTransparent
                   ? iconBgClass
-                  : "bg-red-50 hover:bg-red-100";
+                  : "bg-[#edf5e1] hover:bg-[#8ee4af]";
                 const chatBgClass = isHeaderTransparent
                   ? iconBgClass
-                  : "bg-blue-50 hover:bg-blue-100";
+                  : "bg-[#edf5e1] hover:bg-[#8ee4af]";
 
                 return (
                   <>
-                    {/* Dark Mode */}
                     <button
                       onClick={() => {
                         setIsDarkMode((prev) => {
@@ -266,7 +202,7 @@ const Header = () => {
                     >
                       <FiMessageCircle
                         size={18}
-                        className="md:text-[20px] text-[#4da6ff] m-auto"
+                        className="md:text-[20px] text-[#379683] m-auto"
                       />
                       {unreadCount > 0 && (
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center animate-pulse">
@@ -278,10 +214,10 @@ const Header = () => {
                     {/* Đăng phòng */}
                     <button
                       onClick={() => requireAuth(() => navigate("/post-item"))}
-                      className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-[#4da6ff]/70 hover:bg-[#4da6ff]/90 text-white border-[#4da6ff]/50 hover:border-[#4da6ff]`}
+                      className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-[#5cdb95]/80 hover:bg-[#379683] text-[#05386b] border-[#5cdb95]/60 hover:border-[#379683]`}
                       title="Đăng tin"
                     >
-                      <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Đăng phòng</span>
+                      <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Vào lớp học</span>
                     </button>
 
                     {/* --- 5. USER MENU MỚI --- */}

@@ -18,7 +18,7 @@ const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
   if (!selectedChat) return null;
 
   const displayName = selectedChat.name || 'Unknown User';
-  const displayAvatar = selectedChat.avatar || 'https://ui-avatars.com/api/?name=User&background=4da6ff&color=fff';
+  const displayAvatar = selectedChat.avatar || 'https://ui-avatars.com/api/?name=User&background=5cdb95&color=05386b';
 
   return (
     <div className={`border-b px-6 py-3 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
@@ -39,9 +39,9 @@ const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
               {displayName}
               {displayName === 'Đang tải...' && (
                 <div className="flex gap-1">
-                  <div className="w-2 h-2 bg-[#4da6ff] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-[#4da6ff] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-[#4da6ff] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-2 h-2 bg-[#5cdb95] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-[#5cdb95] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-[#5cdb95] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               )}
             </h2>

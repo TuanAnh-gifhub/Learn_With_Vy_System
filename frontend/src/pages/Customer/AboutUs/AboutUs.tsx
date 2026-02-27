@@ -146,7 +146,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
           className="mb-20"
         >
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
               Tại Sao Chọn Chúng Tôi?
             </h2>
             <p
@@ -177,10 +177,10 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                 >
                   <div
                     className={`w-16 h-16 rounded-lg flex items-center justify-center mb-4 ${
-                      isDarkMode ? "bg-[#4da6ff]/20" : "bg-[#4da6ff]/10"
+                      isDarkMode ? "bg-[#5cdb95]/20" : "bg-[#5cdb95]/15"
                     }`}
                   >
-                    <IconComponent className="text-2xl text-[#4da6ff]" />
+                    <IconComponent className="text-2xl text-[#379683]" />
                   </div>
                   <h3
                     className={`text-lg font-bold mb-3 ${
@@ -210,7 +210,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
           className="mb-20"
         >
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
               Cách Thức Hoạt Động
             </h2>
             <p
@@ -246,21 +246,17 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                   >
                     {/* Number Badge */}
                     <div
-                      className={`absolute -top-4 -right-4 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                        isDarkMode
-                          ? "bg-[#4da6ff] text-white"
-                          : "bg-[#4da6ff] text-white"
-                      } shadow-lg`}
+                      className={`absolute -top-4 -right-4 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-[#5cdb95] text-[#034732] shadow-lg`}
                     >
                       {step.number}
                     </div>
 
                     <div
                       className={`w-20 h-20 rounded-lg flex items-center justify-center mb-6 ${
-                        isDarkMode ? "bg-[#4da6ff]/20" : "bg-[#4da6ff]/10"
+                        isDarkMode ? "bg-[#5cdb95]/20" : "bg-[#5cdb95]/15"
                       }`}
                     >
-                      <IconComponent className="text-3xl text-[#4da6ff]" />
+                      <IconComponent className="text-3xl text-[#379683]" />
                     </div>
                     <h3
                       className={`text-lg font-bold mb-3 ${
@@ -290,7 +286,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
               Khách Hàng Nói Gì Về Chúng Tôi
             </h2>
             <p
@@ -320,12 +316,12 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                 {/* Quote marks */}
                 <FaQuoteLeft
                   className={`absolute top-4 right-4 text-4xl opacity-20 ${
-                    isDarkMode ? "text-[#4da6ff]" : "text-[#4da6ff]"
+                    isDarkMode ? "text-[#5cdb95]" : "text-[#5cdb95]"
                   }`}
                 />
                 <FaQuoteRight
                   className={`absolute bottom-4 left-4 text-4xl opacity-20 ${
-                    isDarkMode ? "text-[#4da6ff]" : "text-[#4da6ff]"
+                    isDarkMode ? "text-[#5cdb95]" : "text-[#5cdb95]"
                   }`}
                 />
 
@@ -333,7 +329,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-[#4da6ff]"
+                    className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-[#5cdb95]"
                   />
                   <div>
                     <h4
@@ -378,7 +374,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-20 mt-20"
         >
-          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-blue-500 to-blue-700 p-8 md:p-12">
+          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#5cdb95] to-[#379683] p-8 md:p-12">
             {/* Decorative circles */}
             <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/2 translate-y-1/2"></div>
@@ -413,12 +409,12 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Nhập email của bạn..."
-                  className="flex-1 px-4 py-3 rounded-lg border-2 border-blue-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 text-gray-700 placeholder-gray-400"
+                  className="flex-1 px-4 py-3 rounded-lg border-2 border-[#8ee4af] focus:outline-none focus:border-[#5cdb95] focus:ring-2 focus:ring-[#5cdb95]/25 text-white placeholder-white/80 bg-white/10"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap"
+                  className="px-6 py-3 bg-white text-[#379683] font-semibold rounded-lg hover:bg-[#edf5e1] transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap"
                 >
                   Đăng ký
                 </button>

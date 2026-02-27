@@ -141,8 +141,8 @@ const RoomCard = ({
               }}
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-              <span className="text-gray-400 text-sm font-medium">No Image</span>
+            <div className="w-full h-full bg-gradient-to-br from-[#edf5e1] to-[#8ee4af] flex items-center justify-center">
+              <span className="text-gray-500 text-sm font-medium">No Image</span>
             </div>
           )}
 
@@ -213,7 +213,7 @@ const RoomCard = ({
               <>
                 {/* Title and Location in one line for wide variant */}
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-[#4da6ff] transition-colors text-sm`}>
+                  <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-[#379683] transition-colors text-sm`}>
                     {title}
                   </h3>
                   <p className={`text-gray-600 line-clamp-1 text-xs mt-0.5`}>
@@ -224,10 +224,10 @@ const RoomCard = ({
                 {/* Feature and Price in one line for wide variant */}
                 <div className="flex items-center gap-3 shrink-0">
                   <div className={`flex items-center text-gray-600 text-xs`}>
-                    <FeatureIcon className={`mr-1 text-[#4da6ff] w-3 h-3`} />
+                    <FeatureIcon className={`mr-1 text-[#379683] w-3 h-3`} />
                     <span className="line-clamp-1 whitespace-nowrap">{feature?.label || capacity}</span>
                   </div>
-                  <div className={`font-bold text-[#4da6ff] text-sm whitespace-nowrap`}>
+                  <div className={`font-bold text-[#379683] text-sm whitespace-nowrap`}>
                     ${price}/hr
                   </div>
                 </div>
@@ -235,17 +235,17 @@ const RoomCard = ({
             ) : isCompact ? (
               <>
                 {/* Title only for compact cards - location hidden to show more image */}
-                <h3 className={`font-bold text-gray-900 mb-0 line-clamp-1 group-hover:text-[#4da6ff] transition-colors text-xs`}>
+                <h3 className={`font-bold text-gray-900 mb-0 line-clamp-1 group-hover:text-[#379683] transition-colors text-xs`}>
                   {title}
                 </h3>
 
                 {/* Price and Feature in one line - compact layout */}
                 <div className="flex items-center justify-between mt-auto">
                   <div className={`flex items-center text-gray-600 text-xs`}>
-                    <FeatureIcon className={`mr-1 text-[#4da6ff] w-2.5 h-2.5`} />
+                    <FeatureIcon className={`mr-1 text-[#379683] w-2.5 h-2.5`} />
                     <span className="line-clamp-1 text-xs">{feature?.label || capacity}</span>
                   </div>
-                  <div className={`font-bold text-[#4da6ff] text-xs`}>
+                  <div className={`font-bold text-[#379683] text-xs`}>
                     ${price}/hr
                   </div>
                 </div>
@@ -253,7 +253,7 @@ const RoomCard = ({
             ) : (
               <>
                 {/* Title */}
-                <h3 className={`font-bold text-gray-900 mb-0.5 line-clamp-1 group-hover:text-[#4da6ff] transition-colors text-base`}>
+                <h3 className={`font-bold text-gray-900 mb-0.5 line-clamp-1 group-hover:text-[#379683] transition-colors text-base`}>
                   {title}
                 </h3>
 
@@ -265,10 +265,10 @@ const RoomCard = ({
                 {/* Price and Feature in one line */}
                 <div className="flex items-center justify-between mt-auto">
                   <div className={`flex items-center text-gray-600 text-xs`}>
-                    <FeatureIcon className={`mr-1.5 text-[#4da6ff] w-3 h-3`} />
+                    <FeatureIcon className={`mr-1.5 text-[#379683] w-3 h-3`} />
                     <span className="line-clamp-1">{feature?.label || capacity}</span>
                   </div>
-                  <div className={`font-bold text-[#4da6ff] text-sm`}>
+                  <div className={`font-bold text-[#379683] text-sm`}>
                     ${price}/hr
                   </div>
                 </div>

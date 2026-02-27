@@ -235,9 +235,9 @@ const HeroSection = () => {
   };
 
   return (
-  <div className="relative w-full -mt-16 flex items-start justify-center pt-0 pb-10 md:pb-14 min-h-screen min-h-[100svh] overflow-hidden">
+  <div className="relative w-full -mt-[7rem] md:-mt-[4.5rem] flex items-start justify-center pt-0 pb-10 md:pb-14 min-h-[102vh] overflow-hidden">
     {/* Hero background with video */}
-    <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0">
       <video
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
@@ -252,12 +252,12 @@ const HeroSection = () => {
         <source src={introLandingVideo} type="video/mp4" />
       </video>
 
-      {/* Gradient overlay to keep content readable */}
+      {/* Gradient overlay to keep content readable (rất nhẹ, gần như chỉ phủ mờ) */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, rgba(77,166,255,0.45) 0%, rgba(77,166,255,0.35) 50%, rgba(59,130,246,0.45) 100%)",
+            "linear-gradient(135deg, rgba(92,219,149,0.16) 0%, rgba(142,228,175,0.12) 50%, rgba(55,150,131,0.20) 100%)",
         }}
       />
     </div>
@@ -273,7 +273,7 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        EduRoom
+        Learn With Vy
       </motion.h1>
       <motion.p 
         className="text-lg md:text-xl mb-1 md:mb-1.5 font-medium drop-shadow-md text-center"
@@ -299,7 +299,7 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <div className="flex flex-col lg:flex-row items-stretch bg-white/95 rounded-3xl shadow-2xl border border-[#4da6ff] px-3 py-2 md:px-4 md:py-3 gap-2 md:gap-3 text-gray-900">
+        <div className="flex flex-col lg:flex-row items-stretch bg-white/95 rounded-3xl shadow-2xl border border-[#5cdb95] px-3 py-2 md:px-4 md:py-3 gap-2 md:gap-3 text-gray-900">
           {/* Ô tìm kiếm chính */}
           <div className="flex-1 flex items-center gap-2 px-1">
             <FiSearch className="text-gray-400 w-5 h-5" />
@@ -319,7 +319,7 @@ const HeroSection = () => {
           {/* Địa điểm */}
           <div
             ref={cityRef}
-            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#4da6ff] transition-colors"
+            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
             onClick={() => setIsCityOpen((prev) => !prev)}
           >
             <FiMapPin className="text-yellow-500 w-4 h-4 shrink-0" />
@@ -336,7 +336,7 @@ const HeroSection = () => {
             {isCityOpen && (
               <div 
                 ref={cityDropdownRef}
-                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#4da6ff] py-2 z-[999999] w-full min-w-[200px]"
+                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-[999999] w-full min-w-[200px]"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
@@ -350,8 +350,8 @@ const HeroSection = () => {
                       setCity(c);
                       setIsCityOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors ${
-                      city === c ? 'bg-blue-50 text-[#4da6ff] font-semibold' : 'text-gray-800'
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#edf5e1] transition-colors ${
+                      city === c ? 'bg-[#8ee4af] text-[#05386b] font-semibold' : 'text-gray-800'
                     }`}
                   >
                     {c}
@@ -364,7 +364,7 @@ const HeroSection = () => {
           {/* Ngày nhận / trả phòng - trong 1 khung */}
           <div
             ref={dateRef}
-            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#4da6ff] transition-colors"
+            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
             onClick={() => setIsDateOpen((prev) => !prev)}
           >
             <FiCalendar className="text-yellow-500 w-4 h-4 shrink-0" />
@@ -381,7 +381,7 @@ const HeroSection = () => {
             {isDateOpen && (
               <div 
                 ref={calendarRef}
-                className="absolute left-0 top-full mt-2 bg-white rounded-xl shadow-2xl border-2 border-[#4da6ff] p-2.5 text-gray-900 z-[999999]"
+                className="absolute left-0 top-full mt-2 bg-white rounded-xl shadow-2xl border-2 border-[#5cdb95] p-2.5 text-gray-900 z-[999999]"
                 style={{
                   width: '280px',
                   pointerEvents: 'auto',
@@ -456,10 +456,10 @@ const HeroSection = () => {
                         disabled={past}
                         className={`
                           aspect-square text-[10px] font-medium rounded-md transition-all flex items-center justify-center
-                          ${past ? 'text-gray-300 cursor-not-allowed opacity-50' : 'hover:bg-blue-50 cursor-pointer text-gray-700'}
-                          ${today && !selected ? 'border border-[#4da6ff] font-semibold' : ''}
-                          ${inRange && !selected ? 'bg-blue-100' : ''}
-                          ${selected ? 'bg-[#4da6ff] text-white font-bold' : ''}
+                          ${past ? 'text-gray-300 cursor-not-allowed opacity-50' : 'hover:bg-[#edf5e1] cursor-pointer text-gray-700'}
+                          ${today && !selected ? 'border border-[#5cdb95] font-semibold' : ''}
+                          ${inRange && !selected ? 'bg-[#8ee4af]/70' : ''}
+                          ${selected ? 'bg-[#5cdb95] text-[#05386b] font-bold' : ''}
                         `}
                       >
                         {date.getDate()}
@@ -498,7 +498,7 @@ const HeroSection = () => {
                         e.stopPropagation();
                         applyPresetDays(d);
                       }}
-                      className="flex items-center gap-0.5 px-2 py-1 rounded-full border border-gray-300 text-[10px] hover:border-[#4da6ff] hover:text-[#4da6ff] hover:bg-blue-50 transition-colors"
+                      className="flex items-center gap-0.5 px-2 py-1 rounded-full border border-gray-300 text-[10px] hover:border-[#5cdb95] hover:text-[#379683] hover:bg-[#edf5e1] transition-colors"
                     >
                       <span className="text-xs leading-none">+</span>
                       {d} ngày
@@ -537,7 +537,7 @@ const HeroSection = () => {
           {/* Loại phòng */}
           <div
             ref={roomTypeRef}
-            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#4da6ff] transition-colors"
+            className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
             onClick={() => setIsRoomTypeOpen((prev) => !prev)}
           >
             <FaChalkboardTeacher className="text-yellow-500 w-4 h-4 shrink-0" />
@@ -555,7 +555,7 @@ const HeroSection = () => {
               <div 
                 ref={roomTypeDropdownRef}
                 data-room-type-dropdown
-                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#4da6ff] py-2 z-[999999] w-full min-w-[200px] max-h-[300px] overflow-y-auto"
+                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-[999999] w-full min-w-[200px] max-h-[300px] overflow-y-auto"
                 style={{
                   scrollbarWidth: 'none', /* Firefox */
                   msOverflowStyle: 'none', /* IE and Edge */
@@ -573,8 +573,8 @@ const HeroSection = () => {
                       setRoomType(t);
                       setIsRoomTypeOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-blue-50 transition-colors ${
-                      roomType === t ? 'bg-blue-50 text-[#4da6ff] font-semibold' : 'text-gray-800'
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#edf5e1] transition-colors ${
+                      roomType === t ? 'bg-[#8ee4af] text-[#05386b] font-semibold' : 'text-gray-800'
                     }`}
                   >
                     {t}
@@ -588,7 +588,7 @@ const HeroSection = () => {
           <button
             type="button"
             onClick={handleSearch}
-            className="w-full md:w-auto md:min-w-[130px] h-11 md:h-12 rounded-2xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm md:text-base flex items-center justify-center shadow-md hover:shadow-lg transition-all"
+            className="w-full md:w-auto md:min-w-[130px] h-11 md:h-12 rounded-2xl bg-[#379683] hover:bg-[#2f6f60] text-[#edf5e1] font-semibold text-sm md:text-base flex items-center justify-center shadow-md hover:shadow-lg transition-all"
           >
             Tìm phòng
           </button>
@@ -614,7 +614,7 @@ const HeroSection = () => {
           <button
             key={label}
             type="button"
-            className="px-3 md:px-4 py-1.5 rounded-full border border-white/60 bg-white/10 backdrop-blur text-white hover:bg-white hover:text-[#2563eb] hover:border-white shadow-sm transition-all"
+            className="px-3 md:px-4 py-1.5 rounded-full border border-white/60 bg-white/10 backdrop-blur text-white hover:bg-white hover:text-[#379683] hover:border-white shadow-sm transition-all"
           >
             {label}
           </button>

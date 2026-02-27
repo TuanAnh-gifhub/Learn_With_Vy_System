@@ -509,7 +509,7 @@ const LandingPage = () => {
           ) : (
             <div className="mb-8 w-full">
               <div className="text-center mb-12">
-                <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+                <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
                   <ScrambleText text="Phòng học mới nhất" triggerKey={decodeLatestListings} />
                 </h1>
               </div>
@@ -619,7 +619,11 @@ const LandingPage = () => {
               {/* Navigation buttons */}
               <div className="flex justify-between items-center mt-8">
                 <button
-                  className={`rounded-lg shadow px-6 py-2 border hover:scale-105 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${isDarkMode ? 'bg-gray-700 border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400' : 'bg-white border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'}`}
+                  className={`rounded-lg shadow px-6 py-2 border hover:scale-105 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                    isDarkMode
+                      ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
+                      : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+                  }`}
                   onClick={() => setLatestListingsStart(s => Math.max(0, s - 1))}
                   disabled={latestListingsStart === 0 || rooms.length === 0}
                   aria-label="Xem phòng trước"
@@ -634,13 +638,21 @@ const LandingPage = () => {
 
                 <Link
                   to="/products"
-                  className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]' : 'border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]'}`}
+                  className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
+                    isDarkMode
+                      ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                      : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                  }`}
                 >
                   Xem thêm {totalItems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} phòng học
                 </Link>
 
                 <button
-                  className={`rounded-lg shadow px-6 py-2 border hover:scale-105 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${isDarkMode ? 'bg-gray-700 border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400' : 'bg-white border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'}`}
+                  className={`rounded-lg shadow px-6 py-2 border hover:scale-105 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                    isDarkMode
+                      ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
+                      : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+                  }`}
                   onClick={() => setLatestListingsStart(s => Math.min(Math.max(0, rooms.length - 4), s + 1))}
                   disabled={latestListingsStart >= Math.max(0, rooms.length - 4)}
                   aria-label="Xem phòng tiếp"
@@ -659,21 +671,21 @@ const LandingPage = () => {
 
         <div id="official-stores" ref={officialStoresRef} className="max-w-7xl mx-auto p-8">
           <div className="text-center mb-12">
-            <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+            <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
               <ScrambleText text="Đặt Phòng Học Trực Tuyến" triggerKey={decodeOfficialStores} />
             </h1>
           </div>
 
           <div className="flex flex-wrap gap-4 mb-6">
-            <div className="flex items-center text-blue-600">
+            <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
               <span className="text-sm">Hủy đặt phòng miễn phí</span>
             </div>
-            <div className="flex items-center text-blue-600">
+            <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
               <span className="text-sm">Phòng học chất lượng cao</span>
             </div>
-            <div className="flex items-center text-blue-600">
+            <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
               <span className="text-sm">Hỗ trợ đặt phòng linh hoạt</span>
             </div>
@@ -710,7 +722,11 @@ const LandingPage = () => {
           ) : (
             <div className="mb-8 w-full relative flex items-center">
               <button
-                className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${isDarkMode ? 'bg-gray-700 border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400' : 'bg-white border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'}`}
+                className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                  isDarkMode
+                    ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
+                    : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+                }`}
                 onClick={() => setOfficialStoresStart(s => Math.max(0, s - 1))}
                 disabled={officialStoresStart === 0 || rooms.length === 0}
                 aria-label="Xem phòng trước"
@@ -754,7 +770,11 @@ const LandingPage = () => {
           <div className="flex justify-center mt-4 mb-8">
             <Link
               to="/products"
-              className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]' : 'border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]'}`}
+              className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
+                isDarkMode
+                  ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                  : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+              }`}
             >
               Xem thêm {totalItems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} phòng học
             </Link>
@@ -880,7 +900,7 @@ const LandingPage = () => {
 
         <div id="featured-stores" ref={featuredStoresRef} className="max-w-7xl mx-auto p-8">
           <div className="text-center mb-12">
-            <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#4da6ff]">
+            <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
               <ScrambleText text="Địa điểm cho thuê nổi bật" triggerKey={decodeFeaturedStores} />
             </h1>
           </div>
@@ -890,10 +910,15 @@ const LandingPage = () => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(String(category.id))}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedCategory === String(category.id)
-                  ? isDarkMode ? 'bg-[#4da6ff] text-white border border-[#4da6ff]' : 'bg-[#4da6ff] text-white border border-[#4da6ff]'
-                  : isDarkMode ? 'bg-gray-700 text-gray-300 border border-gray-600 hover:border-[#4da6ff] hover:text-[#4da6ff]' : 'bg-white text-gray-700 border border-gray-300 hover:border-[#4da6ff] hover:text-[#4da6ff]'
-                  }`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedCategory === String(category.id)
+                    ? isDarkMode
+                      ? 'bg-[#379683] text-white border border-[#5cdb95]'
+                      : 'bg-[#5cdb95] text-[#034732] border border-[#5cdb95]'
+                    : isDarkMode
+                      ? 'bg-gray-700 text-gray-300 border border-gray-600 hover:border-[#5cdb95] hover:text-[#5cdb95]'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:border-[#5cdb95] hover:text-[#379683]'
+                }`}
               >
                 {category.name}
               </button>
@@ -902,7 +927,11 @@ const LandingPage = () => {
 
           <div className="mb-8 w-full relative flex items-center">
             <button
-              className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${isDarkMode ? 'bg-gray-700 border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400' : 'bg-white border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'}`}
+              className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                isDarkMode
+                  ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
+                  : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+              }`}
               onClick={() => setFeaturedStoresStart(s => Math.max(0, s - 1))}
               disabled={featuredStoresStart === 0}
               aria-label="Xem cửa hàng trước"
@@ -920,7 +949,11 @@ const LandingPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  className={`w-full rounded-xl shadow-lg p-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group border border-gray-100 ${isDarkMode ? 'bg-gray-800/90 backdrop-blur-sm hover:shadow-[#4da6ff]/30 hover:border-[#4da6ff]' : 'bg-white/95 backdrop-blur-sm hover:shadow-[#4da6ff]/20 hover:border-[#4da6ff]/50'}`}
+                  className={`w-full rounded-xl shadow-lg p-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group border border-gray-100 ${
+                    isDarkMode
+                      ? 'bg-gray-800/90 backdrop-blur-sm hover:shadow-[#5cdb95]/30 hover:border-[#5cdb95]'
+                      : 'bg-white/95 backdrop-blur-sm hover:shadow-[#5cdb95]/20 hover:border-[#5cdb95]/60'
+                  }`}
                 >
                   <div className="flex flex-col items-center text-center h-full">
                     <div className="relative mb-3">
@@ -935,15 +968,17 @@ const LandingPage = () => {
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-16 h-16 rounded-full bg-linear-to-br from-[#5cdb95] to-[#379683] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                           <span className="text-white font-bold text-lg">
                             {store.name ? store.name.charAt(0).toUpperCase() : 'S'}
                           </span>
                         </div>
                       )}
-                      <div className="absolute inset-0 rounded-full bg-linear-to-t from-[#4da6ff]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 rounded-full bg-linear-to-t from-[#5cdb95]/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h3 className={`text-lg font-bold mb-2 transition-colors duration-300 ${isDarkMode ? 'text-white group-hover:text-[#4da6ff]' : 'text-gray-900 group-hover:text-[#4da6ff]'}`}>{store.name}</h3>
+                    <h3 className={`text-lg font-bold mb-2 transition-colors duration-300 ${
+                      isDarkMode ? 'text-white group-hover:text-[#5cdb95]' : 'text-gray-900 group-hover:text-[#379683]'
+                    }`}>{store.name}</h3>
 
                     <div className="flex items-center mb-2">
                       <FaStar className="w-4 h-4 text-yellow-400 mr-1 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-200" />
@@ -952,15 +987,23 @@ const LandingPage = () => {
                       </span>
                     </div>
 
-                    <div className={`text-xs mb-2 transition-colors duration-300 ${isDarkMode ? 'text-gray-400 group-hover:text-[#4da6ff]' : 'text-gray-500 group-hover:text-[#4da6ff]'}`}>
+                    <div className={`text-xs mb-2 transition-colors duration-300 ${
+                      isDarkMode ? 'text-gray-400 group-hover:text-[#5cdb95]' : 'text-gray-500 group-hover:text-[#379683]'
+                    }`}>
                       Đang cho thuê: {store.currentListings || 0} | Đã cho thuê: {store.soldItems || 0}
                     </div>
 
-                    <div className={`text-xs mb-3 flex-1 transition-colors duration-300 ${isDarkMode ? 'text-gray-400 group-hover:text-[#4da6ff]' : 'text-gray-500 group-hover:text-[#4da6ff]'}`}>
+                    <div className={`text-xs mb-3 flex-1 transition-colors duration-300 ${
+                      isDarkMode ? 'text-gray-400 group-hover:text-[#5cdb95]' : 'text-gray-500 group-hover:text-[#379683]'
+                    }`}>
                       📍 {store.location}
                     </div>
 
-                    <button className={`border px-4 py-1 rounded text-sm hover:scale-105 transition-all duration-300 group-hover:shadow-md ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]' : 'border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]'}`}>
+                    <button className={`border px-4 py-1 rounded text-sm hover:scale-105 transition-all duration-300 group-hover:shadow-md ${
+                      isDarkMode
+                        ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                        : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                    }`}>
                       Theo dõi
                     </button>
                   </div>
@@ -969,7 +1012,11 @@ const LandingPage = () => {
             </div>
 
             <button
-              className={`hidden lg:block absolute right-0 z-10 rounded-full shadow p-2 -mr-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${isDarkMode ? 'bg-gray-700 border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400' : 'bg-white border-[#4da6ff] hover:bg-[#4da6ff] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'}`}
+              className={`hidden lg:block absolute right-0 z-10 rounded-full shadow p-2 -mr-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                isDarkMode
+                  ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
+                  : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+              }`}
               onClick={() => setFeaturedStoresStart(s => Math.min(filteredStores.length - 5, s + 1))}
               disabled={featuredStoresStart >= filteredStores.length - 5}
               aria-label="Xem cửa hàng tiếp"
@@ -982,7 +1029,11 @@ const LandingPage = () => {
           </div>
 
           <div className="flex justify-center">
-            <button className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]' : 'border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]'}`}>
+            <button className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
+              isDarkMode
+                ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+            }`}>
               Xem thêm địa điểm cho thuê
             </button>
           </div>

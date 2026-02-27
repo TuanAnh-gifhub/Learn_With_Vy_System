@@ -18,13 +18,13 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
       <div className="max-w-screen-2xl mx-auto px-4 md:px-8 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8 mb-8">
-          {/* Column 1: EduRoom Branding and Social Media */}
+          {/* Column 1: Learn With Vy Branding and Social Media */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#4da6ff] rounded-lg flex items-center justify-center">
-                <FaHome className="text-white text-xl" />
+              <div className="w-12 h-12 bg-[#5cdb95] rounded-lg flex items-center justify-center">
+                <FaHome className="text-[#05386b] text-xl" />
               </div>
-              <h3 className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-black"}`}>EduRoom</h3>
+              <h3 className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-black"}`}>Learn With Vy</h3>
             </div>
             <p
               className={`text-sm leading-relaxed ${
@@ -36,21 +36,21 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="#"
-                className="w-10 h-10 bg-blue-50 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-[#4da6ff] hover:bg-blue-100 transition-colors"
+                className="w-10 h-10 bg-[#edf5e1] border-2 border-[#8ee4af] rounded-lg flex items-center justify-center hover:border-[#5cdb95] hover:bg-[#8ee4af] transition-colors"
                 aria-label="Facebook"
               >
                 <FaFacebook className="text-gray-700 text-lg" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-blue-50 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-[#4da6ff] hover:bg-blue-100 transition-colors"
+                className="w-10 h-10 bg-[#edf5e1] border-2 border-[#8ee4af] rounded-lg flex items-center justify-center hover:border-[#5cdb95] hover:bg-[#8ee4af] transition-colors"
                 aria-label="Instagram"
               >
                 <FaInstagram className="text-gray-700 text-lg" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-blue-50 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-[#4da6ff] hover:bg-blue-100 transition-colors"
+                className="w-10 h-10 bg-[#edf5e1] border-2 border-[#8ee4af] rounded-lg flex items-center justify-center hover:border-[#5cdb95] hover:bg-[#8ee4af] transition-colors"
                 aria-label="Twitter"
               >
                 <FaTwitter className="text-gray-700 text-lg" />
@@ -71,7 +71,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/about-us"
-                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
                   Về chúng tôi
                 </Link>
@@ -79,7 +79,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/products"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Phòng học
                 </Link>
@@ -87,7 +87,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/news"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Tin tức
                 </Link>
@@ -95,7 +95,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/terms"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Điều khoản
                 </Link>
@@ -116,7 +116,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/help"
-                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
                   Trung tâm trợ giúp
                 </Link>
@@ -124,7 +124,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/faq"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Câu hỏi thường gặp
                 </Link>
@@ -132,7 +132,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/privacy"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Chính sách bảo mật
                 </Link>
@@ -140,7 +140,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-sm text-gray-600 hover:text-[#4da6ff] transition-colors"
+                  className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
                   Liên hệ
                 </Link>
@@ -159,7 +159,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <FiMapPin className="text-[#4da6ff] text-lg mt-0.5 shrink-0" />
+                <FiMapPin className="text-[#5cdb95] text-lg mt-0.5 shrink-0" />
                 <span
                   className={`text-sm ${
                     isDarkMode ? "text-white" : "text-black"
@@ -169,7 +169,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <FiPhone className="text-[#4da6ff] text-lg shrink-0" />
+                <FiPhone className="text-[#5cdb95] text-lg shrink-0" />
                 <span
                   className={`text-sm ${
                     isDarkMode ? "text-white" : "text-black"
@@ -179,12 +179,12 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <FiMail className="text-[#4da6ff] text-lg shrink-0" />
+                <FiMail className="text-[#5cdb95] text-lg shrink-0" />
                 <a
-                  href="mailto:info@eduroom.vn"
-                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#4da6ff] transition-colors"
+                  href="mailto:info@learn_with_vy.vn"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
-                  info@eduroom.vn
+                  info@learn_with_vy.vn
                 </a>
               </li>
             </ul>
@@ -194,7 +194,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
         {/* Copyright Section */}
         <div className={`border-t pt-6 ${isDarkMode ? "border-gray-700" : "border-gray-300"}`}>
           <p className={`text-center text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            © 2026 EduRoom. All rights reserved.
+            © 2026 Learn With Vy. All rights reserved.
           </p>
         </div>
       </div>

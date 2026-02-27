@@ -1454,7 +1454,7 @@ const ChatBubble = () => {
           }}
           onMouseDown={handleMouseDown}
         >
-          <button
+            <button
             onClick={() => {
               // Nếu đã drag, không mở chat (để tránh mở khi đang kéo thả)
               if (hasDragged) {
@@ -1466,7 +1466,7 @@ const ChatBubble = () => {
               setIsOpen(true);
               setIsMinimized(false);
             }}
-            className="w-14 h-14 bg-[#4da6ff] hover:bg-[#4da6ff]/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group relative cursor-grab active:cursor-grabbing pointer-events-auto"
+            className="w-14 h-14 bg-[#379683] hover:bg-[#2f6f60] text-[#edf5e1] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group relative cursor-grab active:cursor-grabbing pointer-events-auto"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
@@ -1498,9 +1498,9 @@ const ChatBubble = () => {
                   <h3 className={`font-bold text-lg ${isDarkMode ? 'text-white' : 'text-black'}`}>Đoạn chat</h3>
                   <div className="flex items-center gap-2">
                     {/* Maximize/Minimize button */}
-                    <button
-                      onClick={() => setIsMinimized(!isMinimized)}
-                      className={`p-1.5 rounded transition-colors ${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:text-[#4da6ff] hover:bg-[#4da6ff]/10'}`}
+                  <button
+                    onClick={() => setIsMinimized(!isMinimized)}
+                      className={`p-1.5 rounded transition-colors ${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:text-[#379683] hover:bg-[#5cdb95]/10'}`}
                     >
                       {isMinimized ? (
                         <FaExpand className="w-4 h-4" />
@@ -1600,7 +1600,7 @@ const ChatBubble = () => {
                         navigate('/chat');
                         setIsOpen(false);
                       }}
-                      className={`w-full text-center text-sm font-medium py-3 transition-colors ${isDarkMode ? 'text-[#4da6ff] hover:text-[#4da6ff]/80' : 'text-[#4da6ff] hover:text-[#4da6ff]/90'}`}
+                    className={`w-full text-center text-sm font-medium py-3 transition-colors ${isDarkMode ? 'text-[#5cdb95] hover:text-[#8ee4af]' : 'text-[#379683] hover:text-[#5cdb95]'}`}
                     >
                       Xem tất cả tin nhắn trong ChatBox
                     </button>

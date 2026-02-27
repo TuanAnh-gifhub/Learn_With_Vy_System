@@ -13,11 +13,11 @@
 
 a {
   font-weight: 500;
-  color: #4da6ff;
+  color: #379683; /* teal from palette */
   text-decoration: inherit;
 }
 a:hover {
-  color: #0080ff;
+  color: #5cdb95; /* bright green on hover */
 }
 
 body {
@@ -83,9 +83,18 @@ body[data-theme="dark"] .admin-sider .ant-layout-sider-children {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #edf5e1; /* soft green background similar to ref image */
   }
   a:hover {
-    color: #66b3ff;
+    color: #5cdb95;
   }
+}
+
+/* Ẩn placeholder mm/dd/yyyy của input type="date" khi chưa chọn ngày */
+.date-input::-webkit-datetime-edit {
+  color: #111827; /* text-gray-900 */
+}
+
+.date-input:not(:focus):invalid::-webkit-datetime-edit {
+  color: transparent;
 }

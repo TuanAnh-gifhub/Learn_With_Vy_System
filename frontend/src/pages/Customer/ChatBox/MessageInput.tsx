@@ -70,7 +70,7 @@ const MessageInput = ({
         .quick-replies{ scrollbar-width: thin; }
         .quick-replies::-webkit-scrollbar{ height: 6px; }
         .quick-replies::-webkit-scrollbar-track{ background: transparent; }
-        .quick-replies::-webkit-scrollbar-thumb{ background-color: #4da6ff; border-radius: 9999px; }
+        .quick-replies::-webkit-scrollbar-thumb{ background-color: #5cdb95; border-radius: 9999px; }
       `;
       document.head.appendChild(style);
     }
@@ -145,10 +145,10 @@ const MessageInput = ({
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            className={`w-full px-4 py-3 rounded-full focus:ring-2 focus:ring-[#4da6ff] outline-none transition-colors ${
+            className={`w-full px-4 py-3 rounded-full focus:ring-2 focus:ring-[#5cdb95] outline-none transition-colors ${
               isDarkMode 
-                ? 'bg-gray-700 text-white placeholder-gray-400 border border-gray-600 hover:border-[#4da6ff] focus:border-[#4da6ff]' 
-                : 'bg-white text-gray-900 placeholder-gray-500 border border-gray-300 hover:border-[#4da6ff] focus:border-[#4da6ff]'
+                ? 'bg-gray-700 text-white placeholder-gray-400 border border-gray-600 hover:border-[#5cdb95] focus:border-[#5cdb95]' 
+                : 'bg-white text-gray-900 placeholder-gray-500 border border-gray-300 hover:border-[#5cdb95] focus:border-[#5cdb95]'
             }`}
           />
         </div>
@@ -173,7 +173,7 @@ const MessageInput = ({
 
         <button
           onClick={onSendMessage}
-          className="p-2 bg-[#4da6ff] hover:bg-[#4da6ff]/90 text-white rounded-full transition-colors"
+          className="p-2 bg-[#379683] hover:bg-[#2f6f60] text-[#edf5e1] rounded-full transition-colors"
         >
           <FaPaperPlane className="w-4 h-4" />
         </button>
