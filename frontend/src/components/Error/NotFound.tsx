@@ -29,25 +29,25 @@ const NotFound = () => {
   return (
     <div className={`fixed inset-0 overflow-hidden h-screen w-screen ${
       isDarkMode 
-        ? "bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900" 
-        : "bg-gradient-to-b from-blue-200 via-blue-100 to-white"
+        ? "bg-linear-to-b from-gray-900 via-gray-800 to-gray-900" 
+        : "bg-linear-to-b from-[#edf5e1] via-[#f7fff1] to-white"
     }`}>
       {/* Wavy background patterns */}
       <div className="absolute inset-0 opacity-30">
         <div className={`absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl opacity-50 ${
-          isDarkMode ? "bg-blue-900" : "bg-blue-300"
+          isDarkMode ? "bg-emerald-950" : "bg-[#8ee4af]"
         }`}></div>
         <div className={`absolute top-40 right-20 w-80 h-80 rounded-full blur-3xl opacity-40 ${
-          isDarkMode ? "bg-blue-800" : "bg-blue-200"
+          isDarkMode ? "bg-emerald-900" : "bg-[#5cdb95]"
         }`}></div>
         <div className={`absolute bottom-20 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-30 ${
-          isDarkMode ? "bg-blue-900" : "bg-blue-100"
+          isDarkMode ? "bg-emerald-950" : "bg-[#edf5e1]"
         }`}></div>
       </div>
 
       {/* Globe icon in top right */}
       <div className={`absolute top-4 right-4 sm:top-6 sm:right-6 w-8 h-8 sm:w-10 sm:h-10 opacity-60 ${
-        isDarkMode ? "text-blue-500" : "text-blue-400"
+        isDarkMode ? "text-[#5cdb95]" : "text-[#379683]"
       }`}>
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
@@ -56,7 +56,7 @@ const NotFound = () => {
 
       {/* Small 404 text at top */}
       <div className={`absolute top-2 left-1/2 transform -translate-x-1/2 text-lg sm:text-xl font-light opacity-40 ${
-        isDarkMode ? "text-blue-400" : "text-blue-300"
+        isDarkMode ? "text-[#8ee4af]" : "text-[#5cdb95]"
       }`}>
         404
       </div>
@@ -71,13 +71,13 @@ const NotFound = () => {
             <div className="relative z-10">
               <div className="relative">
                 <div className={`text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black drop-shadow-2xl transform -rotate-6 leading-none ${
-                  isDarkMode ? "text-blue-400" : "text-blue-500"
+                  isDarkMode ? "text-[#8ee4af]" : "text-[#379683]"
                 }`}>
                   4
                 </div>
                 {/* Shadow for 3D effect */}
                 <div className={`absolute inset-0 text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black opacity-30 blur-sm transform translate-x-1 translate-y-1 -rotate-6 leading-none pointer-events-none ${
-                  isDarkMode ? "text-blue-600" : "text-blue-700"
+                  isDarkMode ? "text-emerald-500" : "text-[#034732]"
                 }`}>
                   4
                 </div>
@@ -87,15 +87,15 @@ const NotFound = () => {
               <div className="absolute -left-3 sm:-left-4 md:-left-6 lg:-left-8 bottom-2 sm:bottom-3 md:bottom-4 lg:bottom-6 z-20">
                 <div className="relative">
                   {/* Person body */}
-                  <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-blue-400 rounded-full relative">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-[#5cdb95] rounded-full relative">
                     {/* Head */}
-                    <div className="absolute -top-0.5 sm:-top-1 md:-top-1.5 left-1/2 transform -translate-x-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 bg-blue-300 rounded-full"></div>
+                      <div className="absolute -top-0.5 sm:-top-1 md:-top-1.5 left-1/2 transform -translate-x-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 bg-[#8ee4af] rounded-full"></div>
                     {/* Body */}
-                    <div className="absolute top-1 sm:top-1.5 md:top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-3.5 sm:h-4 md:w-4 md:h-5 lg:w-5 lg:h-6 bg-blue-500 rounded-b-full"></div>
+                      <div className="absolute top-1 sm:top-1.5 md:top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-3.5 sm:h-4 md:w-4 md:h-5 lg:w-5 lg:h-6 bg-[#379683] rounded-b-full"></div>
                   </div>
                   {/* Magnifying glass */}
-                  <div className="absolute -right-1.5 sm:-right-2 md:-right-3 top-0.5 sm:top-1 md:top-1.5 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 border-2 border-blue-600 rounded-full bg-white/20">
-                    <div className="absolute bottom-0 right-0 w-0.5 h-1 sm:w-1 sm:h-1.5 md:w-1 md:h-2 lg:w-1.5 lg:h-3 bg-blue-600 transform rotate-45 origin-bottom"></div>
+                    <div className="absolute -right-1.5 sm:-right-2 md:-right-3 top-0.5 sm:top-1 md:top-1.5 w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 border-2 border-[#034732] rounded-full bg-white/20">
+                      <div className="absolute bottom-0 right-0 w-0.5 h-1 sm:w-1 sm:h-1.5 md:w-1 md:h-2 lg:w-1.5 lg:h-3 bg-[#034732] transform rotate-45 origin-bottom"></div>
                   </div>
                 </div>
               </div>
@@ -105,13 +105,13 @@ const NotFound = () => {
             <div className="relative z-10">
               <div className="relative">
                 <div className={`text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black drop-shadow-2xl leading-none ${
-                  isDarkMode ? "text-blue-400" : "text-blue-500"
+                  isDarkMode ? "text-[#8ee4af]" : "text-[#379683]"
                 }`}>
                   0
                 </div>
                 {/* Shadow for 3D effect */}
                 <div className={`absolute inset-0 text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black opacity-30 blur-sm transform translate-x-1 translate-y-1 leading-none pointer-events-none ${
-                  isDarkMode ? "text-blue-600" : "text-blue-700"
+                  isDarkMode ? "text-emerald-500" : "text-[#034732]"
                 }`}>
                   0
                 </div>
@@ -120,11 +120,11 @@ const NotFound = () => {
               {/* "Oops" speech bubble */}
               <div className="absolute -top-3 sm:-top-4 md:-top-6 lg:-top-8 left-1/2 transform -translate-x-1/2 z-30">
                 <div className={`text-white text-[9px] sm:text-[10px] md:text-xs font-semibold px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-full relative shadow-md ${
-                  isDarkMode ? "bg-blue-600" : "bg-blue-400"
+                  isDarkMode ? "bg-[#379683]" : "bg-[#5cdb95]"
                 }`}>
                   oops
                   <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent ${
-                    isDarkMode ? "border-t-blue-600" : "border-t-blue-400"
+                    isDarkMode ? "border-t-[#379683]" : "border-t-[#5cdb95]"
                   }`}></div>
                 </div>
               </div>
@@ -139,13 +139,13 @@ const NotFound = () => {
             <div className="relative z-10">
               <div className="relative">
                 <div className={`text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black drop-shadow-2xl leading-none ${
-                  isDarkMode ? "text-blue-400" : "text-blue-500"
+                  isDarkMode ? "text-[#8ee4af]" : "text-[#379683]"
                 }`}>
                   4
                 </div>
                 {/* Shadow for 3D effect */}
                 <div className={`absolute inset-0 text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black opacity-30 blur-sm transform translate-x-1 translate-y-1 leading-none pointer-events-none ${
-                  isDarkMode ? "text-blue-600" : "text-blue-700"
+                  isDarkMode ? "text-emerald-500" : "text-[#034732]"
                 }`}>
                   4
                 </div>
@@ -154,11 +154,11 @@ const NotFound = () => {
               {/* "Not found" speech bubble */}
               <div className="absolute -top-3 sm:-top-4 md:-top-6 lg:-top-8 right-0 z-30">
                 <div className={`text-white text-[9px] sm:text-[10px] md:text-xs font-semibold px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-full relative whitespace-nowrap shadow-md ${
-                  isDarkMode ? "bg-blue-600" : "bg-blue-400"
+                  isDarkMode ? "bg-[#379683]" : "bg-[#5cdb95]"
                 }`}>
                   not found
                   <div className={`absolute bottom-0 right-2 sm:right-2.5 md:right-3 translate-y-full w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent ${
-                    isDarkMode ? "border-t-blue-600" : "border-t-blue-400"
+                    isDarkMode ? "border-t-[#379683]" : "border-t-[#5cdb95]"
                   }`}></div>
                 </div>
               </div>
@@ -167,24 +167,24 @@ const NotFound = () => {
               <div className="absolute -right-3 sm:-right-4 md:-right-6 lg:-right-8 bottom-2 sm:bottom-3 md:bottom-4 lg:bottom-6 z-20">
                 <div className="relative">
                   {/* Person body */}
-                  <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-blue-400 rounded-full relative">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-[#5cdb95] rounded-full relative">
                     {/* Head */}
-                    <div className="absolute -top-0.5 sm:-top-1 md:-top-1.5 left-1/2 transform -translate-x-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 bg-blue-300 rounded-full"></div>
+                      <div className="absolute -top-0.5 sm:-top-1 md:-top-1.5 left-1/2 transform -translate-x-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 bg-[#8ee4af] rounded-full"></div>
                     {/* Body */}
-                    <div className="absolute top-1 sm:top-1.5 md:top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-3.5 sm:h-4 md:w-4 md:h-5 lg:w-5 lg:h-6 bg-blue-500 rounded-b-full"></div>
+                      <div className="absolute top-1 sm:top-1.5 md:top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-3.5 sm:h-4 md:w-4 md:h-5 lg:w-5 lg:h-6 bg-[#379683] rounded-b-full"></div>
                   </div>
                   {/* Wrench */}
                   <div className="absolute -left-3 sm:-left-3.5 md:-left-4 lg:-left-5 top-0.5 sm:top-0.5 md:top-1 w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 lg:w-4 lg:h-4">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="text-blue-600 w-full h-full">
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="text-[#034732] w-full h-full">
                       <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
                     </svg>
                   </div>
                   {/* Plug */}
                   <div className="absolute -left-1 sm:-left-1 md:-left-1.5 lg:-left-2 top-2 sm:top-2.5 md:top-3 lg:top-4 w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2 md:h-2 lg:w-2.5 lg:h-2.5">
-                    <div className="w-full h-0.5 sm:h-1 md:h-1 bg-blue-600 rounded-t"></div>
+                      <div className="w-full h-0.5 sm:h-1 md:h-1 bg-[#034732] rounded-t"></div>
                     <div className="flex gap-0.5 justify-center mt-0.5">
-                      <div className="w-0.5 h-0.5 sm:h-1 md:h-1 bg-blue-600"></div>
-                      <div className="w-0.5 h-0.5 sm:h-1 md:h-1 bg-blue-600"></div>
+                        <div className="w-0.5 h-0.5 sm:h-1 md:h-1 bg-[#034732]"></div>
+                        <div className="w-0.5 h-0.5 sm:h-1 md:h-1 bg-[#034732]"></div>
                     </div>
                   </div>
                 </div>
@@ -228,9 +228,9 @@ const NotFound = () => {
         {/* Go home button */}
         <Link
           to="/"
-          className="relative z-20 px-6 py-2 sm:px-7 sm:py-2.5 md:px-8 md:py-3 bg-[#4da6ff] text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-[#3d8cff] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+          className="relative z-20 px-6 py-2 sm:px-7 sm:py-2.5 md:px-8 md:py-3 bg-[#379683] text-[#edf5e1] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#2f6f60] hover:text-[#edf5e1] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
         >
-          <span className="text-white">Về trang chủ</span>
+          <span className="text-[#edf5e1]">Về trang chủ</span>
         </Link>
       </div>
     </div>

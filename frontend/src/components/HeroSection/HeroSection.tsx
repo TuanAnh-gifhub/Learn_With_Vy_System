@@ -6,17 +6,22 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import backgroundHeroSection from "../../assets/backgroundHeroSection.jpg";
 import introLandingVideo from "../../assets/intro_landing_page.mp4";
 
-const CITIES = ["Tp Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Cần Thơ"] as const;
+const CITIES = [
+  "Trực tuyến 1:1",
+  "Trực tuyến nhóm",
+  "Hybrid (Online + Offline)",
+  "Tại trung tâm",
+] as const;
 
 const ROOM_TYPES = [
-  "Tất cả Phòng học",
-  "Phòng học",
-  "Phòng lab",
-  "Phòng nhóm",
-  "Phòng thuyết trình",
-  "Thư viện",
-  "Phòng thí nghiệm",
-  "Phòng họp",
+  "Tất cả lớp học",
+  "1:1 (Cá nhân)",
+  "Nhóm nhỏ (3-6)",
+  "Giao tiếp",
+  "IELTS",
+  "TOEIC",
+  "Thiếu nhi",
+  "Business English",
 ] as const;
 
 const HeroSection = () => {
@@ -136,8 +141,8 @@ const HeroSection = () => {
 
   const formatDateRangeLabel = () => {
     if (!checkIn && !checkOut) return "";
-    if (checkIn && !checkOut) return `Nhận: ${checkIn}`;
-    if (!checkIn && checkOut) return `Trả: ${checkOut}`;
+    if (checkIn && !checkOut) return `Từ: ${checkIn}`;
+    if (!checkIn && checkOut) return `Đến: ${checkOut}`;
     return `${checkIn} - ${checkOut}`;
   };
 
@@ -235,7 +240,7 @@ const HeroSection = () => {
   };
 
   return (
-  <div className="relative w-full -mt-[7rem] md:-mt-[4.5rem] flex items-start justify-center pt-0 pb-10 md:pb-14 min-h-[102vh] overflow-hidden">
+  <div className="relative w-full -mt-28 md:-mt-18 flex items-start justify-center pt-0 pb-10 md:pb-14 min-h-[102vh] overflow-hidden">
     {/* Hero background with video */}
       <div className="absolute inset-0 z-0">
       <video
@@ -266,7 +271,7 @@ const HeroSection = () => {
     <div className="absolute inset-0 z-10 bg-linear-to-b from-black/20 via-transparent to-black/10" />
     
     {/* Content */}
-    <div className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-[calc(4rem+2rem)] md:pt-[calc(4rem+3rem)] text-white">
+    <div className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-24 md:pt-28 text-white">
       <motion.h1 
         className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-3 drop-shadow-lg text-center"
         initial={{ opacity: 0, y: 20 }}
@@ -281,7 +286,7 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        Nền tảng cho thuê phòng học hàng đầu
+        Nền tảng học tiếng Anh trực tuyến 1:1 & lớp nhóm
       </motion.p>
       <motion.p 
         className="text-base md:text-lg opacity-95 drop-shadow-md text-center"
@@ -289,12 +294,12 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        Tìm phòng học phù hợp cho mọi nhu cầu học tập
+        Chọn giáo viên phù hợp, lịch học linh hoạt và bắt đầu ngay hôm nay
       </motion.p>
 
       {/* Search bar: từ khóa + địa điểm + ngày nhận/trả (1 khung) + loại phòng + nút tìm */}
       <motion.div
-        className="mt-1.5 md:mt-2 w-full max-w-5xl mx-auto relative z-[100]"
+        className="mt-1.5 md:mt-2 w-full max-w-5xl mx-auto relative z-100"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
@@ -308,7 +313,7 @@ const HeroSection = () => {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              placeholder="Tìm phòng học..."
+              placeholder="Tìm lớp học / khóa học..."
               className="w-full bg-transparent outline-none text-sm md:text-base placeholder:text-gray-400"
             />
           </div>
@@ -316,7 +321,7 @@ const HeroSection = () => {
           {/* Divider */}
           <div className="hidden md:block w-px bg-gray-200" />
 
-          {/* Địa điểm */}
+          {/* Hình thức */}
           <div
             ref={cityRef}
             className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
@@ -325,7 +330,7 @@ const HeroSection = () => {
             <FiMapPin className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col flex-1">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Địa điểm
+                Hình thức
               </span>
               <span className="text-xs md:text-sm text-gray-800">
                 {city}
@@ -336,7 +341,7 @@ const HeroSection = () => {
             {isCityOpen && (
               <div 
                 ref={cityDropdownRef}
-                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-[999999] w-full min-w-[200px]"
+                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-999999 w-full min-w-[200px]"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
@@ -361,7 +366,7 @@ const HeroSection = () => {
             )}
           </div>
 
-          {/* Ngày nhận / trả phòng - trong 1 khung */}
+          {/* Lịch học - trong 1 khung */}
           <div
             ref={dateRef}
             className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
@@ -370,7 +375,7 @@ const HeroSection = () => {
             <FiCalendar className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Nhận - Trả phòng
+                Lịch học
               </span>
               <span className="text-xs md:text-sm text-gray-800">
                 {formatDateRangeLabel()}
@@ -381,7 +386,7 @@ const HeroSection = () => {
             {isDateOpen && (
               <div 
                 ref={calendarRef}
-                className="absolute left-0 top-full mt-2 bg-white rounded-xl shadow-2xl border-2 border-[#5cdb95] p-2.5 text-gray-900 z-[999999]"
+                className="absolute left-0 top-full mt-2 bg-white rounded-xl shadow-2xl border-2 border-[#5cdb95] p-2.5 text-gray-900 z-999999"
                 style={{
                   width: '280px',
                   pointerEvents: 'auto',
@@ -534,7 +539,7 @@ const HeroSection = () => {
             )}
           </div>
 
-          {/* Loại phòng */}
+          {/* Loại lớp */}
           <div
             ref={roomTypeRef}
             className="relative flex items-center gap-2 bg-white rounded-2xl px-3 py-2 border border-gray-200 flex-1 lg:flex-none lg:w-52 cursor-pointer hover:border-[#5cdb95] transition-colors"
@@ -543,7 +548,7 @@ const HeroSection = () => {
             <FaChalkboardTeacher className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col flex-1">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Loại phòng
+                Loại lớp
               </span>
               <span className="text-xs md:text-sm text-gray-800">
                 {roomType}
@@ -555,7 +560,7 @@ const HeroSection = () => {
               <div 
                 ref={roomTypeDropdownRef}
                 data-room-type-dropdown
-                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-[999999] w-full min-w-[200px] max-h-[300px] overflow-y-auto"
+                className="absolute left-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#5cdb95] py-2 z-999999 w-full min-w-[200px] max-h-[300px] overflow-y-auto"
                 style={{
                   scrollbarWidth: 'none', /* Firefox */
                   msOverflowStyle: 'none', /* IE and Edge */
@@ -590,7 +595,7 @@ const HeroSection = () => {
             onClick={handleSearch}
             className="w-full md:w-auto md:min-w-[130px] h-11 md:h-12 rounded-2xl bg-[#379683] hover:bg-[#2f6f60] text-[#edf5e1] font-semibold text-sm md:text-base flex items-center justify-center shadow-md hover:shadow-lg transition-all"
           >
-            Tìm phòng
+            Tìm lớp
           </button>
         </div>
       </motion.div>
@@ -603,13 +608,13 @@ const HeroSection = () => {
         transition={{ duration: 0.6, delay: 0.45 }}
       >
         {[
-          "Phòng học",
-          "Phòng lab",
-          "Phòng nhóm",
-          "Phòng thuyết trình",
-          "Thư viện",
-          "Phòng thí nghiệm",
-          "Phòng họp",
+          "1:1",
+          "Nhóm nhỏ",
+          "Giao tiếp",
+          "IELTS",
+          "TOEIC",
+          "Thiếu nhi",
+          "Business English",
         ].map((label) => (
           <button
             key={label}

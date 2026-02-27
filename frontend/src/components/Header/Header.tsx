@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FiMessageCircle, FiMoon, FiSun } from "react-icons/fi";
+import { FiMessageCircle, FiMoon, FiSun, FiMenu } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoginPage from "../../pages/Customer/LoginPage/LoginPage";
@@ -104,7 +104,7 @@ const Header = () => {
           className={`w-full fixed top-0 left-0 right-0 z-50 text-[#0e0e0e] text-base leading-[1.4] transition-colors duration-300 ${
           isHeaderTransparent
             ? "border-b-0 shadow-none bg-transparent"
-            : "border-b-2 border-[#5cdb95] shadow-sm bg-[rgba(237,245,225,0.9)] backdrop-blur-[2px]"
+            : "border-b-2 border-[#0ea753] shadow-sm bg-[rgba(169,240,190,0.6)] backdrop-blur-[2px]"
           }`}
         style={{ minHeight: `${HEADER_CONFIG.MIN_HEIGHT}px` }}
       >
@@ -112,7 +112,26 @@ const Header = () => {
           className={`w-full max-w-screen-2xl mx-auto px-2 md:px-4 flex flex-col items-center justify-center h-auto ${headerHeightClass}`}
         >
           <div className="flex items-center w-full gap-2 md:gap-4">
-            <div className="flex-1" />
+            <div className="flex-1 flex items-center justify-start">
+              <button
+                type="button"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("toggleSidebar"));
+                }}
+                className={`${ICON_BUTTON_CLASS} ${
+                  isHeaderTransparent ? "bg-transparent hover:bg-white/10" : "bg-[#edf5e1] hover:bg-[#8ee4af]"
+                }`}
+                aria-label="Mở menu"
+                title="Menu"
+              >
+                <FiMenu
+                  size={24}
+                  className={`md:text-[22px] m-auto ${
+                    isHeaderTransparent ? "text-white" : "text-black"
+                  }`}
+                />
+              </button>
+            </div>
             <div className="flex items-center justify-center shrink-0">
               <Link
                 to="/"
