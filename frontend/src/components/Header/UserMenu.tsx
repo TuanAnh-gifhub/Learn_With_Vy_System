@@ -11,8 +11,10 @@ import {
 } from "react-icons/fi";
 
 // Style lấy từ Header cũ của bạn để đồng bộ
-const PRIMARY_BUTTON_CLASS = "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border hover:border-[#4da6ff]";
-const BUTTON_TEXT_HOVER_CLASS = "text-[11px] md:text-xs whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
+const PRIMARY_BUTTON_CLASS =
+  "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border";
+const BUTTON_TEXT_HOVER_CLASS =
+  "text-xs md:text-sm whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
 
 interface UserMenuProps {
   isLoggedIn: boolean;
@@ -44,8 +46,8 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
         onClick={onLoginClick}
         className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 ${
           isHeaderTransparent
-            ? "bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/30"
-            : "bg-white hover:bg-gray-100 text-black border-gray-300"
+            ? "bg-transparent hover:bg-white/10 text-white border-white/40 hover:border-white/60"
+            : "bg-transparent hover:bg-[#edf5e1]/60 text-[#034732] border-[#0ea753] hover:border-[#0ea753]"
         }`}
         title="Đăng nhập"
       >
@@ -94,7 +96,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[9999] overflow-hidden"
+            className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-9999 overflow-hidden"
           >
             <div className="px-4 py-3 border-b border-gray-50 mb-1">
               <p className="text-sm font-bold text-gray-800 truncate">{displayName}</p>

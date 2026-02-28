@@ -271,17 +271,9 @@ const HeroSection = () => {
     <div className="absolute inset-0 z-10 bg-linear-to-b from-black/20 via-transparent to-black/10" />
     
     {/* Content */}
-    <div className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-24 md:pt-28 text-white">
-      <motion.h1 
-        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-3 drop-shadow-lg text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        Learn With Vy
-      </motion.h1>
+    <div className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-44 md:pt-66 text-white">
       <motion.p 
-        className="text-lg md:text-xl mb-1 md:mb-1.5 font-medium drop-shadow-md text-center"
+        className="mt-2 md:mt-3 text-lg md:text-xl mb-1 md:mb-1.5 font-medium drop-shadow-md text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}

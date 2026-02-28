@@ -31,7 +31,7 @@ const ICON_BUTTON_CLASS =
 const PRIMARY_BUTTON_CLASS =
   "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border hover:border-[#5cdb95]";
 const BUTTON_TEXT_HOVER_CLASS =
-  "text-[11px] md:text-xs whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
+  "text-xs md:text-sm whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
 
 const Header = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
@@ -50,7 +50,6 @@ const Header = () => {
 
   const headerRef = useRef<HTMLElement>(null);
   const headerHeightClass = "md:h-16 py-1";
-  const logoSizeClass = "h-24 w-24 md:h-28 md:w-28";
 
   const handleLogoutClick = async () => {
     await logout();
@@ -104,7 +103,7 @@ const Header = () => {
           className={`w-full fixed top-0 left-0 right-0 z-50 text-[#0e0e0e] text-base leading-[1.4] transition-colors duration-300 ${
           isHeaderTransparent
             ? "border-b-0 shadow-none bg-transparent"
-            : "border-b-2 border-[#0ea753] shadow-sm bg-[rgba(169,240,190,0.6)] backdrop-blur-[2px]"
+            : "border-b-2 border-[#0ea753] shadow-sm bg-[rgba(171,222,186,0.7)] backdrop-blur-[2px]"
           }`}
         style={{ minHeight: `${HEADER_CONFIG.MIN_HEIGHT}px` }}
       >
@@ -119,7 +118,9 @@ const Header = () => {
                   window.dispatchEvent(new CustomEvent("toggleSidebar"));
                 }}
                 className={`${ICON_BUTTON_CLASS} ${
-                  isHeaderTransparent ? "bg-transparent hover:bg-white/10" : "bg-[#edf5e1] hover:bg-[#8ee4af]"
+                  isHeaderTransparent
+                    ? "bg-transparent hover:bg-white/10"
+                    : "bg-transparent hover:bg-[#edf5e1]/60"
                 }`}
                 aria-label="Mở menu"
                 title="Menu"
@@ -146,7 +147,11 @@ const Header = () => {
                 <img
                   src={logo}
                   alt="Learn With Vy Logo"
-                  className={`${logoSizeClass} object-contain transform scale-125 md:scale-150`}
+                  className={`object-contain transform transition-all duration-300 ease-in-out ${
+                    isHeaderTransparent
+                      ? "h-40 w-40 md:h-60 md:w-60 translate-y-10 md:translate-y-26 scale-[2.15] md:scale-[2.35]"
+                      : "h-24 w-24 md:h-28 md:w-28 translate-y-0 scale-125 md:scale-150"
+                  }`}
                 />
               </Link>
             </div>
@@ -156,13 +161,13 @@ const Header = () => {
               {(() => {
                 const iconBgClass = isHeaderTransparent
                   ? "bg-transparent hover:bg-white/10"
-                  : "";
+                  : "bg-transparent hover:bg-[#edf5e1]/60";
                 const wishlistBgClass = isHeaderTransparent
                   ? iconBgClass
-                  : "bg-[#edf5e1] hover:bg-[#8ee4af]";
+                  : iconBgClass;
                 const chatBgClass = isHeaderTransparent
                   ? iconBgClass
-                  : "bg-[#edf5e1] hover:bg-[#8ee4af]";
+                  : iconBgClass;
 
                 return (
                   <>
@@ -233,7 +238,11 @@ const Header = () => {
                     {/* Đăng phòng */}
                     <button
                       onClick={() => requireAuth(() => navigate("/post-item"))}
-                      className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-[#5cdb95]/80 hover:bg-[#379683] text-[#05386b] border-[#5cdb95]/60 hover:border-[#379683]`}
+                      className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-transparent ${
+                        isHeaderTransparent
+                          ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-white/60"
+                          : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
+                      }`}
                       title="Đăng tin"
                     >
                       <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Vào lớp học</span>
