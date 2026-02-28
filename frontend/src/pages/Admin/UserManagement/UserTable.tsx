@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import type { UserResponse } from "../../../services/usersService";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface UserTableProps {
   data: UserResponse[];
@@ -29,9 +30,10 @@ const UserTable: React.FC<UserTableProps> = ({
   onEdit,
   onToggleStatus,
 }) => {
+  const t = useI18n();
   const columns: ColumnsType<UserResponse> = [
     {
-      title: "STT",
+      title: t("admin.userTableSTT"),
       key: "index",
       width: 60,
       align: "center",
@@ -42,7 +44,7 @@ const UserTable: React.FC<UserTableProps> = ({
       },
     },
     {
-      title: "Email",
+      title: t("admin.userTableEmail"),
       dataIndex: "email",
       key: "email",
       width: 250,
@@ -54,14 +56,14 @@ const UserTable: React.FC<UserTableProps> = ({
       ),
     },
     {
-      title: "Username",
+      title: t("admin.userTableUsername"),
       dataIndex: "userName",
       key: "userName",
       width: 150,
       ellipsis: true,
     },
     {
-      title: "Vai trò",
+      title: t("admin.userTableRole"),
       dataIndex: "role",
       key: "role",
       width: 80,
@@ -75,19 +77,19 @@ const UserTable: React.FC<UserTableProps> = ({
       },
     },
     {
-      title: "Trạng thái",
+      title: t("admin.userTableStatus"),
       dataIndex: "active",
       key: "active",
       width: 100,
       align: "center",
       render: (active) => (
         <Tag color={active ? "success" : "error"}>
-          {active ? "Hoạt động" : "Bị khóa"}
+          {active ? t("admin.userTableStatusActive") : t("admin.userTableStatusLocked")}
         </Tag>
       ),
     },
     {
-      title: "Ngày tạo",
+      title: t("admin.userTableCreatedAt"),
       dataIndex: "createdAt",
       key: "createdAt",
       width: 100,
@@ -96,7 +98,7 @@ const UserTable: React.FC<UserTableProps> = ({
         date ? new Date(date).toLocaleDateString("vi-VN") : "-",
     },
     {
-      title: "Hành động",
+      title: t("admin.userTableActions"),
       key: "action",
       align: "center",
       width: 80,
@@ -105,19 +107,19 @@ const UserTable: React.FC<UserTableProps> = ({
         const items: MenuProps["items"] = [
           {
             key: "detail",
-            label: "Xem chi tiết",
+            label: t("admin.userTableViewDetail"),
             icon: <EyeOutlined />,
             onClick: () => onViewDetail(record),
           },
           {
             key: "edit",
-            label: "Chỉnh sửa",
+            label: t("admin.userTableEdit"),
             icon: <EditOutlined />,
             onClick: () => onEdit(record),
           },
           {
             key: "toggle_status",
-            label: record.active ? "Khóa tài khoản" : "Mở khóa",
+            label: record.active ? t("admin.userTableLock") : t("admin.userTableUnlock"),
             icon: record.active ? <LockOutlined /> : <UnlockOutlined />,
             danger: record.active,
             onClick: () => onToggleStatus(record),

@@ -14,7 +14,6 @@ import {
   useLanguage,
   type SupportedLanguage,
 } from "../Language/LanguageContext";
-import { translate } from "../Language/translations";
 import { useI18n } from "../Language/useI18n";
 
 interface CustomerSidebarProps {
@@ -214,7 +213,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                           : "text-gray-800 hover:bg-gray-100"
                       }`}
                     >
-                      {translate(language, item.labelKey)}
+                      {t(item.labelKey)}
                     </Link>
                   ))}
                 </nav>
@@ -304,7 +303,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                     onClick={onClose}
                     className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                   >
-                    {translate(language, "menu.policy")}
+                    {t("menu.policy")}
                   </Link>
                 </div>
               </div>

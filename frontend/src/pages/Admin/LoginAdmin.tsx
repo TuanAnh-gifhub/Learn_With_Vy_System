@@ -12,6 +12,7 @@ import {
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import authService from "../../services/auth/authService";
+import { useI18n } from "../../components/Language/useI18n";
 
 interface LoginFormData {
   email: string;
@@ -19,6 +20,7 @@ interface LoginFormData {
 }
 
 const LoginAdmin: React.FC = () => {
+  const t = useI18n();
   const navigate = useNavigate();
   const { user, refreshProfile } = useAuth();
   const [formData, setFormData] = useState<LoginFormData>({
@@ -61,14 +63,14 @@ const LoginAdmin: React.FC = () => {
         // 2. Gọi API lấy profile (dựa trên token)
         await refreshProfile();
 
-        toast.success("Đăng nhập thành công!");
+        toast.success(t("admin.loginSuccess"));
         navigate("/admin", { replace: true });
       } else {
-        setError(res.message || "Email hoặc mật khẩu không đúng.");
+        setError(res.message || t("admin.loginInvalidCredentials"));
       }
     } catch (err: any) {
       console.error(err);
-      setError(err.response?.data?.message || "Đăng nhập thất bại.");
+      setError(err.response?.data?.message || t("admin.loginFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -87,15 +89,14 @@ const LoginAdmin: React.FC = () => {
           <div className="flex items-center mb-8">
             <FaShieldAlt className="text-5xl text-gray-800 mr-3" />
             <h1 className="text-3xl font-bold text-gray-800">
-              Learn With Vy Admin Portal
+              {t("admin.loginPortalTitle")}
             </h1>
           </div>
           <h2 className="text-2xl font-light text-gray-600 mb-6">
-            Hệ thống quản lý dành cho nhân viên Learn With Vy
+            {t("admin.loginPortalSubtitle")}
           </h2>
           <p className="text-gray-500 mb-8">
-            Truy cập vào bảng điều khiển để quản lý tin đăng, đấu giá, người
-            dùng và các hoạt động khác trong hệ thống.
+            {t("admin.loginPortalDescription")}
           </p>
 
           <div className="bg-gray-100 p-6 rounded-lg">
@@ -105,10 +106,10 @@ const LoginAdmin: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-800">
-                  Quản lý người dùng
+                  {t("admin.loginPortalUserManagement")}
                 </h3>
                 <p className="text-sm text-gray-500">
-                  Quản lý tài khoản và phân quyền
+                  {t("admin.loginPortalUserManagementDesc")}
                 </p>
               </div>
             </div>
@@ -126,9 +127,9 @@ const LoginAdmin: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-medium text-gray-800">Quản lý tin đăng</h3>
+                <h3 className="font-medium text-gray-800">{t("admin.loginPortalPostManagement")}</h3>
                 <p className="text-sm text-gray-500">
-                  Theo dõi và duyệt tin đăng
+                  {t("admin.loginPortalPostManagementDesc")}
                 </p>
               </div>
             </div>
@@ -146,10 +147,10 @@ const LoginAdmin: React.FC = () => {
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl font-light text-gray-800">
-              Đăng nhập Hệ thống
+              {t("admin.loginTitle")}
             </h2>
             <p className="text-gray-500 mt-2">
-              Vui lòng đăng nhập Email quản trị
+              {t("admin.loginSubtitle")}
             </p>
           </div>
 
@@ -157,7 +158,7 @@ const LoginAdmin: React.FC = () => {
             {/* --- Input Email (Đã sửa từ Phone) --- */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                {t("admin.loginEmailLabel")}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -181,7 +182,7 @@ const LoginAdmin: React.FC = () => {
             {/* --- Input Mật Khẩu (Giữ nguyên) --- */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Mật khẩu
+                {t("admin.loginPasswordLabel")}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -195,14 +196,14 @@ const LoginAdmin: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  placeholder="Nhập mật khẩu"
+                  placeholder={t("admin.loginPasswordPlaceholder")}
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 focus:outline-none"
                   tabIndex={-1}
                   onClick={() => setShowPassword((prev) => !prev)}
-                  aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                  aria-label={showPassword ? t("admin.loginHidePassword") : t("admin.loginShowPassword")}
                 >
                   {showPassword ? (
                     <FaEyeSlash className="h-5 w-5" />
@@ -262,7 +263,7 @@ const LoginAdmin: React.FC = () => {
                     ></path>
                   </svg>
                 ) : (
-                  "Đăng nhập"
+                  t("admin.loginButton")
                 )}
               </button>
             </div>

@@ -1,9 +1,6 @@
 import React from "react";
 import { useLanguage } from "./LanguageContext";
-import VietnamLanguage from "./VietnamLanguage";
-import EnglishLanguage from "./EnglishLanguage";
-import KoreaLanguage from "./KoreaLanguage";
-import ChinaLanguage from "./ChinaLanguage";
+import LanguageButton from "./LanguageButton";
 import { useI18n } from "./useI18n";
 
 const LanguagePage: React.FC = () => {
@@ -20,19 +17,23 @@ const LanguagePage: React.FC = () => {
       </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <VietnamLanguage
+        <LanguageButton
+          code="vi"
           active={language === "vi"}
           onSelect={() => setLanguage("vi")}
         />
-        <EnglishLanguage
+        <LanguageButton
+          code="en"
           active={language === "en"}
           onSelect={() => setLanguage("en")}
         />
-        <KoreaLanguage
+        <LanguageButton
+          code="ko"
           active={language === "ko"}
           onSelect={() => setLanguage("ko")}
         />
-        <ChinaLanguage
+        <LanguageButton
+          code="zh"
           active={language === "zh"}
           onSelect={() => setLanguage("zh")}
         />

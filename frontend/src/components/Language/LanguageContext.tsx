@@ -2,9 +2,11 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
+import i18n from "../../i18n";
 
 export type SupportedLanguage = "vi" | "en" | "ko" | "zh";
 
@@ -22,19 +24,41 @@ const LANGUAGE_STORAGE_KEY = "app_language";
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // Khởi tạo từ i18next language để đảm bảo đồng bộ
   const [language, setLanguageState] = useState<SupportedLanguage>(() => {
-    try {
-      const saved = localStorage.getItem(
-        LANGUAGE_STORAGE_KEY,
-      ) as SupportedLanguage | null;
-      if (saved === "vi" || saved === "en" || saved === "ko" || saved === "zh") {
-        return saved;
-      }
-    } catch {
-      // ignore read errors, fallback to default
+    const i18nLang = i18n.language as SupportedLanguage;
+    if (i18nLang === "vi" || i18nLang === "en" || i18nLang === "ko" || i18nLang === "zh") {
+      return i18nLang;
     }
     return "vi";
   });
+
+  // Đồng bộ state với i18next khi i18next language thay đổi (từ bên ngoài)
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      const newLang = lng as SupportedLanguage;
+      if (newLang === "vi" || newLang === "en" || newLang === "ko" || newLang === "zh") {
+        setLanguageState(newLang);
+        try {
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, newLang);
+        } catch {
+          // ignore write errors
+        }
+      }
+    };
+
+    i18n.on("languageChanged", handleLanguageChanged);
+    return () => {
+      i18n.off("languageChanged", handleLanguageChanged);
+    };
+  }, []);
+
+  // Đồng bộ i18next với state khi state thay đổi (từ UI)
+  useEffect(() => {
+    if (i18n.language !== language) {
+      void i18n.changeLanguage(language);
+    }
+  }, [language]);
 
   const setLanguage = (lang: SupportedLanguage) => {
     setLanguageState(lang);
@@ -43,6 +67,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
     } catch {
       // ignore write errors
     }
+    void i18n.changeLanguage(lang);
   };
 
   return (

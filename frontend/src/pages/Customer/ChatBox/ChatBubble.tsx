@@ -23,8 +23,8 @@ import { tokenService } from "../../../services/auth/tokenService";
 
 import { useUnreadMessages } from "../../../hooks/useUnreadMessages";
 
-import {
-  // uploadToCloudinary, // Not used in template mode
+import { 
+  // uploadToCloudinary, // Not used in template mode 
   uploadMultipleFiles,
   createMediaMessageContent,
 } from "../../../services/upload/uploadService";
@@ -190,8 +190,8 @@ const generateAvatarSVG = (name: string, userId: string | null = null): string =
  * Get display name and avatar from URL params or fallback
  */
 const getInitialDisplayInfo = (
-  sellerName: string | null,
-  buyerName: string | null,
+  sellerName: string | null, 
+  buyerName: string | null, 
   fallbackName: string,
 ): { name: string; avatar: string } => {
   if (sellerName && buyerName) {

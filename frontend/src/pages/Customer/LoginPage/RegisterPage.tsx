@@ -468,10 +468,10 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
 
             {/* Thông tin thương hiệu trên video */}
             <div className="absolute bottom-4 right-4 text-white hidden md:block text-right">
-                  <div className="text-lg font-semibold">Learn With Vy</div>
-                  <div className="text-sm text-white/90">
+              <div className="text-lg font-semibold">Learn With Vy</div>
+              <div className="text-sm text-white/90">
                     {t("auth.registerSubtitle")}
-                  </div>
+              </div>
             </div>
 
             {/* Thẻ form đè bên trái video */}

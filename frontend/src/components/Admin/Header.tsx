@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 // 1. Import kiểu dữ liệu thật từ service
 import { type UserResponse } from "../../services/usersService";
+import { useI18n } from "../Language/useI18n";
 
 const { Header } = Layout;
 
@@ -28,13 +29,14 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
   isDark,
   onThemeToggle,
 }) => {
+  const t = useI18n();
   // 3. Kiểm tra xem UserResponse của bạn dùng trường nào (fullName hay name?)
   // Ví dụ ở đây tôi đang giả định là fullName, nếu API trả về name thì sửa thành adminUser.name
   const displayName = adminUser?.userName || "Admin";
 
   const userMenu: MenuProps["items"] = [
-    { key: "1", label: "Hồ sơ cá nhân" },
-    { key: "2", label: "Cài đặt" },
+    { key: "1", label: t("admin.headerProfile") },
+    { key: "2", label: t("admin.headerSettings") },
   ];
 
   return (
@@ -72,7 +74,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
             )
           }
           className={isDark ? "bg-gray-700 border-gray-600 text-white" : ""}
-          title={isDark ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+          title={isDark ? t("admin.headerDarkModeOff") : t("admin.headerDarkModeOn")}
         />
 
         <Dropdown menu={{ items: userMenu }} placement="bottomRight">

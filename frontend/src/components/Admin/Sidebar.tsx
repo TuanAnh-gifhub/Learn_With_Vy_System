@@ -12,6 +12,7 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import type { UserResponse } from "../../services/usersService";
+import { useI18n } from "../Language/useI18n";
 
 const { Sider } = Layout;
 
@@ -45,6 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   adminUser,
   handleLogout,
 }) => {
+  const t = useI18n();
   const location = useLocation();
   const [activeKey, setActiveKey] = useState<string>(location.pathname);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -60,75 +62,75 @@ const Sidebar: React.FC<SidebarProps> = ({
   // --- CẤU HÌNH MENU CHO THUÊ PHÒNG ---
   const items: MenuItem[] = [
     // 1. Tổng quan
-    getItem(<Link to="/admin">Dashboard</Link>, "/admin", <AppstoreOutlined />),
+    getItem(<Link to="/admin">{t("admin.sidebarDashboard")}</Link>, "/admin", <AppstoreOutlined />),
 
     // 2. Nghiệp vụ chính: Quản lý Lịch đặt
-    getItem("Quản lý Đặt phòng", "sub_booking", <CalendarOutlined />, [
+    getItem(t("admin.sidebarBookingManagement"), "sub_booking", <CalendarOutlined />, [
       getItem(
-        <Link to="/admin/bookings/calendar">Lịch phòng (Calendar)</Link>,
+        <Link to="/admin/bookings/calendar">{t("admin.sidebarBookingCalendar")}</Link>,
         "/admin/bookings/calendar",
       ),
       getItem(
-        <Link to="/admin/bookings/list">Danh sách đơn đặt</Link>,
+        <Link to="/admin/bookings/list">{t("admin.sidebarBookingList")}</Link>,
         "/admin/bookings/list",
       ),
       getItem(
-        <Link to="/admin/bookings/check-in">Check-in/Check-out</Link>,
+        <Link to="/admin/bookings/check-in">{t("admin.sidebarBookingCheckIn")}</Link>,
         "/admin/bookings/check-in",
       ),
     ]),
 
     // 3. Quản lý Tài nguyên (Phòng ốc) -> BỎ HẾT CHILD
     getItem(
-      <Link to="/admin/rooms">Quản lý Phòng & Cơ sở</Link>,
+      <Link to="/admin/rooms">{t("admin.sidebarRoomsManagement")}</Link>,
       "/admin/rooms",
       <ShopOutlined />,
     ),
 
     // 4. Khách hàng
     getItem(
-      <Link to="/admin/customers">Khách hàng</Link>,
+      <Link to="/admin/customers">{t("admin.sidebarCustomers")}</Link>,
       "/admin/customers",
       <TeamOutlined />,
     ),
 
     // 5. Tài chính
-    getItem("Tài chính & Hóa đơn", "sub_finance", <DollarOutlined />, [
+    getItem(t("admin.sidebarFinance"), "sub_finance", <DollarOutlined />, [
       getItem(
-        <Link to="/admin/invoices">Hóa đơn dịch vụ</Link>,
+        <Link to="/admin/invoices">{t("admin.sidebarInvoices")}</Link>,
         "/admin/invoices",
       ),
       getItem(
-        <Link to="/admin/transactions">Lịch sử giao dịch</Link>,
+        <Link to="/admin/transactions">{t("admin.sidebarTransactions")}</Link>,
         "/admin/transactions",
       ),
     ]),
 
     // 6. Đánh giá & Phản hồi
     getItem(
-      <Link to="/admin/reviews">Đánh giá từ khách</Link>,
+      <Link to="/admin/reviews">{t("admin.sidebarReviews")}</Link>,
       "/admin/reviews",
       <StarOutlined />,
     ),
 
     // 7. Cài đặt hệ thống -> THÊM CHILD
-    getItem("Cài đặt hệ thống", "sub_settings", <SettingOutlined />, [
+    getItem(t("admin.sidebarSystemSettings"), "sub_settings", <SettingOutlined />, [
       getItem(
-        <Link to="/admin/room-types">Loại phòng</Link>,
+        <Link to="/admin/room-types">{t("admin.sidebarRoomTypes")}</Link>,
         "/admin/room-types",
       ),
       getItem(
-        <Link to="/admin/amenities">Thiết bị & Tiện ích</Link>,
+        <Link to="/admin/amenities">{t("admin.sidebarAmenities")}</Link>,
         "/admin/amenities",
       ),
       getItem(
-        <Link to="/admin/settings">Cài đặt chung</Link>,
+        <Link to="/admin/settings">{t("admin.sidebarGeneralSettings")}</Link>,
         "/admin/settings",
       ),
     ]),
 
     // Logout
-    getItem("Đăng xuất", "logout", <LogoutOutlined />),
+    getItem(t("admin.sidebarLogout"), "logout", <LogoutOutlined />),
   ];
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {

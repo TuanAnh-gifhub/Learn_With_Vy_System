@@ -501,7 +501,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                         </div>
                         <div className="relative flex justify-center text-sm">
                           <span className="px-2 bg-transparent text-white/80">
-                            hoặc
+                            {t("admin.authOr")}
                           </span>
                         </div>
                       </div>
