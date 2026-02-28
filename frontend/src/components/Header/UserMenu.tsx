@@ -9,6 +9,7 @@ import {
   FiCreditCard,
   FiFileText,
 } from "react-icons/fi";
+import { useI18n } from "../Language/useI18n";
 
 // Style lấy từ Header để đồng bộ
 const PRIMARY_BUTTON_CLASS =
@@ -28,6 +29,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const t = useI18n();
 
   // Đóng menu khi click ra ngoài
   useEffect(() => {
@@ -50,9 +52,11 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-[#5cdb95]"
             : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
         }`}
-        title="Đăng nhập"
+        title={t("header.login")}
       >
-        <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Đăng nhập</span>
+        <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>
+          {t("header.login")}
+        </span>
       </button>
     );
   }
@@ -101,7 +105,9 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
           >
             <div className="px-4 py-3 border-b border-gray-50 mb-1">
               <p className="text-sm font-bold text-gray-800 truncate">{displayName}</p>
-              <p className="text-xs text-gray-500">Thành viên Learn With Vy</p>
+              <p className="text-xs text-gray-500">
+                {t("userMenu.memberBadge")}
+              </p>
             </div>
 
             <Link
@@ -114,7 +120,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
               }`}
             >
               <FiUser className="w-4 h-4" />
-              Thông tin cá nhân
+              {t("userMenu.profile")}
             </Link>
 
             <Link
@@ -127,7 +133,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
               }`}
             >
               <FiHeart className="w-4 h-4" />
-              Phòng yêu thích
+              {t("userMenu.wishlist")}
             </Link>
 
             <Link
@@ -140,7 +146,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
               }`}
             >
               <FiCreditCard className="w-4 h-4" />
-              Ví cá nhân
+              {t("userMenu.wallet")}
             </Link>
 
             <Link
@@ -153,7 +159,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
               }`}
             >
               <FiFileText className="w-4 h-4" />
-              Quản lý cá nhân
+              {t("userMenu.managePosts")}
             </Link>
 
             <div className="h-px bg-gray-100 my-1 mx-4" />
@@ -166,7 +172,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
               className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors text-left"
             >
               <FiLogOut className="w-4 h-4" />
-              Đăng xuất
+              {t("userMenu.logout")}
             </button>
           </motion.div>
         )}

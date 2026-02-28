@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import EmojiPicker from "./EmojiPicker";
 import FilePreview from "./FilePreview";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface FileItem {
   file: File;
@@ -31,13 +32,13 @@ interface MessageInputProps {
   isDarkMode?: boolean;
 }
 
-// Quick reply templates
-const quickReplies = [
-  "Giá bao nhiêu?",
-  "Xe còn không?",
-  "Địa chỉ ở đâu?",
-  "Có fix giá không?",
-  "Cảm ơn"
+// Quick reply template keys
+const quickReplyKeys = [
+  "chat.quickReplies.price",
+  "chat.quickReplies.available",
+  "chat.quickReplies.address",
+  "chat.quickReplies.negotiable",
+  "chat.quickReplies.thanks",
 ];
 
 const MessageInput = ({ 
@@ -56,6 +57,7 @@ const MessageInput = ({
   onClearAllFiles,
   isDarkMode = false
 }: MessageInputProps) => {
+  const t = useI18n();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
@@ -105,7 +107,9 @@ const MessageInput = ({
 
       {/* Quick Reply Bubbles */}
       <div className="flex gap-2 mb-3 overflow-x-auto quick-replies">
-        {quickReplies.map((reply, index) => (
+        {quickReplyKeys.map((key, index) => {
+          const reply = t(key);
+          return (
           <button
             key={index}
             onClick={() => handleQuickReply(reply)}
@@ -115,7 +119,7 @@ const MessageInput = ({
           >
             {reply}
           </button>
-        ))}
+        );})}
       </div>
 
       {/* Input Field */}
@@ -141,7 +145,7 @@ const MessageInput = ({
         <div className="flex-1 relative">
           <input
             type="text"
-            placeholder="Nhập tin nhắn..."
+            placeholder={t("chat.input.placeholder")}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}

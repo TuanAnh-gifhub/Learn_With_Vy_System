@@ -1,5 +1,6 @@
 import { FaSearch, FaEllipsisV, FaCommentDots, FaSpinner } from "react-icons/fa";
 import { parseMessageContent } from "../../../services/upload/uploadService";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface User {
   userId: string;
@@ -61,8 +62,11 @@ interface ChatListProps {
 /**
  * Format message content for preview display
  */
-const getMessagePreview = (content: string): string => {
-  if (!content) return 'Chưa có tin nhắn';
+const getMessagePreview = (
+  content: string,
+  t: (key: string) => string,
+): string => {
+  if (!content) return t("chat.previewNoMessage");
   
   // Try to parse as media message
   const parsed = parseMessageContent(content) as {
@@ -77,12 +81,11 @@ const getMessagePreview = (content: string): string => {
     const text = parsed.text || '';
     
     if (parsed.type === 'image') {
-      return text ? `📷 ${text}` : '📷 Đã gửi ảnh';
+      return text ? `📷 ${text}` : `📷 ${t("chat.previewSentImage")}`;
     } else if (parsed.type === 'video') {
-      return text ? `🎥 ${text}` : '🎥 Đã gửi video';
+      return text ? `🎥 ${text}` : `🎥 ${t("chat.previewSentVideo")}`;
     } else if (parsed.type === 'multiple') {
-      const mediaCount = parsed.media?.length || 0;
-      return text ? `📎 ${text}` : `📎 Đã gửi ${mediaCount} file`;
+      return text ? `📎 ${text}` : `📎 ${t("chat.previewSentMultiple")}`;
     }
   }
   
@@ -107,6 +110,7 @@ const ChatList = ({
   showBorder = false,
   isDarkMode = false
 }: ChatListProps) => {
+  const t = useI18n();
   // Get current user ID from localStorage
   // TEMPLATE MODE: Returns demo user ID if not logged in
   const getCurrentUserId = (): string => {
@@ -129,13 +133,13 @@ const ChatList = ({
   const transformedConversations: Chat[] = conversations.map(conv => {
     // Determine the other person's name (not current user)
     const otherPerson = conv.seller?.userId === currentUserId ? conv.buyer : conv.seller;
-    const otherPersonName = otherPerson?.fullName || 'Unknown User';
+    const otherPersonName = otherPerson?.fullName || t("chat.unknownUser");
     
     return {
       id: conv.conversationId,
       conversationId: conv.conversationId,
       name: otherPersonName,
-      lastMessage: conv.lastMessage || 'Chưa có tin nhắn',
+      lastMessage: conv.lastMessage || t("chat.noMessagesYet"),
       time: conv.updatedAt ? new Date(conv.updatedAt).toLocaleTimeString('vi-VN', { 
         hour: '2-digit', 
         minute: '2-digit' 
@@ -143,7 +147,7 @@ const ChatList = ({
       isRead: true,
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
       isOnline: false,
-      lastActive: "Không xác định",
+      lastActive: t("chat.lastActiveUnknown"),
       type: "individual",
       listing: conv.listing,
       seller: conv.seller,
@@ -168,7 +172,7 @@ const ChatList = ({
     // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const messagePreview = getMessagePreview(chat.lastMessage).toLowerCase();
+      const messagePreview = getMessagePreview(chat.lastMessage, t).toLowerCase();
       
       if (!chat.name.toLowerCase().includes(query) && 
           !messagePreview.includes(query)) {
@@ -194,7 +198,7 @@ const ChatList = ({
           </div>
           <input
             type="text"
-            placeholder="Tìm kiếm trên ChatBox"
+            placeholder={t("chat.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={`w-full pl-10 pr-4 py-2 border rounded-full focus:ring-2 focus:ring-[#5cdb95] outline-none text-sm transition-colors ${
@@ -215,7 +219,7 @@ const ChatList = ({
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
-            Tất cả
+            {t("chat.tabAll")}
           </button>
           <button
             onClick={() => setActiveTab("unread")}
@@ -225,7 +229,7 @@ const ChatList = ({
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
-            Chưa đọc
+            {t("chat.tabUnread")}
           </button>
           <button
             onClick={() => setActiveTab("group")}
@@ -235,7 +239,7 @@ const ChatList = ({
                 : isDarkMode ? "bg-gray-800 text-gray-300 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"
             }`}
           >
-            Nhóm
+            {t("chat.tabGroup")}
           </button>
           <div className="relative" ref={settingsMenuRef}>
             <button 
@@ -255,7 +259,9 @@ const ChatList = ({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
-                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>Cài đặt trả lời tự động</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {t("chat.settingsAutoReply")}
+                    </span>
                   </button>
                   
                   <div className={`border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-100'}`}></div>
@@ -266,7 +272,9 @@ const ChatList = ({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     </div>
-                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>Quản lý Tin nhắn nhanh</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {t("chat.settingsQuickReplies")}
+                    </span>
                   </button>
                   
                   <div className={`border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-100'}`}></div>
@@ -277,7 +285,9 @@ const ChatList = ({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
                       </svg>
                     </div>
-                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>Hội thoại đã ẩn</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {t("chat.settingsHiddenConversations")}
+                    </span>
                   </button>
                   
                   <div className={`border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-100'}`}></div>
@@ -288,7 +298,9 @@ const ChatList = ({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z" />
                       </svg>
                     </div>
-                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>Tin nhắn rác</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {t("chat.settingsSpam")}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -302,14 +314,18 @@ const ChatList = ({
         {loading ? (
           <div className="flex items-center justify-center py-8">
             <FaSpinner className="w-6 h-6 text-[#379683] animate-spin" />
-            <span className={`ml-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Đang tải...</span>
+            <span className={`ml-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              {t("chat.loading")}
+            </span>
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${isDarkMode ? 'bg-red-900' : 'bg-red-100'}`}>
               <FaCommentDots className={`w-8 h-8 ${isDarkMode ? 'text-red-400' : 'text-red-600'}`} />
             </div>
-            <h3 className={`text-sm font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>Lỗi tải dữ liệu</h3>
+            <h3 className={`text-sm font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+              {t("chat.errorTitle")}
+            </h3>
             <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{error}</p>
           </div>
         ) : (
@@ -388,14 +404,18 @@ const ChatList = ({
                   <FaCommentDots className={`w-8 h-8 ${isDarkMode ? 'text-[#379683]' : 'text-[#379683]'}`} />
                 </div>
                 <h3 className={`text-sm font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                  {activeTab === "unread" ? "Không có tin nhắn chưa đọc" : 
-                   activeTab === "group" ? "Không có nhóm chat" : 
-                   "Không có cuộc trò chuyện"}
+                  {activeTab === "unread"
+                    ? t("chat.emptyUnreadTitle")
+                    : activeTab === "group"
+                    ? t("chat.emptyGroupTitle")
+                    : t("chat.emptyAllTitle")}
                 </h3>
                 <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {activeTab === "unread" ? "Tất cả tin nhắn đã được đọc" : 
-                   activeTab === "group" ? "Bạn chưa tham gia nhóm nào" : 
-                   "Bạn chưa có cuộc trò chuyện nào"}
+                  {activeTab === "unread"
+                    ? t("chat.emptyUnreadDesc")
+                    : activeTab === "group"
+                    ? t("chat.emptyGroupDesc")
+                    : t("chat.emptyAllDesc")}
                 </p>
               </div>
             )}

@@ -23,11 +23,12 @@ import { tokenService } from "../../../services/auth/tokenService";
 
 import { useUnreadMessages } from "../../../hooks/useUnreadMessages";
 
-import { 
-  // uploadToCloudinary, // Not used in template mode 
+import {
+  // uploadToCloudinary, // Not used in template mode
   uploadMultipleFiles,
-  createMediaMessageContent 
+  createMediaMessageContent,
 } from "../../../services/upload/uploadService";
+import { useI18n } from "../../../components/Language/useI18n";
 
 // ============ TYPE DEFINITIONS ============
 
@@ -189,9 +190,9 @@ const generateAvatarSVG = (name: string, userId: string | null = null): string =
  * Get display name and avatar from URL params or fallback
  */
 const getInitialDisplayInfo = (
-  sellerName: string | null, 
-  buyerName: string | null, 
-  fallbackName: string = 'Đang tải...'
+  sellerName: string | null,
+  buyerName: string | null,
+  fallbackName: string,
 ): { name: string; avatar: string } => {
   if (sellerName && buyerName) {
     const name = decodeURIComponent(sellerName);
@@ -203,11 +204,12 @@ const getInitialDisplayInfo = (
   
   return {
     name: fallbackName,
-    avatar: generateAvatarSVG('?')
+    avatar: generateAvatarSVG("?"),
   };
 };
 
 const ChatBubble = () => {
+  const t = useI18n();
   // Dark mode state synced with localStorage & Header event
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const stored = localStorage.getItem('landing_dark_mode');
@@ -772,8 +774,8 @@ const ChatBubble = () => {
               console.warn('⚠️ ChatBubble - API call failed, using URL params:', apiError);
             }
           } catch (error) {
-            console.error('❌ ChatBubble - Error loading conversation:', error);
-            setError('Không thể tải cuộc trò chuyện. Vui lòng thử lại.');
+            console.error("❌ ChatBubble - Error loading conversation:", error);
+            setError(t("chat.loadConversationError"));
             setLoading(false);
           }
         };
@@ -979,8 +981,8 @@ const ChatBubble = () => {
         }
       }
     } catch (err) {
-      console.error('❌ ChatBubble - Error loading conversations:', err);
-      setError('Không thể tải danh sách cuộc trò chuyện');
+      console.error("❌ ChatBubble - Error loading conversations:", err);
+      setError(t("chat.loadConversationsError"));
       setConversations([]);
     } finally {
       setLoading(false);
@@ -1205,13 +1207,14 @@ const ChatBubble = () => {
 
           // Update conversation list with the sent message
           // Show preview text for media messages
-          let previewText = messageText || '📷 Đã gửi ảnh';
+          let previewText = messageText || `📷 ${t("chat.previewSentImage")}`;
           if (uploadedFiles.length > 0) {
             const firstFile = uploadedFiles[0];
             if (firstFile.data.resourceType === 'video') {
-              previewText = messageText || '🎥 Đã gửi video';
+              previewText = messageText || `🎥 ${t("chat.previewSentVideo")}`;
             } else if (uploadedFiles.length > 1) {
-              previewText = messageText || `📷 Đã gửi ${uploadedFiles.length} file`;
+              previewText =
+                messageText || `📷 ${t("chat.previewSentMultiple")}`;
             }
           }
           
@@ -1250,11 +1253,11 @@ const ChatBubble = () => {
         } else {
           // Remove temporary message if API failed
           setMessages(prev => prev.filter(msg => msg.id !== tempId));
-          setError('Không thể gửi tin nhắn');
+          setError(t("chat.sendMessageError"));
         }
       } catch (err) {
         console.error('Error sending message:', err);
-        setError('Không thể gửi tin nhắn');
+        setError(t("chat.sendMessageError"));
         
         // Remove temporary message on error
         const tempId = Date.now();
@@ -1400,7 +1403,7 @@ const ChatBubble = () => {
         const voiceMessage: Message = {
           id: Date.now(),
           sender: "user",
-          content: "🎤 Tin nhắn thoại",
+          content: `🎤 ${t("chat.voiceMessage")}`,
           createdAt: new Date().toISOString(),
           isRead: false,
           isVoice: true
@@ -1481,7 +1484,7 @@ const ChatBubble = () => {
         </div>
       )}
 
-      {/* Chat Window - TEMPLATE MODE: Always show for demo */}
+      {/* Chat Window */}
       {isOpen && (
           <div 
             data-chat-bubble
@@ -1493,9 +1496,10 @@ const ChatBubble = () => {
           <div className={`rounded-t-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
           >
               {showChatList ? (
-                // Header đơn giản cho danh sách chat
                 <div className={`flex items-center justify-between p-4 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-                  <h3 className={`font-bold text-lg ${isDarkMode ? 'text-white' : 'text-black'}`}>Đoạn chat</h3>
+                  <h3 className={`font-bold text-lg ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                    {t("chat.listTitle")}
+                  </h3>
                   <div className="flex items-center gap-2">
                     {/* Maximize/Minimize button */}
                     <button
@@ -1525,7 +1529,7 @@ const ChatBubble = () => {
                   <button
                     onClick={handleBackToList}
                       className={`p-1 rounded transition-colors mr-1 ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
-                    title="Quay lại danh sách"
+                    title={t("chat.backToList")}
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
@@ -1542,9 +1546,13 @@ const ChatBubble = () => {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold text-sm truncate ${isDarkMode ? 'text-white' : ''}`}>{selectedChat.name || 'Unknown User'}</h3>
+                    <h3 className={`font-semibold text-sm truncate ${isDarkMode ? 'text-white' : ''}`}>
+                      {selectedChat.name || t("chat.unknownUser")}
+                    </h3>
                       <p className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-500'}`}>
-                      {selectedChat.isOnline ? "Trực tuyến" : `Hoạt động ${selectedChat.lastActive || 'gần đây'}`}
+                      {selectedChat.isOnline
+                        ? t("chat.online")
+                        : t("chat.lastActive")}
                     </p>
               </div>
             </div>
@@ -1558,7 +1566,7 @@ const ChatBubble = () => {
               <button
                       onClick={closeChatBubble}
                       className={`p-1 rounded transition-colors ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
-                      title="Đóng chat"
+                      title={t("chat.closeChat")}
               >
                 <FaTimes className="w-3 h-3" />
               </button>
@@ -1591,7 +1599,7 @@ const ChatBubble = () => {
                     />
                   </div>
                   
-                  {/* Nút "Xem tất cả tin nhắn trong ChatBox" cố định ở dưới */}
+                  {/* Open full ChatBox page */}
                   <div className={`border-t flex-shrink-0 rounded-b-lg ${isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'}`}>
                     <button
                       onClick={() => {
@@ -1602,7 +1610,7 @@ const ChatBubble = () => {
                       }}
                     className={`w-full text-center text-sm font-medium py-3 transition-colors ${isDarkMode ? 'text-[#5cdb95] hover:text-[#8ee4af]' : 'text-[#379683] hover:text-[#5cdb95]'}`}
                     >
-                      Xem tất cả tin nhắn trong ChatBox
+                      {t("chat.openAllInChatBox")}
                     </button>
                   </div>
                 </div>

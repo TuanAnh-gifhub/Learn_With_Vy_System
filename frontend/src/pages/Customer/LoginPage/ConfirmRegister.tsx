@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Result, Button, Spin } from "antd";
 import authService from "../../../services/auth/authService";
+import { useI18n } from "../../../components/Language/useI18n";
 
 const ConfirmRegister: React.FC = () => {
+  const t = useI18n();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState<"loading" | "success" | "error">(
@@ -52,18 +54,20 @@ const ConfirmRegister: React.FC = () => {
       {status === "loading" && (
         <div style={{ textAlign: "center" }}>
           <Spin size="large" />
-          <p style={{ marginTop: 16, fontSize: "15px" }}>Đang xác thực tài khoản...</p>
+          <p style={{ marginTop: 16, fontSize: "15px" }}>
+            {t("auth.confirmLoading")}
+          </p>
         </div>
       )}
 
       {status === "success" && (
         <Result
           status="success"
-          title="Xác thực thành công!"
-          subTitle="Tài khoản của bạn đã sẵn sàng. Hãy đăng nhập để bắt đầu."
+          title={t("auth.confirmSuccessTitle")}
+          subTitle={t("auth.confirmSuccessSubtitle")}
           extra={[
             <Button type="primary" key="login" onClick={() => navigate("/")}>
-              Đăng nhập ngay
+              {t("auth.loginNow")}
             </Button>,
           ]}
         />
@@ -72,11 +76,11 @@ const ConfirmRegister: React.FC = () => {
       {status === "error" && (
         <Result
           status="error"
-          title="Xác thực thất bại"
-          subTitle="Liên kết đã hết hạn hoặc đã được sử dụng. Vui lòng thử lại."
+          title={t("auth.confirmErrorTitle")}
+          subTitle={t("auth.confirmErrorSubtitle")}
           extra={[
             <Button type="primary" key="home" onClick={() => navigate("/")}>
-              Quay lại trang chủ
+              {t("auth.backToHome") ?? "Quay lại trang chủ"}
             </Button>,
           ]}
         />

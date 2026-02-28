@@ -9,18 +9,20 @@ import Footer from "../../../components/Footer/Footer";
 // import WalletRecharge from "./WalletRecharge";
 // import WalletWithdraw from "./WalletWithdraw";
 import {
-    FaCoins,
-    FaMobileAlt,
-    FaGift,
-    FaHistory,
-    FaHeadphonesAlt
+  FaCoins,
+  FaMobileAlt,
+  FaGift,
+  FaHistory,
+  FaHeadphonesAlt,
 } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 type WalletFeature = "overview" | "history" | "promotion" | "recharge" | "withdraw" | "help";
 
 const WalletPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const t = useI18n();
     const [totalBalance] = useState(0);
     const [mainAccountBalance] = useState(0);
     const [userName] = useState("Tran Le Tuan Anh");
@@ -56,7 +58,7 @@ const WalletPage = () => {
     const categories = [
         {
             icon: FaCoins,
-            label: "Nạp Đồng Tốt",
+            labelKey: "wallet.featureRechargeCoins",
             color: "text-yellow-500",
             bgColor: "bg-yellow-50",
             feature: "recharge" as WalletFeature,
@@ -66,7 +68,7 @@ const WalletPage = () => {
         },
         {
             icon: FaMobileAlt,
-            label: "Nạp ĐT giá trị linh hoạt",
+            labelKey: "wallet.featureRechargePhone",
             color: "text-blue-500",
             bgColor: "bg-blue-50",
             feature: "recharge" as WalletFeature,
@@ -76,7 +78,7 @@ const WalletPage = () => {
         },
         {
             icon: FaGift,
-            label: "Đổi mã khuyến mãi",
+            labelKey: "wallet.featurePromotion",
             color: "text-green-500",
             bgColor: "bg-green-50",
             feature: "promotion" as WalletFeature,
@@ -86,7 +88,7 @@ const WalletPage = () => {
         },
         {
             icon: FaHistory,
-            label: "Lịch sử giao dịch",
+            labelKey: "wallet.featureHistory",
             color: "text-gray-500",
             bgColor: "bg-gray-50",
             feature: "history" as WalletFeature,
@@ -96,7 +98,7 @@ const WalletPage = () => {
         },
         {
             icon: FaHeadphonesAlt,
-            label: "Trợ giúp",
+            labelKey: "wallet.featureHelp",
             color: "text-gray-700",
             bgColor: "bg-gray-50",
             feature: "help" as WalletFeature,
@@ -132,24 +134,36 @@ const WalletPage = () => {
                 return (
                     <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-8 text-center`}>
                         <FaCoins className={`${isDarkMode ? 'text-yellow-400' : 'text-yellow-500'} text-5xl mx-auto mb-4`} />
-                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Nạp Đồng Tốt</h3>
-                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>Tính năng đang được phát triển</p>
+                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {t("wallet.featureRechargeCoins")}
+                        </h3>
+                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+                            {t("wallet.featureComingSoon")}
+                        </p>
                     </div>
                 );
             case "withdraw":
                 return (
                     <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-8 text-center`}>
                         <FaCoins className={`${isDarkMode ? 'text-[#6bb5ff]' : 'text-[#4da6ff]'} text-5xl mx-auto mb-4`} />
-                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Rút tiền</h3>
-                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>Tính năng đang được phát triển</p>
+                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {t("wallet.withdrawTitle")}
+                        </h3>
+                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+                            {t("wallet.featureComingSoon")}
+                        </p>
                     </div>
                 );
             case "help":
                 return (
                     <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-8 text-center`}>
                         <FaHeadphonesAlt className={`${isDarkMode ? 'text-[#6bb5ff]' : 'text-[#4da6ff]'} text-5xl mx-auto mb-4`} />
-                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Trợ giúp</h3>
-                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>Tính năng đang được phát triển</p>
+                        <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {t("wallet.helpTitle")}
+                        </h3>
+                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+                            {t("wallet.featureComingSoon")}
+                        </p>
                     </div>
                 );
             default:
@@ -159,7 +173,9 @@ const WalletPage = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             {/* Left Column - Account Details */}
                             <div>
-                                <h2 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Chi tiết tài khoản</h2>
+                            <h2 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                                {t("wallet.overviewAccountDetails")}
+                            </h2>
                                 <WalletCard
                                     totalBalance={totalBalance}
                                     mainAccountBalance={mainAccountBalance}
@@ -172,12 +188,14 @@ const WalletPage = () => {
                             {/* Right Column - Transaction History */}
                             <div>
                                 <div className="flex items-center justify-between mb-4">
-                                    <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Lịch sử giao dịch</h2>
+                                    <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                                        {t("wallet.overviewHistoryTitle")}
+                                    </h2>
                                     <button
                                         onClick={() => navigate("/wallet/history")}
                                         className="text-[#4da6ff] text-sm font-medium hover:underline"
                                     >
-                                        Xem tất cả
+                                        {t("wallet.overviewViewAll")}
                                     </button>
                                 </div>
                                 <WalletHistory showFull={false} isDarkMode={isDarkMode} />
@@ -197,14 +215,16 @@ const WalletPage = () => {
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <div>
                         <h2 className="text-lg font-semibold">
-                            Xin chào, {userName} ({userInfo})
+                            {t("wallet.greetingPrefix")} {userName} ({userInfo})
                         </h2>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-300 mb-1">Tài khoản định danh</p>
+                        <p className="text-sm text-gray-300 mb-1">
+                            {t("wallet.identifiedAccountTitle")}
+                        </p>
                         <input
                             type="text"
-                            placeholder="Nhập số tài khoản"
+                            placeholder={t("wallet.identifiedAccountPlaceholder")}
                             className="bg-white/20 backdrop-blur-sm border border-white/30 rounded px-3 py-2 text-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 w-48"
                         />
                     </div>
@@ -216,7 +236,9 @@ const WalletPage = () => {
                 {/* Categories Section */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Danh mục</h2>
+                        <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {t("wallet.categoriesTitle")}
+                        </h2>
                         {activeFeature !== "overview" && (
                             <button
                                 onClick={() => navigate("/wallet")}
@@ -225,7 +247,7 @@ const WalletPage = () => {
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
-                                Về trang chủ ví
+                                {t("wallet.backToWalletHome")}
                             </button>
                         )}
                     </div>
@@ -250,7 +272,7 @@ const WalletPage = () => {
                                         <Icon />
                                     </div>
                                     <span className={`text-xs font-medium text-center ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
-                                        {category.label}
+                                        {t(category.labelKey)}
                                     </span>
                                 </button>
                             );

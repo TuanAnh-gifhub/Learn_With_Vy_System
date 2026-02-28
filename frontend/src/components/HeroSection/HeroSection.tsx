@@ -5,30 +5,33 @@ import { FiSearch, FiMapPin, FiCalendar } from "react-icons/fi";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import backgroundHeroSection from "../../assets/backgroundHeroSection.jpg";
 import introLandingVideo from "../../assets/intro_landing_page.mp4";
+import { useI18n } from "../Language/useI18n";
 
 const CITIES = [
-  "Trực tuyến 1:1",
-  "Trực tuyến nhóm",
-  "Hybrid (Online + Offline)",
-  "Tại trung tâm",
+  { value: "Trực tuyến 1:1", labelKey: "landing.citiesOnline1v1" },
+  { value: "Trực tuyến nhóm", labelKey: "landing.citiesOnlineGroup" },
+  { value: "Hybrid (Online + Offline)", labelKey: "landing.citiesHybrid" },
+  { value: "Tại trung tâm", labelKey: "landing.citiesCenter" },
 ] as const;
 
 const ROOM_TYPES = [
-  "Tất cả lớp học",
-  "1:1 (Cá nhân)",
-  "Nhóm nhỏ (3-6)",
-  "Giao tiếp",
-  "IELTS",
-  "TOEIC",
-  "Thiếu nhi",
-  "Business English",
+  { value: "Tất cả lớp học", labelKey: "landing.roomTypeAll" },
+  { value: "1:1 (Cá nhân)", labelKey: "landing.roomType1v1" },
+  { value: "Nhóm nhỏ (3-6)", labelKey: "landing.roomTypeSmallGroup" },
+  { value: "Giao tiếp", labelKey: "landing.roomTypeConversation" },
+  { value: "IELTS", labelKey: "landing.roomTypeIELTS" },
+  { value: "TOEIC", labelKey: "landing.roomTypeTOEIC" },
+  { value: "Thiếu nhi", labelKey: "landing.roomTypeKids" },
+  { value: "Business English", labelKey: "landing.roomTypeBusiness" },
 ] as const;
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const t = useI18n();
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState<(typeof CITIES)[number]>(CITIES[0]);
-  const [roomType, setRoomType] = useState<(typeof ROOM_TYPES)[number]>(ROOM_TYPES[0]);
+  const [roomType, setRoomType] =
+    useState<(typeof ROOM_TYPES)[number]>(ROOM_TYPES[0]);
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -141,8 +144,10 @@ const HeroSection = () => {
 
   const formatDateRangeLabel = () => {
     if (!checkIn && !checkOut) return "";
-    if (checkIn && !checkOut) return `Từ: ${checkIn}`;
-    if (!checkIn && checkOut) return `Đến: ${checkOut}`;
+    if (checkIn && !checkOut)
+      return `${t("landing.dateFromPrefix")} ${checkIn}`;
+    if (!checkIn && checkOut)
+      return `${t("landing.dateToPrefix")} ${checkOut}`;
     return `${checkIn} - ${checkOut}`;
   };
 
@@ -272,21 +277,21 @@ const HeroSection = () => {
     
     {/* Content */}
     <div className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-44 md:pt-66 text-white">
-      <motion.p 
+      <motion.p
         className="mt-2 md:mt-3 text-lg md:text-xl mb-1 md:mb-1.5 font-medium drop-shadow-md text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        Nền tảng học tiếng Anh trực tuyến 1:1 & lớp nhóm
+        {t("landing.heroTitle")}
       </motion.p>
-      <motion.p 
+      <motion.p
         className="text-base md:text-lg opacity-95 drop-shadow-md text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        Chọn giáo viên phù hợp, lịch học linh hoạt và bắt đầu ngay hôm nay
+        {t("landing.heroSubtitle")}
       </motion.p>
 
       {/* Search bar: từ khóa + địa điểm + ngày nhận/trả (1 khung) + loại phòng + nút tìm */}
@@ -305,7 +310,7 @@ const HeroSection = () => {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              placeholder="Tìm lớp học / khóa học..."
+              placeholder={t("landing.searchPlaceholder")}
               className="w-full bg-transparent outline-none text-sm md:text-base placeholder:text-gray-400"
             />
           </div>
@@ -322,10 +327,10 @@ const HeroSection = () => {
             <FiMapPin className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col flex-1">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Hình thức
+                {t("landing.modeLabel")}
               </span>
               <span className="text-xs md:text-sm text-gray-800">
-                {city}
+                {t(city.labelKey)}
               </span>
             </div>
 
@@ -340,7 +345,7 @@ const HeroSection = () => {
               >
                 {CITIES.map((c) => (
                   <button
-                    key={c}
+                    key={c.value}
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -348,10 +353,12 @@ const HeroSection = () => {
                       setIsCityOpen(false);
                     }}
                     className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#edf5e1] transition-colors ${
-                      city === c ? 'bg-[#8ee4af] text-[#05386b] font-semibold' : 'text-gray-800'
+                      city.value === c.value
+                        ? "bg-[#8ee4af] text-[#05386b] font-semibold"
+                        : "text-gray-800"
                     }`}
                   >
-                    {c}
+                    {t(c.labelKey)}
                   </button>
                 ))}
               </div>
@@ -367,7 +374,7 @@ const HeroSection = () => {
             <FiCalendar className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Lịch học
+                {t("landing.scheduleLabel")}
               </span>
               <span className="text-xs md:text-sm text-gray-800">
                 {formatDateRangeLabel()}
@@ -471,13 +478,17 @@ const HeroSection = () => {
                     <div className="text-[10px] text-gray-700 space-y-0.5">
                       {checkIn && (
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold">Ngày nhận:</span>
+                          <span className="font-semibold">
+                            {t("landing.dateFromLabel") ?? "Ngày nhận:"}
+                          </span>
                           <span>{new Date(checkIn).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
                         </div>
                       )}
                       {checkOut && (
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold">Ngày trả:</span>
+                          <span className="font-semibold">
+                            {t("landing.dateToLabel") ?? "Ngày trả:"}
+                          </span>
                           <span>{new Date(checkOut).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
                         </div>
                       )}
@@ -514,7 +525,7 @@ const HeroSection = () => {
                     }}
                     className="px-3 py-1.5 rounded-lg text-[10px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
                   >
-                    Xóa
+                    {t("landing.dateClear")}
                   </button>
                   <button
                     type="button"
@@ -524,7 +535,7 @@ const HeroSection = () => {
                     }}
                     className="px-3 py-1.5 rounded-lg text-[10px] font-semibold bg-[#2563eb] text-white hover:bg-[#1d4ed8] transition-colors"
                   >
-                    Áp dụng
+                    {t("landing.dateApply")}
                   </button>
                 </div>
               </div>
@@ -540,10 +551,10 @@ const HeroSection = () => {
             <FaChalkboardTeacher className="text-yellow-500 w-4 h-4 shrink-0" />
             <div className="flex flex-col flex-1">
               <span className="text-[11px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Loại lớp
+                {t("landing.classTypeLabel")}
               </span>
               <span className="text-xs md:text-sm text-gray-800">
-                {roomType}
+                {t(roomType.labelKey)}
               </span>
             </div>
 
@@ -561,20 +572,22 @@ const HeroSection = () => {
                   e.stopPropagation();
                 }}
               >
-                {ROOM_TYPES.map((t) => (
+                {ROOM_TYPES.map((opt) => (
                   <button
-                    key={t}
+                    key={opt.value}
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setRoomType(t);
+                      setRoomType(opt);
                       setIsRoomTypeOpen(false);
                     }}
                     className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#edf5e1] transition-colors ${
-                      roomType === t ? 'bg-[#8ee4af] text-[#05386b] font-semibold' : 'text-gray-800'
+                      roomType.value === opt.value
+                        ? "bg-[#8ee4af] text-[#05386b] font-semibold"
+                        : "text-gray-800"
                     }`}
                   >
-                    {t}
+                    {t(opt.labelKey)}
                   </button>
                 ))}
               </div>
@@ -587,7 +600,7 @@ const HeroSection = () => {
             onClick={handleSearch}
             className="w-full md:w-auto md:min-w-[130px] h-11 md:h-12 rounded-2xl bg-[#379683] hover:bg-[#2f6f60] text-[#edf5e1] font-semibold text-sm md:text-base flex items-center justify-center shadow-md hover:shadow-lg transition-all"
           >
-            Tìm lớp
+            {t("landing.searchButton") ?? "Tìm lớp"}
           </button>
         </div>
       </motion.div>
@@ -600,20 +613,20 @@ const HeroSection = () => {
         transition={{ duration: 0.6, delay: 0.45 }}
       >
         {[
-          "1:1",
-          "Nhóm nhỏ",
-          "Giao tiếp",
-          "IELTS",
-          "TOEIC",
-          "Thiếu nhi",
-          "Business English",
-        ].map((label) => (
+          "landing.quickChipOneToOne",
+          "landing.quickChipSmallGroup",
+          "landing.quickChipConversation",
+          "landing.quickChipIELTS",
+          "landing.quickChipTOEIC",
+          "landing.quickChipKids",
+          "landing.quickChipBusiness",
+        ].map((key) => (
           <button
-            key={label}
+            key={key}
             type="button"
             className="px-3 md:px-4 py-1.5 rounded-full border border-white/60 bg-white/10 backdrop-blur text-white hover:bg-white hover:text-[#379683] hover:border-white shadow-sm transition-all"
           >
-            {label}
+            {t(key)}
           </button>
         ))}
       </motion.div>

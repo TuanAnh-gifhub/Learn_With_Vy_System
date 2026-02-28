@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaArrowDown, FaArrowUp, FaCoins, FaShoppingCart, FaMobileAlt } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface Transaction {
     id: string;
@@ -16,6 +17,7 @@ interface WalletHistoryProps {
 }
 
 const WalletHistory = ({ showFull = true, isDarkMode = false }: WalletHistoryProps) => {
+    const t = useI18n();
     const [transactions] = useState<Transaction[]>([
         // Sample data - in real app, this would come from API
         // {
@@ -46,15 +48,15 @@ const WalletHistory = ({ showFull = true, isDarkMode = false }: WalletHistoryPro
     const getTransactionLabel = (type: string) => {
         switch (type) {
             case "recharge":
-                return "Nạp tiền";
+                return t("wallet.historyTypeRecharge");
             case "payment":
-                return "Thanh toán";
+                return t("wallet.historyTypePayment");
             case "refund":
-                return "Hoàn tiền";
+                return t("wallet.historyTypeRefund");
             case "transfer":
-                return "Chuyển khoản";
+                return t("wallet.historyTypeTransfer");
             default:
-                return "Giao dịch";
+                return t("wallet.historyTypeGeneric");
         }
     };
 
@@ -75,11 +77,13 @@ const WalletHistory = ({ showFull = true, isDarkMode = false }: WalletHistoryPro
 
     if (transactions.length === 0) {
         return (
-            <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-8`}>
+                <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-8`}>
                 <div className="text-center py-12">
                     <FaCoins className={`${isDarkMode ? 'text-[#4da6ff]/40' : 'text-gray-300'} text-5xl mx-auto mb-4`} />
                     <p className={isDarkMode ? 'text-gray-300 text-sm' : 'text-gray-500 text-sm'}>
-                        {showFull ? "Chưa có giao dịch nào" : "Chưa có giao dịch gần đây"}
+                        {showFull
+                            ? t("wallet.historyEmptyAll")
+                            : t("wallet.historyEmptyRecent")}
                     </p>
                 </div>
             </div>
@@ -128,10 +132,10 @@ const WalletHistory = ({ showFull = true, isDarkMode = false }: WalletHistoryPro
                                         }`}
                                 >
                                     {transaction.status === "completed"
-                                        ? "Hoàn thành"
+                                        ? t("wallet.historyStatusCompleted")
                                         : transaction.status === "pending"
-                                            ? "Đang xử lý"
-                                            : "Thất bại"}
+                                            ? t("wallet.historyStatusPending")
+                                            : t("wallet.historyStatusFailed")}
                                 </span>
                             </div>
                         </div>
@@ -142,7 +146,7 @@ const WalletHistory = ({ showFull = true, isDarkMode = false }: WalletHistoryPro
             {!showFull && transactions.length > 5 && (
                 <div className={`p-4 border-t text-center ${isDarkMode ? 'border-[#4da6ff]/20' : 'border-gray-200'}`}>
                     <button className={`text-sm font-medium hover:underline ${isDarkMode ? 'text-[#4da6ff] hover:text-[#6bb5ff]' : 'text-[#4da6ff]'}`}>
-                        Xem thêm giao dịch
+                        {t("wallet.historyLoadMore")}
                     </button>
                 </div>
             )}

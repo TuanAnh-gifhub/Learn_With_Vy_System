@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useI18n } from "../Language/useI18n";
 
 const NotFound = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(() => {
     return localStorage.getItem("darkMode") === "true";
   });
+  const t = useI18n();
 
   // Prevent body scroll when this component is mounted
   React.useEffect(() => {
@@ -122,7 +124,7 @@ const NotFound = () => {
                 <div className={`text-white text-[9px] sm:text-[10px] md:text-xs font-semibold px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-full relative shadow-md ${
                   isDarkMode ? "bg-[#379683]" : "bg-[#5cdb95]"
                 }`}>
-                  oops
+                  {t("error.oops")}
                   <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent ${
                     isDarkMode ? "border-t-[#379683]" : "border-t-[#5cdb95]"
                   }`}></div>
@@ -156,7 +158,7 @@ const NotFound = () => {
                 <div className={`text-white text-[9px] sm:text-[10px] md:text-xs font-semibold px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-full relative whitespace-nowrap shadow-md ${
                   isDarkMode ? "bg-[#379683]" : "bg-[#5cdb95]"
                 }`}>
-                  not found
+                  {t("error.notFoundBubble")}
                   <div className={`absolute bottom-0 right-2 sm:right-2.5 md:right-3 translate-y-full w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent ${
                     isDarkMode ? "border-t-[#379683]" : "border-t-[#5cdb95]"
                   }`}></div>
@@ -211,17 +213,17 @@ const NotFound = () => {
           </div>
         </div>
 
-        {/* Vietnamese text */}
+        {/* Text */}
         <div className="text-center mb-4 sm:mb-6 mt-2 sm:mt-4 relative z-10 px-4">
           <p className={`text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2 ${
             isDarkMode ? "text-gray-200" : "text-gray-700"
           }`}>
-            Xin lỗi, trang bạn tìm kiếm không tồn tại
+            {t("error.notFoundTitle")}
           </p>
           <p className={`text-xs sm:text-sm md:text-base ${
             isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}>
-            Có thể URL bị hỏng hoặc trang đã bị xóa
+            {t("error.notFoundSubtitle")}
           </p>
         </div>
 
@@ -230,7 +232,9 @@ const NotFound = () => {
           to="/"
           className="relative z-20 px-6 py-2 sm:px-7 sm:py-2.5 md:px-8 md:py-3 bg-[#379683] text-[#edf5e1] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#2f6f60] hover:text-[#edf5e1] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
         >
-          <span className="text-[#edf5e1]">Về trang chủ</span>
+          <span className="text-[#edf5e1]">
+            {t("error.backToHomeButton")}
+          </span>
         </Link>
       </div>
     </div>

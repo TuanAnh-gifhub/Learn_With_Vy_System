@@ -13,7 +13,8 @@ import {
   FaQuoteRight,
   FaEnvelope,
 } from "react-icons/fa";
-import {  message } from "antd";
+import { message } from "antd";
+import { useI18n } from "../../../components/Language/useI18n";
 interface AboutUsProps {
   isDarkMode?: boolean;
 }
@@ -23,10 +24,11 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [email, setEmail] = useState("");
   const aboutUsRef = useRef<HTMLDivElement>(null);
+  const t = useI18n();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    messageApi.success("Cảm ơn bạn đã đăng ký nhận ưu đãi!");
+    messageApi.success(t("about.subscribeSuccess"));
     console.log("Subscribing with email:", email);
     setEmail("");
   };
@@ -58,79 +60,73 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
   const features = [
     {
       icon: FaClock,
-      title: "Đặt Phòng Nhanh Chóng",
-      description:
-        "Chỉ với vài thao tác đơn giản, bạn có thể đặt phòng học ngay lập tức",
+      titleKey: "about.featuresFastBookingTitle",
+      descKey: "about.featuresFastBookingDesc",
     },
     {
       icon: FaShieldAlt,
-      title: "Bảo Mật & An Toàn",
-      description:
-        "Hệ thống bảo mật cao, đảm bảo thông tin cá nhân luôn được bảo vệ",
+      titleKey: "about.featuresSecureTitle",
+      descKey: "about.featuresSecureDesc",
     },
     {
       icon: FaCreditCard,
-      title: "Thanh Toán Linh Hoạt",
-      description: "Hỗ trợ nhiều hình thức thanh toán tiện lợi và an toàn",
+      titleKey: "about.featuresPaymentTitle",
+      descKey: "about.featuresPaymentDesc",
     },
     {
       icon: FaHeadset,
-      title: "Hỗ Trợ 24/7",
-      description:
-        "Đội ngũ chăm sóc khách hàng luôn sẵn sàng hỗ trợ bạn mọi lúc",
+      titleKey: "about.featuresSupportTitle",
+      descKey: "about.featuresSupportDesc",
     },
-  ];
+  ] as const;
 
   const steps = [
     {
       number: "01",
       icon: FaSearch,
-      title: "Tìm Kiếm Phòng",
-      description:
-        "Tìm kiếm phòng học phù hợp với nhu cầu của bạn theo địa điểm, sức chứa và giá cả",
+      titleKey: "about.step1Title",
+      descKey: "about.step1Desc",
     },
     {
       number: "02",
       icon: FaCalendarCheck,
-      title: "Đặt Phòng & Thanh Toán",
-      description:
-        "Chọn thời gian phù hợp và thanh toán dễ dàng qua nhiều hình thức",
+      titleKey: "about.step2Title",
+      descKey: "about.step2Desc",
     },
     {
       number: "03",
       icon: FaCheckCircle,
-      title: "Xác Nhận & Sử Dụng",
-      description:
-        "Nhận xác nhận ngay lập tức và bắt đầu sử dụng phòng học của bạn",
+      titleKey: "about.step3Title",
+      descKey: "about.step3Desc",
     },
-  ];
+  ] as const;
 
   const testimonials = [
     {
-      name: "Nguyễn Minh Anh",
-      occupation: "Sinh viên",
+      nameKey: "about.testimonial1Name",
+      occupationKey: "about.testimonial1Occupation",
       rating: 5,
-      text: "Phòng học rất sạch sẽ, yên tĩnh và đầy đủ tiện nghi. Giá cả hợp lý, dịch vụ tốt. Tôi sẽ tiếp tục sử dụng!",
+      textKey: "about.testimonial1Text",
       avatar:
         "https://ui-avatars.com/api/?name=Nguyen+Minh+Anh&background=4da6ff&color=fff&size=128",
     },
     {
-      name: "Trần Hoàng Nam",
-      occupation: "Freelancer",
+      nameKey: "about.testimonial2Name",
+      occupationKey: "about.testimonial2Occupation",
       rating: 5,
-      text: "Không gian làm việc chuyên nghiệp, internet nhanh. Rất phù hợp cho những người làm việc tự do như tôi",
+      textKey: "about.testimonial2Text",
       avatar:
         "https://ui-avatars.com/api/?name=Tran+Hoang+Nam&background=4da6ff&color=fff&size=128",
     },
     {
-      name: "Lê Thị Hương",
-      occupation: "Giáo viên",
+      nameKey: "about.testimonial3Name",
+      occupationKey: "about.testimonial3Occupation",
       rating: 5,
-      text: "Đặt phòng nhanh chóng và tiện lợi. Phòng học có đầy đủ thiết bị cần thiết cho buổi dạy của tôi",
+      textKey: "about.testimonial3Text",
       avatar:
         "https://ui-avatars.com/api/?name=Le+Thi+Huong&background=4da6ff&color=fff&size=128",
     },
-  ];
+  ] as const;
 
   return (
     <div
@@ -147,14 +143,14 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
         >
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-              Tại Sao Chọn Chúng Tôi?
+              {t("about.whyChooseTitle")}
             </h2>
             <p
               className={`text-sm md:text-base ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Chúng tôi cam kết mang đến trải nghiệm thuê phòng học tốt nhất
+              {t("about.whyChooseSubtitle")}
             </p>
           </div>
 
@@ -187,15 +183,15 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                       isDarkMode ? "text-white" : "text-gray-900"
                     }`}
                   >
-                    {feature.title}
+                    {t(feature.titleKey)}
                   </h3>
                   <p
                     className={`text-xs md:text-sm leading-relaxed ${
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}
-                  >
-                    {feature.description}
-                  </p>
+                    >
+                      {t(feature.descKey)}
+                    </p>
                 </motion.div>
               );
             })}
@@ -211,14 +207,14 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
         >
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-              Cách Thức Hoạt Động
+              {t("about.howItWorksTitle")}
             </h2>
             <p
               className={`text-sm md:text-base ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Quy trình đặt phòng đơn giản chỉ với 3 bước
+              {t("about.howItWorksSubtitle")}
             </p>
           </div>
 
@@ -263,14 +259,14 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                         isDarkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
-                      {step.title}
+                      {t(step.titleKey)}
                     </h3>
                     <p
                       className={`text-xs md:text-sm leading-relaxed ${
                         isDarkMode ? "text-gray-300" : "text-gray-600"
                       }`}
                     >
-                      {step.description}
+                      {t(step.descKey)}
                     </p>
                   </div>
                 </motion.div>
@@ -287,14 +283,14 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
         >
           <div className="text-center mb-12">
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-              Khách Hàng Nói Gì Về Chúng Tôi
+              {t("about.testimonialsTitle")}
             </h2>
             <p
               className={`text-sm md:text-base ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Hàng nghìn khách hàng hài lòng đã sử dụng dịch vụ của chúng tôi
+              {t("about.testimonialsSubtitle")}
             </p>
           </div>
 
@@ -328,7 +324,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                 <div className="flex items-center mb-4">
                   <img
                     src={testimonial.avatar}
-                    alt={testimonial.name}
+                    alt={t(testimonial.nameKey)}
                     className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-[#5cdb95]"
                   />
                   <div>
@@ -336,15 +332,15 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                       className={`font-bold text-base ${
                         isDarkMode ? "text-white" : "text-gray-900"
                       }`}
-                    >
-                      {testimonial.name}
+                      >
+                      {t(testimonial.nameKey)}
                     </h4>
                     <p
                       className={`text-xs ${
                         isDarkMode ? "text-gray-400" : "text-gray-500"
                       }`}
                     >
-                      {testimonial.occupation}
+                      {t(testimonial.occupationKey)}
                     </p>
                   </div>
                 </div>
@@ -360,7 +356,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                     isDarkMode ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  {testimonial.text}
+                  {t(testimonial.textKey)}
                 </p>
               </motion.div>
             ))}
@@ -389,13 +385,12 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
 
               {/* Title */}
               <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-                Đăng Ký Nhận Ưu Đãi
+                {t("about.subscribeTitle")}
               </h2>
 
               {/* Subtitle */}
               <p className="text-sm md:text-base text-white/90 mb-8 max-w-2xl mx-auto">
-                Nhận thông tin và các phòng học mới và ưu đãi đặc biệt ngay
-                trong email của bạn
+                {t("about.subscribeSubtitle")}
               </p>
 
               {/* Email Form */}
@@ -408,7 +403,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Nhập email của bạn..."
+                  placeholder={t("about.subscribePlaceholder")}
                   className="flex-1 px-4 py-3 rounded-lg border-2 border-[#8ee4af] focus:outline-none focus:border-[#5cdb95] focus:ring-2 focus:ring-[#5cdb95]/25 text-white placeholder-white/80 bg-white/10"
                   required
                 />
@@ -416,7 +411,7 @@ const AboutUs = ({ isDarkMode = false }: AboutUsProps) => {
                   type="submit"
                   className="px-6 py-3 bg-white text-[#379683] font-semibold rounded-lg hover:bg-[#edf5e1] transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap"
                 >
-                  Đăng ký
+                  {t("about.subscribeButton")}
                 </button>
               </form>
             </div>

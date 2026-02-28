@@ -1,4 +1,5 @@
 import { FaTimes, FaFile } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface FileItem {
   file: File;
@@ -29,6 +30,7 @@ const FilePreview = ({
   onRemoveFile, 
   onClearAllFiles 
 }: FilePreviewProps) => {
+  const t = useI18n();
   if (!imagePreview && selectedFiles.length === 0) return null;
 
   return (
@@ -56,12 +58,14 @@ const FilePreview = ({
       {selectedFiles.length > 0 && !imagePreview && (
         <div className="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-gray-700">Files đã chọn:</span>
+            <span className="text-sm font-semibold text-gray-700">
+              {t("chat.selectedFilesTitle")}
+            </span>
             <button
               onClick={onClearAllFiles}
               className="text-xs text-red-500 hover:text-red-700"
             >
-              Xóa tất cả
+              {t("chat.clearAllFiles")}
             </button>
           </div>
           <div className="space-y-2">

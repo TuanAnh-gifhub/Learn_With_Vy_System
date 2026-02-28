@@ -4,6 +4,7 @@ import { FaMicrophone } from "react-icons/fa";
 const backgroundMesseger = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23f3f4f6'/%3E%3C/svg%3E";
 import { parseMessageContent } from "../../../services/upload/uploadService";
 import { normalizeImageUrl } from "../../../utils/imageUrlHelper";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface Message {
   id: string | number;
@@ -79,6 +80,7 @@ interface MediaContentProps {
 
 const MediaContent = ({ mediaData, isDarkMode }: MediaContentProps) => {
   const { type, url, text, metadata } = mediaData;
+  const t = useI18n();
   
   // Normalize URLs
   const normalizedUrl = normalizeImageUrl(url);
@@ -109,7 +111,7 @@ const MediaContent = ({ mediaData, isDarkMode }: MediaContentProps) => {
           poster={normalizedThumbnail || undefined}
         >
           <source src={normalizedUrl} type={`video/${metadata?.format || 'mp4'}`} />
-          Trình duyệt của bạn không hỗ trợ video.
+          {t("chat.browserNoVideoSupport")}
         </video>
         {text && <p className={`text-sm mt-2 ${isDarkMode ? 'text-white' : ''}`}>{text}</p>}
       </div>
@@ -153,10 +155,15 @@ const MediaContent = ({ mediaData, isDarkMode }: MediaContentProps) => {
   }
   
   // Fallback for unknown types
-  return <p className={`text-sm ${isDarkMode ? 'text-white' : ''}`}>{text || 'Unsupported media type'}</p>;
+  return (
+    <p className={`text-sm ${isDarkMode ? 'text-white' : ''}`}>
+      {text || t("chat.unsupportedMedia")}
+    </p>
+  );
 };
 
 const MessageList = ({ messages, messagesEndRef, showBackground = true, isDarkMode = false }: MessageListProps) => {
+  const t = useI18n();
   // Group consecutive messages from the same sender
   const groupConsecutiveMessages = (messages: Message[]): MessageGroup[] => {
     const grouped: MessageGroup[] = [];
@@ -279,8 +286,8 @@ const MessageList = ({ messages, messagesEndRef, showBackground = true, isDarkMo
                 {group.sender === 'user' && (
                   <span className="text-xs ml-1">
                     {group.messages[group.messages.length - 1].isRead 
-                      ? 'Đã xem' 
-                      : 'Đã nhận'}
+                      ? t("chat.read")
+                      : t("chat.received")}
                   </span>
                 )}
               </div>

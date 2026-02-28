@@ -1,4 +1,5 @@
 import { FaCoins } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface WalletCardProps {
     totalBalance?: number;
@@ -15,6 +16,7 @@ const WalletCard = ({
     onViewDetails,
     isDarkMode = false,
 }: WalletCardProps) => {
+    const t = useI18n();
     return (
         <div className="space-y-4">
             {/* Main Account Card - 3D Premium Green */}
@@ -49,7 +51,9 @@ const WalletCard = ({
                     <div className="relative z-10">
                         <div className="flex items-start justify-between mb-6">
                             <div>
-                                <p className="text-white/80 text-xs font-semibold mb-2 tracking-wider uppercase">TỔNG TÀI KHOẢN</p>
+                                <p className="text-white/80 text-xs font-semibold mb-2 tracking-wider uppercase">
+                                    {t("wallet.totalAccountLabel")}
+                                </p>
                                 <div className="flex items-center gap-3">
                                     <span className="text-5xl font-black drop-shadow-lg tracking-tight">{totalBalance.toLocaleString('vi-VN')}</span>
                                     <div className="relative">
@@ -74,17 +78,19 @@ const WalletCard = ({
                         <div className="flex items-end justify-between mt-8 pt-4 border-t border-white/20">
                             <div className="space-y-1">
                                 <button className="text-white/70 text-xs hover:text-white transition-colors text-left font-medium hover:underline">
-                                    Đồng Tốt là gì?
+                                    {t("wallet.whatIsCoin")}
                                 </button>
                                 <button className="text-white/70 text-xs hover:text-white transition-colors text-left block font-medium hover:underline">
-                                    Thứ tự trừ Đồng Tốt khi thanh toán?
+                                    {t("wallet.coinDeductionOrder")}
                                 </button>
                             </div>
                             <button
                                 onClick={onRecharge}
                                 className="relative bg-white/25 hover:bg-white/35 backdrop-blur-md px-5 py-2.5 rounded-lg text-white font-bold transition-all duration-300 border border-white/40 shadow-lg hover:shadow-xl hover:scale-105 transform"
                             >
-                                <span className="relative z-10">+ Nạp thêm</span>
+                                <span className="relative z-10">
+                                    {t("wallet.rechargeMore")}
+                                </span>
                                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 rounded-lg opacity-0 hover:opacity-100 transition-opacity"></div>
                             </button>
                         </div>
@@ -109,7 +115,9 @@ const WalletCard = ({
                                 </div>
                                 <div className="absolute inset-0 bg-yellow-400/30 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <span className={`font-bold text-base ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Tài khoản chính</span>
+                            <span className={`font-bold text-base ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                                {t("wallet.mainAccountLabel")}
+                            </span>
                         </div>
                         <div className="flex items-center gap-3">
                             <span className={`font-black text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mainAccountBalance.toLocaleString('vi-VN')}</span>
@@ -123,7 +131,7 @@ const WalletCard = ({
                         onClick={onViewDetails}
                         className={`text-sm font-semibold hover:underline flex items-center gap-2 group/btn transition-all ${isDarkMode ? 'text-[#6bb5ff] hover:text-[#8cc5ff]' : 'text-[#4da6ff] hover:text-[#3d8fdd]'}`}
                     >
-                        <span>Xem chi tiết</span>
+                        <span>{t("wallet.viewDetails")}</span>
                         <svg className="w-4 h-4 transform group-hover/btn:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>

@@ -20,12 +20,14 @@ import { useAuth } from "../../../context/AuthContext";
 import type { UserResponse } from "../../../services/usersService";
 import loginIntroVideo from "../../../assets/login_intro_video.mp4";
 import logo from "../../../assets/logo.jpg";
+import { useI18n } from "../../../components/Language/useI18n";
 interface LoginPageProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
+  const t = useI18n();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,7 +62,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
     login(userData);
 
     message.success({
-      content: "Đăng nhập thành công!",
+      content: t("auth.loginSuccess"),
       duration: 3,
     });
 
@@ -85,7 +87,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
           await handleLoginSuccess(meResponse.result);
         }
       } else {
-        setErrorMessage("Đăng nhập thất bại. Vui lòng thử lại.");
+        setErrorMessage(t("auth.loginFailed"));
       }
     } catch (error: unknown) {
       const errorResponse =
@@ -98,13 +100,11 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
           : undefined;
 
       if (errorResponse?.code === 1000) {
-        setErrorMessage("Email hoặc mật khẩu không chính xác.");
+        setErrorMessage(t("auth.invalidCredentials"));
       } else if (errorResponse?.message?.includes("Google")) {
-        setErrorMessage(
-          "Tài khoản này được liên kết với Google. Vui lòng chọn 'Đăng nhập với Google'.",
-        );
+        setErrorMessage(t("auth.emailRegisteredWithGoogle"));
       } else {
-        setErrorMessage(errorResponse?.message || "Lỗi kết nối server.");
+        setErrorMessage(errorResponse?.message || t("auth.serverError"));
       }
     } finally {
       setIsLoading(false);
@@ -120,16 +120,14 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
     setSuccessMessage("");
 
     if (!email) {
-      setErrorMessage("Vui lòng nhập email của bạn.");
+      setErrorMessage(t("auth.requireEmail"));
       setIsLoading(false);
       return;
     }
 
     try {
       await authService.forgotPassword(email);
-      setSuccessMessage(
-        "Link đặt lại mật khẩu đã được gửi vào email của bạn. Vui lòng kiểm tra hộp thư.",
-      );
+      setSuccessMessage(t("auth.forgotLinkSent"));
     } catch (error: unknown) {
       console.error("Forgot password failed:", error);
       const errorResponse =
@@ -140,8 +138,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
           ? (error as { response?: { data?: { message?: string } } }).response!.data
           : undefined;
       setErrorMessage(
-        errorResponse?.message ||
-        "Không thể gửi yêu cầu. Vui lòng kiểm tra lại email.",
+        errorResponse?.message || t("auth.serverError"),
       );
     } finally {
       setIsLoading(false);
@@ -196,16 +193,16 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
             await handleLoginSuccess(meResponse.result);
           }
         } else {
-          setErrorMessage("Không thể đăng nhập bằng Google.");
+          setErrorMessage(t("auth.loginGoogleFailed"));
         }
       } catch (error: unknown) {
         console.error("Google login failed:", error);
-        setErrorMessage("Lỗi kết nối tới Google. Vui lòng thử lại.");
+        setErrorMessage(t("auth.loginGoogleError"));
       } finally {
         setIsLoading(false);
       }
     },
-    onError: () => setErrorMessage("Đăng nhập Google bị hủy hoặc thất bại."),
+    onError: () => setErrorMessage(t("auth.loginGoogleCanceled")),
   });
 
   if (!isOpen) return null;
@@ -311,19 +308,19 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                     </div>
                   </div>
 
-                  <h2 className={`${errorMessage || successMessage ? 'text-lg' : 'text-xl'} font-bold text-center text-white transition-all duration-200 ease-in-out ${errorMessage || successMessage ? 'mb-0' : 'mb-0.5'}`}>
+                  <h2 className={`${errorMessage || successMessage ? "text-lg" : "text-xl"} font-bold text-center text-white transition-all duration-200 ease-in-out ${errorMessage || successMessage ? "mb-0" : "mb-0.5"}`}>
                     {isRegisterMode
-                      ? "Tạo Tài Khoản"
+                      ? t("auth.registerTitle")
                       : isForgotPasswordMode
-                        ? "Khôi Phục Mật Khẩu"
-                        : "Chào Mừng Trở Lại!"}
+                        ? t("auth.forgotTitle")
+                        : t("auth.loginTitle")}
                   </h2>
-                  <p className={`text-center text-white/90 transition-all duration-200 ease-in-out ${errorMessage || successMessage ? 'text-xs' : 'text-sm'}`}>
+                  <p className={`text-center text-white/90 transition-all duration-200 ease-in-out ${errorMessage || successMessage ? "text-xs" : "text-sm"}`}>
                     {isRegisterMode
-                      ? "Đăng ký ngay để bắt đầu"
+                      ? t("auth.registerSubtitle")
                       : isForgotPasswordMode
-                        ? "Nhập email để nhận hướng dẫn đặt lại mật khẩu"
-                        : "Đăng nhập để tiếp tục"}
+                        ? t("auth.forgotSubtitle")
+                        : t("auth.loginSubtitle")}
                   </p>
                 </div>
 
@@ -377,7 +374,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                       <div>
                         <div className="relative">
                           <div className="absolute left-2.5 top-1/2 transform -translate-y-1/2">
-                            <FaEnvelope className="w-4 h-4 text-white/70" />
+                            <FaEnvelope className="w-4 h-4 text-[#5cdb95]" />
                           </div>
                           <input
                             type="email"
@@ -389,7 +386,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                             disabled={isLoading}
                           />
                           <label className="pointer-events-none absolute left-9 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                            Email đăng ký
+                            {t("auth.emailLabel")}
                           </label>
                         </div>
                       </div>
@@ -401,7 +398,9 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                           isLoading ? "cursor-not-allowed brightness-95" : ""
                         }`}
                       >
-                        {isLoading ? "Đang gửi..." : "Gửi link xác nhận"}
+                        {isLoading
+                          ? t("auth.loading") ?? "Đang gửi..."
+                          : t("auth.forgotSendButton")}
                       </button>
 
                       <div className="text-center mt-1">
@@ -413,7 +412,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                           }}
                             className="text-sm text-white/80 hover:text-white font-medium"
                         >
-                          Quay lại đăng nhập
+                          {t("auth.forgotBackToLogin")}
                         </button>
                       </div>
                     </form>
@@ -435,7 +434,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                             disabled={isLoading}
                           />
                           <label className="pointer-events-none absolute left-9 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                              Email
+                              {t("auth.emailLabel")}
                             </label>
                           </div>
                         </div>
@@ -455,7 +454,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                               disabled={isLoading}
                             />
                             <label className="pointer-events-none absolute left-9 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                              Mật khẩu
+                              {t("auth.passwordLabel")}
                             </label>
                             <button
                             type="button"
@@ -481,7 +480,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                             }}
                             className="text-sm text-[#5cdb95] hover:text-[#379683] font-medium focus:outline-none"
                           >
-                            Quên mật khẩu?
+                            {t("auth.forgotTitle")}
                           </button>
                         </div>
 
@@ -492,7 +491,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                           isLoading ? "cursor-not-allowed brightness-95" : ""
                         }`}
                         >
-                          {isLoading ? "Đang xử lý..." : "Đăng nhập"}
+                          {isLoading ? t("auth.loading") ?? "Đang xử lý..." : t("auth.loginButton")}
                         </button>
                       </form>
 
@@ -532,13 +531,13 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                             />
                           </svg>
-                          <span>Đăng nhập với Google</span>
+                          <span>{t("auth.loginWithGoogle")}</span>
                         </button>
                       </div>
 
                       <div className="mt-2.5 text-center">
                         <span className="text-sm text-white">
-                          Chưa có tài khoản?{" "}
+                          {t("auth.noAccount")}{" "}
                         </span>
                         <button
                           type="button"
@@ -546,7 +545,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                           onClick={slideToRegister}
                           className="text-sm text-[#5cdb95] hover:text-[#379683] font-semibold focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          Đăng ký ngay
+                          {t("auth.registerNow")}
                         </button>
                       </div>
                     </>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaGift, FaTag, FaCheckCircle, FaTimes } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface Promotion {
     id: string;
@@ -19,6 +20,7 @@ interface WalletPromotionProps {
 }
 
 const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
+    const t = useI18n();
     const [promotions] = useState<Promotion[]>([
         // Sample data - in real app, this would come from API
         // {
@@ -46,11 +48,11 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
 
     const handleRedeemCode = () => {
         if (!promoCode.trim()) {
-            alert("Vui lòng nhập mã khuyến mãi");
+            alert(t("wallet.promoEnterCodeAlert"));
             return;
         }
         // Handle redeem logic here
-        alert(`Đang kiểm tra mã: ${promoCode}`);
+        alert(`${t("wallet.promoCheckingPrefix")} ${promoCode}`);
     };
 
     const formatDate = (dateString: string) => {
@@ -68,20 +70,20 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
                 return (
                     <span className={`${isDarkMode ? 'bg-green-500/20 text-green-300' : 'bg-green-100 text-green-700'} text-xs px-2 py-1 rounded flex items-center gap-1`}>
                         <FaCheckCircle className="text-xs" />
-                        Có thể sử dụng
+                        {t("wallet.promoStatusActive")}
                     </span>
                 );
             case "used":
                 return (
                     <span className={`${isDarkMode ? 'bg-gray-500/20 text-gray-300' : 'bg-gray-100 text-gray-700'} text-xs px-2 py-1 rounded`}>
-                        Đã sử dụng
+                        {t("wallet.promoStatusUsed")}
                     </span>
                 );
             case "expired":
                 return (
                     <span className={`${isDarkMode ? 'bg-red-500/20 text-red-300' : 'bg-red-100 text-red-700'} text-xs px-2 py-1 rounded flex items-center gap-1`}>
                         <FaTimes className="text-xs" />
-                        Hết hạn
+                        {t("wallet.promoStatusExpired")}
                     </span>
                 );
             default:
@@ -93,43 +95,53 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
         <div className="py-8">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="mb-6">
-                    <h1 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Đổi mã khuyến mãi</h1>
-                    <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Nhập mã khuyến mãi để nhận ưu đãi</p>
+                    <h1 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {t("wallet.promoTitle")}
+                    </h1>
+                    <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                        {t("wallet.promoSubtitle")}
+                    </p>
                 </div>
 
                 {/* Redeem Code Section */}
                 <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-6 mb-6`}>
                     <div className="flex items-center gap-2 mb-4">
                         <FaGift className="text-[#4da6ff] text-xl" />
-                        <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Nhập mã khuyến mãi</h2>
+                        <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {t("wallet.promoInputLabel")}
+                        </h2>
                     </div>
                     <div className="flex gap-3">
                         <input
                             type="text"
                             value={promoCode}
                             onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                            placeholder="Nhập mã khuyến mãi"
+                            placeholder={t("wallet.promoInputPlaceholder")}
                             className={`flex-1 border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#4da6ff] focus:border-transparent ${isDarkMode ? 'bg-[#4da6ff]/20 border-[#4da6ff]/30 text-white placeholder-white/70' : 'border-gray-300'}`}
                         />
                         <button
                             onClick={handleRedeemCode}
                             className="bg-[#4da6ff] hover:bg-[#3d8fdd] text-white px-6 py-3 rounded-lg font-medium transition-colors"
                         >
-                            Đổi mã
+                            {t("wallet.promoSubmitButton")}
                         </button>
                     </div>
                 </div>
 
                 {/* Promotions List */}
                 <div>
-                    <h2 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Mã khuyến mãi của tôi</h2>
+                    <h2 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {t("wallet.promoListTitle")}
+                    </h2>
 
                     {promotions.length === 0 ? (
                         <div className={`${isDarkMode ? 'bg-[#2d7fcb] border-[#4da6ff]/30' : 'bg-white border-gray-200'} rounded-xl border shadow-sm p-12 text-center`}>
                             <FaTag className={`${isDarkMode ? 'text-[#4da6ff]/40' : 'text-gray-300'} text-5xl mx-auto mb-4`} />
-                            <p className={isDarkMode ? 'text-gray-300 mb-2' : 'text-gray-500 mb-2'}>Bạn chưa có mã khuyến mãi nào</p>
+                            <p className={isDarkMode ? 'text-gray-300 mb-2' : 'text-gray-500 mb-2'}>
+                                {t("wallet.promoEmptyTitle")}
+                            </p>
                             <p className={isDarkMode ? 'text-gray-400 text-sm' : 'text-gray-400 text-sm'}>
-                                Nhập mã khuyến mãi ở trên để nhận ưu đãi
+                                {t("wallet.promoEmptySubtitle")}
                             </p>
                         </div>
                     ) : (
@@ -153,7 +165,9 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
                                     <div className={`${isDarkMode ? 'bg-[#4da6ff]/20' : 'bg-gray-50'} rounded-lg p-3 mb-3`}>
                                         <div className="flex items-center justify-between">
                                             <div>
-                                                <p className={`text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Mã khuyến mãi</p>
+                                                <p className={`text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                                                    {t("wallet.promoCodeLabel")}
+                                                </p>
                                                 <p className={`font-mono font-bold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                                                     {promotion.code}
                                                 </p>
@@ -183,9 +197,11 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2 text-sm">
+                                        <div className="space-y-2 text-sm">
                                         <div className="flex items-center justify-between">
-                                            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Giảm giá:</span>
+                                            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                                                {t("wallet.promoDiscountLabel")}
+                                            </span>
                                             <span className="font-semibold text-[#4da6ff]">
                                                 {promotion.discountType === "percent"
                                                     ? `${promotion.discount}%`
@@ -194,7 +210,9 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
                                         </div>
                                         {promotion.minAmount && (
                                             <div className="flex items-center justify-between">
-                                                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Đơn tối thiểu:</span>
+                                                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                                                    {t("wallet.promoMinAmountLabel")}
+                                                </span>
                                                 <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                                                     {promotion.minAmount.toLocaleString("vi-VN")} đ
                                                 </span>
@@ -202,14 +220,18 @@ const WalletPromotion = ({ isDarkMode = false }: WalletPromotionProps) => {
                                         )}
                                         {promotion.maxDiscount && (
                                             <div className="flex items-center justify-between">
-                                                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Giảm tối đa:</span>
+                                                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                                                    {t("wallet.promoMaxDiscountLabel")}
+                                                </span>
                                                 <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                                                     {promotion.maxDiscount.toLocaleString("vi-VN")} đ
                                                 </span>
                                             </div>
                                         )}
                                         <div className="flex items-center justify-between">
-                                            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Hết hạn:</span>
+                                            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                                                {t("wallet.promoExpiryLabel")}
+                                            </span>
                                             <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{formatDate(promotion.expiryDate)}</span>
                                         </div>
                                     </div>

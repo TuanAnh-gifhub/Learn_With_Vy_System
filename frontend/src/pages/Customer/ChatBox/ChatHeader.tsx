@@ -1,4 +1,5 @@
 import { FaEllipsisV } from "react-icons/fa";
+import { useI18n } from "../../../components/Language/useI18n";
 
 interface ChatHeaderProps {
   selectedChat: {
@@ -17,7 +18,9 @@ interface ChatHeaderProps {
 const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
   if (!selectedChat) return null;
 
-  const displayName = selectedChat.name || 'Unknown User';
+  const t = useI18n();
+  const loadingName = t("chat.loadingName");
+  const displayName = selectedChat.name || t("chat.unknownUser");
   const displayAvatar = selectedChat.avatar || 'https://ui-avatars.com/api/?name=User&background=5cdb95&color=05386b';
 
   return (
@@ -37,7 +40,7 @@ const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
           <div>
             <h2 className={`font-semibold flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               {displayName}
-              {displayName === 'Đang tải...' && (
+              {displayName === loadingName && (
                 <div className="flex gap-1">
                   <div className="w-2 h-2 bg-[#5cdb95] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                   <div className="w-2 h-2 bg-[#5cdb95] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
@@ -48,7 +51,9 @@ const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                {selectedChat.listing ? `Sản phẩm: ${selectedChat.listing.item?.title || 'N/A'}` : 'Hoạt động gần đây'}
+                {selectedChat.listing
+                  ? `${selectedChat.listing.item?.title || "N/A"}`
+                  : t("chat.lastActive")}
               </span>
             </div>
           </div>
@@ -58,7 +63,7 @@ const ChatHeader = ({ selectedChat, isDarkMode = false }: ChatHeaderProps) => {
         <div className="flex items-center gap-2">
           <button 
             className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
-            title="Thông tin"
+            title={t("chat.headerTitle")}
           >
             <FaEllipsisV className="w-5 h-5" />
           </button>

@@ -17,6 +17,7 @@ import authService, {
   type CreateUsersRequest,
 } from "../../../services/auth/authService";
 import loginIntroVideo from "../../../assets/login_intro_video.mp4";
+import { useI18n } from "../../../components/Language/useI18n";
 
 export interface RegisterPageProps {
   isOpen: boolean;
@@ -38,27 +39,28 @@ export type RegisterFormValues = {
 // Hàm validate dùng chung cho cả RegisterPage và LoginPage
 export const validateRegisterFormValues = (
   values: RegisterFormValues,
+  t: (key: string) => string,
 ): string | null => {
-  if (!values.userName.trim()) return "Vui lòng nhập họ và tên.";
-  if (!values.email.trim()) return "Vui lòng nhập email.";
+  if (!values.userName.trim()) return t("auth.fullNameRequired");
+  if (!values.email.trim()) return t("auth.requireEmail");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(values.email)) return "Email không hợp lệ.";
+  if (!emailRegex.test(values.email)) return t("auth.emailInvalid");
 
   if (values.phone && !/^0\d{9,10}$/.test(values.phone)) {
-    return "Số điện thoại không hợp lệ.";
+    return t("auth.phoneInvalid");
   }
 
-  if (!values.dateOfBirth) return "Vui lòng chọn ngày sinh.";
-  if (!values.gender) return "Vui lòng chọn giới tính.";
+  if (!values.dateOfBirth) return t("auth.dobRequired");
+  if (!values.gender) return t("auth.genderRequired");
 
-  if (!values.password) return "Vui lòng nhập mật khẩu.";
+  if (!values.password) return t("auth.requirePassword");
   if (values.password.length < 8) {
-    return "Mật khẩu tối thiểu 8 ký tự.";
+    return t("auth.minPassword");
   }
 
-  if (!values.confirmPassword) return "Vui lòng nhập lại mật khẩu.";
+  if (!values.confirmPassword) return t("auth.confirmPasswordRequired");
   if (values.password !== values.confirmPassword) {
-    return "Mật khẩu nhập lại không khớp.";
+    return t("auth.confirmPasswordNotMatch");
   }
 
   return null;
@@ -79,6 +81,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSuccessMessage,
   variant = "dark",
 }) => {
+  const t = useI18n();
   const [values, setValues] = useState<RegisterFormValues>({
     userName: "",
     email: "",
@@ -117,7 +120,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     onErrorMessage?.("");
     onSuccessMessage?.("");
 
-    const validationError = validateRegisterFormValues(values);
+    const validationError = validateRegisterFormValues(values, t);
     if (validationError) {
       onErrorMessage?.(validationError);
       return;
@@ -137,8 +140,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
       const response = await authService.registerRequest(payload);
       if (response && response.code === 200) {
-        const successText =
-          "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.";
+        const successText = t("auth.registerSuccess");
         onSuccessMessage?.(successText);
         message.success(response.message || "Đăng ký thành công!");
         setValues({
@@ -151,8 +153,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           dateOfBirth: "",
         });
       } else {
-        const errorText =
-          response?.message || "Đăng ký thất bại. Vui lòng thử lại!";
+        const errorText = response?.message || t("auth.serverError");
         onErrorMessage?.(errorText);
         message.error(errorText);
       }
@@ -169,7 +170,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               response?: { data?: { message?: string } };
             }
           ).response!.data!.message!
-          : "Lỗi kết nối máy chủ!";
+          : t("auth.serverError");
       onErrorMessage?.(errorMsg);
       message.error(errorMsg);
     } finally {
@@ -195,7 +196,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               required
             />
             <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-              Họ và tên
+              {t("auth.fullNameLabel")}
             </label>
           </div>
         </div>
@@ -215,7 +216,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               pattern="^0\\d{9,10}$"
             />
             <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-              SĐT
+              {t("auth.phoneLabel")}
             </label>
           </div>
         </div>
@@ -242,7 +243,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                   : "top-1/2 -translate-y-1/2 text-sm text-gray-700"
               }`}
             >
-              Ngày sinh
+              {t("auth.dobLabel")}
             </label>
           </div>
         </div>
@@ -272,7 +273,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                   : "top-1/2 -translate-y-1/2 text-sm text-gray-700"
               }`}
             >
-              Giới tính
+              {t("auth.genderLabel")}
             </label>
           </div>
         </div>
@@ -293,7 +294,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             required
           />
           <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-            Email
+            {t("auth.emailLabel")}
           </label>
         </div>
       </div>
@@ -315,7 +316,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               minLength={8}
             />
             <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-              Mật khẩu
+              {t("auth.passwordLabel")}
             </label>
             <button
               type="button"
@@ -357,7 +358,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                   : "text-gray-600 peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:text-[#05386b] peer-not-placeholder-shown:text-[#05386b]"
               }`}
             >
-              {isPasswordMismatch ? "Mật khẩu không khớp" : "Nhập lại mật khẩu"}
+              {isPasswordMismatch
+                ? t("auth.confirmPasswordNotMatch")
+                : t("auth.confirmPasswordLabel")}
             </label>
             <button
               type="button"
@@ -383,7 +386,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             : ""
         }`}
       >
-        {loading ? "Đang xử lý..." : "Tiếp tục"}
+        {loading ? t("auth.loading") : t("auth.registerButton")}
       </button>
 
       {onSwitchToLogin && (
@@ -393,7 +396,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               variant === "light" ? "text-gray-700" : "text-white"
             }`}
           >
-            Đã có tài khoản?{" "}
+            {t("auth.haveAccount")}{" "}
           </span>
           <button
             type="button"
@@ -405,7 +408,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 : "text-[#5cdb95] hover:text-[#379683]"
             }`}
           >
-            Đăng nhập
+            {t("auth.loginNow")}
           </button>
         </div>
       )}
@@ -465,10 +468,10 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
 
             {/* Thông tin thương hiệu trên video */}
             <div className="absolute bottom-4 right-4 text-white hidden md:block text-right">
-              <div className="text-lg font-semibold">Learn With Vy</div>
-              <div className="text-sm text-white/90">
-                Đăng ký ngay để bắt đầu.
-              </div>
+                  <div className="text-lg font-semibold">Learn With Vy</div>
+                  <div className="text-sm text-white/90">
+                    {t("auth.registerSubtitle")}
+                  </div>
             </div>
 
             {/* Thẻ form đè bên trái video */}
@@ -491,9 +494,11 @@ const RegisterPage: React.FC<RegisterPageProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2 className="text-xl font-bold text-center">Tạo Tài Khoản</h2>
+                  <h2 className="text-xl font-bold text-center">
+                    {t("auth.registerTitle")}
+                  </h2>
                   <p className="text-center text-white/80 text-sm">
-                    Đăng ký ngay để bắt đầu
+                    {t("auth.registerSubtitle")}
                   </p>
                 </div>
 

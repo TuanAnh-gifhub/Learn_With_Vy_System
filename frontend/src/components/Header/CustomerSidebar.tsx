@@ -15,6 +15,7 @@ import {
   type SupportedLanguage,
 } from "../Language/LanguageContext";
 import { translate } from "../Language/translations";
+import { useI18n } from "../Language/useI18n";
 
 interface CustomerSidebarProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("landing_dark_mode") === "true";
   });
+  const t = useI18n();
 
   const menuItems = useMemo(
     () => [
@@ -173,7 +175,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                 <button
                   onClick={onClose}
                   className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="Đóng menu"
+                aria-label={t("header.openMenuAria")}
                 >
                   <FiX size={20} className="text-black" />
                 </button>
@@ -192,7 +194,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                 {/* Search Icon */}
                 <button
                   className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="Tìm kiếm"
+                  aria-label={t("header.search")}
                 >
                   <FiSearch size={20} className="text-black" />
                 </button>
@@ -276,7 +278,11 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                         });
                       }}
                       className="relative inline-flex items-center h-7 w-14 rounded-full transition-colors duration-300 focus:outline-none bg-gray-300 hover:bg-gray-400"
-                      title={isDarkMode ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+                      title={
+                        isDarkMode
+                          ? t("header.darkModeOff")
+                          : t("header.darkModeOn")
+                      }
                     >
                       <span
                         className={`inline-flex items-center justify-center h-6 w-6 rounded-full bg-white shadow-lg transform transition-transform duration-300 ${

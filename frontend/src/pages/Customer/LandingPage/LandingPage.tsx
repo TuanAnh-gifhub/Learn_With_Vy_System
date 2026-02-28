@@ -1,27 +1,78 @@
 import { Link } from "react-router-dom";
-import { FaCheck, FaChevronRight, FaChalkboardTeacher, FaLaptop, FaUsers, FaMicrophone, FaBook, FaFlask, FaBuilding } from "react-icons/fa";
+import {
+  FaCheck,
+  FaChevronRight,
+  FaChalkboardTeacher,
+  FaLaptop,
+  FaUsers,
+  FaMicrophone,
+  FaBook,
+  FaFlask,
+  FaBuilding,
+  FaStar,
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ParallaxBackground from "./ParallaxBackground";
 import HeroSection from "../../../components/HeroSection/HeroSection";
-import { FaStar } from "react-icons/fa";
 import ScrambleText from "../../../components/Header/ScrambleText";
 import RoomCard, { TEMPLATE_ROOMS } from "./RoomCard";
 import Footer from "../../../components/Footer/Footer";
 import AboutUs from "../AboutUs/AboutUs";
+import { useI18n } from "../../../components/Language/useI18n";
 
 const useScrollspy = () => ({ setActiveSection: (_section: string) => { void _section; } });
 
 const SIDEBAR_CATEGORIES = [
-  { key: 'all', label: 'Tất cả', icon: FaChalkboardTeacher, type: 'Tất cả Phòng học' },
-  { key: 'classroom', label: 'Phòng học', icon: FaChalkboardTeacher, type: 'Phòng học' },
-  { key: 'lab', label: 'Phòng lab', icon: FaLaptop, type: 'Phòng lab' },
-  { key: 'group', label: 'Phòng nhóm', icon: FaUsers, type: 'Phòng nhóm' },
-  { key: 'presentation', label: 'Phòng thuyết trình', icon: FaMicrophone, type: 'Phòng thuyết trình' },
-  { key: 'library', label: 'Thư viện', icon: FaBook, type: 'Thư viện' },
-  { key: 'experiment', label: 'Phòng thí nghiệm', icon: FaFlask, type: 'Phòng thí nghiệm' },
-  { key: 'meeting', label: 'Phòng họp', icon: FaBuilding, type: 'Phòng họp' },
+  {
+    key: "all",
+    labelKey: "landing.sidebarAll",
+    icon: FaChalkboardTeacher,
+    type: "Tất cả Phòng học",
+  },
+  {
+    key: "classroom",
+    labelKey: "landing.sidebarClassroom",
+    icon: FaChalkboardTeacher,
+    type: "Phòng học",
+  },
+  {
+    key: "lab",
+    labelKey: "landing.sidebarLab",
+    icon: FaLaptop,
+    type: "Phòng lab",
+  },
+  {
+    key: "group",
+    labelKey: "landing.sidebarGroup",
+    icon: FaUsers,
+    type: "Phòng nhóm",
+  },
+  {
+    key: "presentation",
+    labelKey: "landing.sidebarPresentation",
+    icon: FaMicrophone,
+    type: "Phòng thuyết trình",
+  },
+  {
+    key: "library",
+    labelKey: "landing.sidebarLibrary",
+    icon: FaBook,
+    type: "Thư viện",
+  },
+  {
+    key: "experiment",
+    labelKey: "landing.sidebarExperiment",
+    icon: FaFlask,
+    type: "Phòng thí nghiệm",
+  },
+  {
+    key: "meeting",
+    labelKey: "landing.sidebarMeeting",
+    icon: FaBuilding,
+    type: "Phòng họp",
+  },
 ];
 
 interface ListingItem {
@@ -88,23 +139,28 @@ const transformListingToRoom = (listing: Listing): Room | null => {
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return "Vừa xong";
-    if (diffMins < 60) return `${diffMins} phút trước`;
-    if (diffHours < 24) return `${diffHours} giờ trước`;
-    return `${diffDays} ngày trước`;
+    if (diffMins < 1) return "just_now";
+    if (diffMins < 60) return `m_${diffMins}`;
+    if (diffHours < 24) return `h_${diffHours}`;
+    return `d_${diffDays}`;
   };
 
   return {
     id: item.itemId,
     listingId: listing.listingId,
     image: item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : null,
-    title: item.title || 'Không có tiêu đề',
-    description: `${item.brand || 'N/A'} ${item.model || 'N/A'} - ${item.condition || 'N/A'}`,
+    title: item.title || "Untitled",
+    description: `${item.brand || "N/A"} ${item.model || "N/A"} - ${
+      item.condition || "N/A"
+    }`,
     price: listing.buyNowPrice || item.price || 0,
-    location: listing.userName || item.userName ? `Người bán: ${listing.userName || item.userName}` : "Việt Nam",
+    location:
+      listing.userName || item.userName
+        ? `Người bán: ${listing.userName || item.userName}`
+        : "Việt Nam",
     timeAgo: calculateTimeAgo(listing.createdAt),
     products: [],
-    name: listing.userName || item.userName || 'Người bán',
+    name: listing.userName || item.userName || "Người bán",
     logo: item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : null,
     banner: item.imageUrls && item.imageUrls.length > 1 ? item.imageUrls[1] : null,
   };
@@ -118,6 +174,7 @@ const LandingPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [totalItems, setTotalItems] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const t = useI18n();
   const navigate = useNavigate();
   const { setActiveSection } = useScrollspy();
   const [roomCategories, setRoomCategories] = useState<RoomCategory[]>([]);
@@ -277,7 +334,7 @@ const LandingPage = () => {
         }
       } catch (error) {
         console.error("❌ LandingPage - Error fetching rooms:", error);
-        setError("Không thể tải danh sách phòng học");
+        setError(t("landing.loadRoomsError"));
         setRooms([]);
         setTotalItems(0);
       } finally {
@@ -510,7 +567,10 @@ const LandingPage = () => {
             <div className="mb-8 w-full">
               <div className="text-center mb-12">
                 <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-                  <ScrambleText text="Phòng học mới nhất" triggerKey={decodeLatestListings} />
+                  <ScrambleText
+                    text={t("landing.latestRoomsTitle")}
+                    triggerKey={decodeLatestListings}
+                  />
                 </h1>
               </div>
 
@@ -626,13 +686,13 @@ const LandingPage = () => {
                   }`}
                   onClick={() => setLatestListingsStart(s => Math.max(0, s - 1))}
                   disabled={latestListingsStart === 0 || rooms.length === 0}
-                  aria-label="Xem phòng trước"
+                  aria-label={t("landing.prev")}
                 >
                   <div className="flex items-center gap-2">
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                       <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <span>Trước</span>
+                    <span>{t("landing.prev")}</span>
                   </div>
                 </button>
 
@@ -640,11 +700,15 @@ const LandingPage = () => {
                   to="/products"
                   className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
                     isDarkMode
-                      ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-                      : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                      ? "border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+                      : "border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
                   }`}
                 >
-                  Xem thêm {totalItems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} phòng học
+                  {t("landing.viewMoreRoomsPrefix")}{" "}
+                  {totalItems
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                  {t("landing.viewMoreRoomsSuffix")}
                 </Link>
 
                 <button
@@ -655,10 +719,10 @@ const LandingPage = () => {
                   }`}
                   onClick={() => setLatestListingsStart(s => Math.min(Math.max(0, rooms.length - 4), s + 1))}
                   disabled={latestListingsStart >= Math.max(0, rooms.length - 4)}
-                  aria-label="Xem phòng tiếp"
+                  aria-label={t("landing.next")}
                 >
                   <div className="flex items-center gap-2">
-                    <span>Sau</span>
+                    <span>{t("landing.next")}</span>
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                       <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -672,22 +736,27 @@ const LandingPage = () => {
         <div id="official-stores" ref={officialStoresRef} className="max-w-7xl mx-auto p-8">
           <div className="text-center mb-12">
             <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-              <ScrambleText text="Đặt Phòng Học Trực Tuyến" triggerKey={decodeOfficialStores} />
+              <ScrambleText
+                text={t("landing.onlineBookingTitle")}
+                triggerKey={decodeOfficialStores}
+              />
             </h1>
           </div>
 
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
-              <span className="text-sm">Hủy đặt phòng miễn phí</span>
+              <span className="text-sm">{t("landing.cancelFree")}</span>
             </div>
             <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
-              <span className="text-sm">Phòng học chất lượng cao</span>
+              <span className="text-sm">
+                {t("landing.highQualityRooms")}
+              </span>
             </div>
             <div className="flex items-center text-[#379683]">
               <FaCheck className="w-4 h-4 mr-2" />
-              <span className="text-sm">Hỗ trợ đặt phòng linh hoạt</span>
+              <span className="text-sm">{t("landing.flexibleSupport")}</span>
             </div>
           </div>
 
@@ -772,16 +841,27 @@ const LandingPage = () => {
               to="/products"
               className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
                 isDarkMode
-                  ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-                  : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
+                  ? "border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+                  : "border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
               }`}
             >
-              Xem thêm {totalItems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} phòng học
+              {t("landing.viewMoreRoomsPrefix")}{" "}
+              {totalItems
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+              {t("landing.viewMoreRoomsSuffix")}
             </Link>
           </div>
 
-          <div className={`text-sm mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            Đang hiển thị {showAllStores ? stores.length : Math.min(stores.length, 6)} / {stores.length} địa điểm
+          <div
+            className={`text-sm mb-2 ${
+              isDarkMode ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            {t("landing.showingLocationsPrefix")}{" "}
+            {showAllStores ? stores.length : Math.min(stores.length, 6)}{" "}
+            {t("landing.showingLocationsMiddle")} {stores.length}{" "}
+            {t("landing.showingLocationsSuffix")}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -865,8 +945,12 @@ const LandingPage = () => {
                       </div>
                     ))}
                     {(store.products || []).length === 0 && (
-                      <div className={`text-center text-sm py-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                        Chưa có phòng học
+                      <div
+                        className={`text-center text-sm py-2 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        {t("landing.noRoomsYet")}
                       </div>
                     )}
                   </div>
@@ -879,9 +963,13 @@ const LandingPage = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowAllStores(!showAllStores)}
-                className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${isDarkMode ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]' : 'border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]'}`}
+                className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
+                  isDarkMode
+                    ? "border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]"
+                    : "border-gray-300 bg-white text-gray-700 hover:bg-[#4da6ff] hover:text-white hover:border-[#4da6ff]"
+                }`}
               >
-                Xem thêm 3 địa điểm
+                {t("landing.viewMoreThreeLocations")}
               </button>
             </div>
           )}
@@ -892,7 +980,7 @@ const LandingPage = () => {
                 onClick={() => setVisibleStoreCount(6)}
                 className="border border-gray-300 bg-white text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-500 hover:text-white hover:border-gray-500 transition-all duration-300 font-medium text-sm"
               >
-                Thu gọn
+                {t("landing.collapse")}
               </button>
             </div>
           )}
@@ -901,7 +989,10 @@ const LandingPage = () => {
         <div id="featured-stores" ref={featuredStoresRef} className="max-w-7xl mx-auto p-8">
           <div className="text-center mb-12">
             <h1 className="text-xl md:text-2xl font-bold mb-4 text-[#379683]">
-              <ScrambleText text="Địa điểm cho thuê nổi bật" triggerKey={decodeFeaturedStores} />
+              <ScrambleText
+                text={t("landing.highlightLocationsTitle")}
+                triggerKey={decodeFeaturedStores}
+              />
             </h1>
           </div>
 
@@ -926,17 +1017,19 @@ const LandingPage = () => {
           </div>
 
           <div className="mb-8 w-full relative flex items-center">
-            <button
-              className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
-                isDarkMode
-                  ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
-                  : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
-              }`}
-              onClick={() => setFeaturedStoresStart(s => Math.max(0, s - 1))}
-              disabled={featuredStoresStart === 0}
-              aria-label="Xem cửa hàng trước"
-              style={{ top: '50%', transform: 'translateY(-50%)' }}
-            >
+                <button
+                  className={`hidden lg:block absolute left-0 z-10 rounded-full shadow p-2 -ml-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
+                    isDarkMode
+                      ? "bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400"
+                      : "bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400"
+                  }`}
+                  onClick={() =>
+                    setFeaturedStoresStart((s) => Math.max(0, s - 1))
+                  }
+                  disabled={featuredStoresStart === 0}
+                  aria-label={t("landing.prev")}
+                  style={{ top: "50%", transform: "translateY(-50%)" }}
+                >
               <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
                 <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -982,15 +1075,28 @@ const LandingPage = () => {
 
                     <div className="flex items-center mb-2">
                       <FaStar className="w-4 h-4 text-yellow-400 mr-1 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-200" />
-                      <span className={`text-sm transition-colors duration-300 ${isDarkMode ? 'text-gray-300 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-gray-700'}`}>
-                        {store.rating || 0} ({store.reviewCount || 0} đánh giá)
+                      <span
+                        className={`text-sm transition-colors duration-300 ${
+                          isDarkMode
+                            ? "text-gray-300 group-hover:text-gray-200"
+                            : "text-gray-600 group-hover:text-gray-700"
+                        }`}
+                      >
+                        {store.rating || 0} ({store.reviewCount || 0}{" "}
+                        {t("landing.reviewsSuffix")})
                       </span>
                     </div>
 
-                    <div className={`text-xs mb-2 transition-colors duration-300 ${
-                      isDarkMode ? 'text-gray-400 group-hover:text-[#5cdb95]' : 'text-gray-500 group-hover:text-[#379683]'
-                    }`}>
-                      Đang cho thuê: {store.currentListings || 0} | Đã cho thuê: {store.soldItems || 0}
+                    <div
+                      className={`text-xs mb-2 transition-colors duration-300 ${
+                        isDarkMode
+                          ? "text-gray-400 group-hover:text-[#5cdb95]"
+                          : "text-gray-500 group-hover:text-[#379683]"
+                      }`}
+                    >
+                      {t("landing.currentlyRentingPrefix")}:{" "}
+                      {store.currentListings || 0} |{" "}
+                      {t("landing.rentedPrefix")}: {store.soldItems || 0}
                     </div>
 
                     <div className={`text-xs mb-3 flex-1 transition-colors duration-300 ${
@@ -999,12 +1105,14 @@ const LandingPage = () => {
                       📍 {store.location}
                     </div>
 
-                    <button className={`border px-4 py-1 rounded text-sm hover:scale-105 transition-all duration-300 group-hover:shadow-md ${
-                      isDarkMode
-                        ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-                        : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-                    }`}>
-                      Theo dõi
+                    <button
+                      className={`border px-4 py-1 rounded text-sm hover:scale-105 transition-all duration-300 group-hover:shadow-md ${
+                        isDarkMode
+                          ? "border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+                          : "border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+                      }`}
+                    >
+                      {t("landing.followButton")}
                     </button>
                   </div>
                 </motion.div>
@@ -1014,13 +1122,17 @@ const LandingPage = () => {
             <button
               className={`hidden lg:block absolute right-0 z-10 rounded-full shadow p-2 -mr-6 border hover:scale-110 hover:shadow-lg disabled:opacity-40 disabled:hover:scale-100 transition-all duration-300 ${
                 isDarkMode
-                  ? 'bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400'
-                  : 'bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400'
+                  ? "bg-gray-700 border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-gray-700 disabled:hover:text-gray-400"
+                  : "bg-white border-[#5cdb95] hover:bg-[#379683] hover:text-white disabled:hover:bg-white disabled:hover:text-gray-400"
               }`}
-              onClick={() => setFeaturedStoresStart(s => Math.min(filteredStores.length - 5, s + 1))}
+              onClick={() =>
+                setFeaturedStoresStart((s) =>
+                  Math.min(filteredStores.length - 5, s + 1),
+                )
+              }
               disabled={featuredStoresStart >= filteredStores.length - 5}
-              aria-label="Xem cửa hàng tiếp"
-              style={{ top: '50%', transform: 'translateY(-50%)' }}
+              aria-label={t("landing.next")}
+              style={{ top: "50%", transform: "translateY(-50%)" }}
             >
               <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
                 <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -1029,12 +1141,14 @@ const LandingPage = () => {
           </div>
 
           <div className="flex justify-center">
-            <button className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
-              isDarkMode
-                ? 'border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-                : 'border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]'
-            }`}>
-              Xem thêm địa điểm cho thuê
+            <button
+              className={`border px-6 py-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium ${
+                isDarkMode
+                  ? "border-gray-600 bg-gray-700 text-gray-200 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+                  : "border-gray-300 bg-white text-gray-700 hover:bg-[#379683] hover:text-white hover:border-[#5cdb95]"
+              }`}
+            >
+              {t("landing.viewMoreLocations")}
             </button>
           </div>
         </div>

@@ -6,6 +6,7 @@ import UserMenu from "./UserMenu";
 import CustomerSidebar from "./CustomerSidebar";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.jpg";
+import { useI18n } from "../Language/useI18n";
 
 const useAuthCheck = () => {
   const requireAuth = (cb: () => void) => {
@@ -32,6 +33,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isHeaderTransparent, setIsHeaderTransparent] = useState<boolean>(false);
+  const t = useI18n();
 
   const [headerHeight, setHeaderHeight] = useState<number>(HEADER_CONFIG.MIN_HEIGHT);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -110,8 +112,8 @@ const Header = () => {
                     ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
                     : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
                 }`}
-                aria-label="Mở menu"
-                title="Menu"
+                aria-label={t("header.openMenuAria")}
+                title={t("header.menu")}
               >
                 <FiMenu
                   size={24}
@@ -153,7 +155,7 @@ const Header = () => {
                     ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
                     : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
                 }`}
-                title="Bài tập"
+                title={t("header.homework")}
               >
                 <FiFileText
                   size={18}
@@ -174,7 +176,7 @@ const Header = () => {
                     ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
                     : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
                 }`}
-                title="Chat"
+                title={t("header.chat")}
               >
                 <FiMessageCircle
                   size={18}
@@ -196,9 +198,11 @@ const Header = () => {
                     ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-[#5cdb95]"
                     : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
                 }`}
-                title="Đăng tin"
+                title={t("header.postTitle")}
               >
-                <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Vào lớp học</span>
+                <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>
+                  {t("header.goToClass")}
+                </span>
               </button>
 
               {isLoading ? (

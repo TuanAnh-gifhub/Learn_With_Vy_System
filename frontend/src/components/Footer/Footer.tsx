@@ -2,12 +2,14 @@ import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import { FaFacebook, FaInstagram, FaTwitter, FaHome } from "react-icons/fa";
+import { useI18n } from "../Language/useI18n";
 
 interface FooterProps {
   isDarkMode?: boolean;
 }
 
 const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
+  const t = useI18n();
   return (
     <footer
       ref={ref}
@@ -31,7 +33,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 isDarkMode ? "text-white" : "text-black"
               }`}
             >
-              Nền tảng cho thuê phòng học hàng đầu, mang đến không gian học tập lý tưởng cho mọi người.
+              {t("footer.brandDescription")}
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
@@ -65,7 +67,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 isDarkMode ? "text-white" : "text-black"
               }`}
             >
-              Liên Kết Nhanh
+              {t("footer.quickLinksTitle")}
             </h4>
             <ul className="space-y-2">
               <li>
@@ -73,7 +75,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/about-us"
                   className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
-                  Về chúng tôi
+                  {t("footer.quickLinksAboutUs")}
                 </Link>
               </li>
               <li>
@@ -81,7 +83,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/products"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Phòng học
+                  {t("footer.quickLinksClassrooms")}
                 </Link>
               </li>
               <li>
@@ -89,7 +91,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/news"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Tin tức
+                  {t("footer.quickLinksNews")}
                 </Link>
               </li>
               <li>
@@ -97,7 +99,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/terms"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Điều khoản
+                  {t("footer.quickLinksTerms")}
                 </Link>
               </li>
             </ul>
@@ -110,7 +112,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 isDarkMode ? "text-white" : "text-black"
               }`}
             >
-              Hỗ Trợ
+              {t("footer.supportTitle")}
             </h4>
             <ul className="space-y-2">
               <li>
@@ -118,7 +120,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/help"
                   className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
-                  Trung tâm trợ giúp
+                  {t("footer.supportHelpCenter")}
                 </Link>
               </li>
               <li>
@@ -126,7 +128,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/faq"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Câu hỏi thường gặp
+                  {t("footer.supportFaq")}
                 </Link>
               </li>
               <li>
@@ -134,7 +136,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/privacy"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Chính sách bảo mật
+                  {t("footer.supportPrivacy")}
                 </Link>
               </li>
               <li>
@@ -142,7 +144,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                   to="/contact"
                   className="text-sm text-gray-600 hover:text-[#379683] transition-colors"
                 >
-                  Liên hệ
+                  {t("footer.supportContact")}
                 </Link>
               </li>
             </ul>
@@ -155,7 +157,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                 isDarkMode ? "text-white" : "text-black"
               }`}
             >
-              Liên Hệ
+              {t("footer.contactTitle")}
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
@@ -165,7 +167,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                     isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
-                  123 Đường ABC, Quận 1, TP.HCM
+                  {t("footer.contactAddress")}
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -175,16 +177,16 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
                     isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
-                  0800 456 789
+                  {t("footer.contactPhone")}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <FiMail className="text-[#5cdb95] text-lg shrink-0" />
                 <a
-                  href="mailto:info@learn_with_vy.vn"
+                  href={`mailto:${t("footer.contactEmail")}`}
                   className="text-sm text-gray-600 dark:text-gray-300 hover:text-[#379683] transition-colors"
                 >
-                  info@learn_with_vy.vn
+                  {t("footer.contactEmail")}
                 </a>
               </li>
             </ul>
@@ -194,7 +196,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ isDarkMode }, ref) => {
         {/* Copyright Section */}
         <div className={`border-t pt-6 ${isDarkMode ? "border-gray-700" : "border-gray-300"}`}>
           <p className={`text-center text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            © 2026 Learn With Vy. All rights reserved.
+            {t("footer.copyright")}
           </p>
         </div>
       </div>
