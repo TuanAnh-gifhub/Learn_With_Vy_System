@@ -13,11 +13,11 @@
 
 a {
   font-weight: 500;
-  color: #379683; /* teal from palette */
+  color: #379683; 
   text-decoration: inherit;
 }
 a:hover {
-  color: #5cdb95; /* bright green on hover */
+  color: #5cdb95; 
 }
 
 body {
@@ -26,7 +26,6 @@ body {
   min-height: 100vh;
 }
 
-/* Theme (used by Admin via body[data-theme]) */
 body[data-theme="light"] {
   color-scheme: light;
   color: #213547;
@@ -39,23 +38,19 @@ body[data-theme="dark"] {
   background-color: #242424;
 }
 
-/*
-  Ant Design's `.ant-layout-header` background can override Tailwind classes depending on CSS load order.
-  Force Admin header colors to follow the current theme.
-*/
 body[data-theme="light"] .admin-header {
   background-color: #ffffff !important;
   color: #1f2937 !important;
-  border-color: #e5e7eb !important; /* gray-200 */
+  border-color: #e5e7eb !important; 
 }
 
 body[data-theme="dark"] .admin-header {
-  background-color: #1e3a8a !important; /* blue-900 */
+  background-color: #1e3a8a !important;
   color: #ffffff !important;
-  border-color: #1e40af !important; /* blue-800 */
+  border-color: #1e40af !important; 
 }
 
-/* Same issue for Ant Design Sider: it sets a default dark background. Force it per theme. */
+
 body[data-theme="light"] .admin-sider,
 body[data-theme="light"] .admin-sider .ant-layout-sider-children {
   background-color: #ffffff !important;
@@ -63,7 +58,7 @@ body[data-theme="light"] .admin-sider .ant-layout-sider-children {
 
 body[data-theme="dark"] .admin-sider,
 body[data-theme="dark"] .admin-sider .ant-layout-sider-children {
-  background-color: #1e3a8a !important; /* blue-900 */
+  background-color: #1e3a8a !important;
 }
 
 #root {
@@ -71,30 +66,26 @@ body[data-theme="dark"] .admin-sider .ant-layout-sider-children {
   min-height: 100vh;
 }
 
-/* Removed global h1 styles to allow Tailwind CSS classes to work properly */
-/* h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-} */
-
-/* Removed global button styles to allow Tailwind CSS classes to work properly */
-/* If you need default button styles, use Tailwind utility classes instead */
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #edf5e1; /* soft green background similar to ref image */
+    background-color: #edf5e1; 
   }
   a:hover {
     color: #5cdb95;
   }
 }
 
-/* Ẩn placeholder mm/dd/yyyy của input type="date" khi chưa chọn ngày */
 .date-input::-webkit-datetime-edit {
-  color: #111827; /* text-gray-900 */
+  color: #111827;
 }
 
 .date-input:not(:focus):invalid::-webkit-datetime-edit {
   color: transparent;
+}
+
+/* Đổi màu icon chọn ngày cho giống màu icon còn lại */
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(48%) sepia(36%) saturate(534%) hue-rotate(116deg) brightness(91%) contrast(92%);
+  cursor: pointer;
 }

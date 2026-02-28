@@ -6,10 +6,6 @@ import {
   FaEyeSlash,
   FaTimes,
   FaArrowLeft,
-  FaUser,
-  FaPhone,
-  FaCalendarAlt,
-  FaVenusMars,
 } from "react-icons/fa";
 import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion";
 import { message } from "antd";
@@ -18,12 +14,8 @@ import authService, {
   type ApiResponse as AuthApiResponse,
   type LoginResponse,
   type LoginGoogleResponse,
-  type CreateUsersRequest,
 } from "../../../services/auth/authService";
-import {
-  type RegisterFormValues,
-  validateRegisterFormValues,
-} from "./RegisterPage";
+import { RegisterForm } from "./RegisterPage";
 import { useAuth } from "../../../context/AuthContext";
 import type { UserResponse } from "../../../services/usersService";
 import loginIntroVideo from "../../../assets/login_intro_video.mp4";
@@ -38,30 +30,11 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
-  const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] =
-    useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isForgotPasswordMode, setIsForgotPasswordMode] = useState(false);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [registerFormValues, setRegisterFormValues] = useState<RegisterFormValues>({
-    userName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    gender: "",
-    dateOfBirth: "",
-  });
-  const isPasswordMatch =
-    registerFormValues.password.length > 0 &&
-    registerFormValues.confirmPassword.length > 0 &&
-    registerFormValues.password === registerFormValues.confirmPassword;
-  const isPasswordMismatch =
-    registerFormValues.confirmPassword.length > 0 && !isPasswordMatch;
-  const [isRegisterLoading, setIsRegisterLoading] = useState(false);
   const panelX = useMotionValue(192); // vị trí mặc định cho màn đăng nhập (lệch sát hơn)
   const [isPanelAnimating, setIsPanelAnimating] = useState(false);
 
@@ -73,16 +46,6 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
     setIsRegisterMode(false);
     setEmail("");
     setPassword("");
-    setRegisterFormValues({
-      userName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      phone: "",
-      gender: "",
-      dateOfBirth: "",
-    });
-    setIsRegisterLoading(false);
 
     // Đảm bảo khi mở lại luôn bắt đầu ở vị trí/thẻ đăng nhập bên phải
     panelX.set(192);
@@ -182,85 +145,6 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
       );
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleRegisterChange =
-    (field: keyof RegisterFormValues) =>
-      (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const value = e.target.value;
-        setRegisterFormValues((prev) => ({ ...prev, [field]: value }));
-      };
-
-  const validateRegisterForm = (): string | null =>
-    validateRegisterFormValues(registerFormValues as RegisterFormValues);
-
-  const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    const validationError = validateRegisterForm();
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
-
-    setIsRegisterLoading(true);
-    try {
-      const payload: CreateUsersRequest = {
-        userName: registerFormValues.userName.trim(),
-        email: registerFormValues.email.trim(),
-        password: registerFormValues.password,
-        phone: registerFormValues.phone ?? "",
-        gender: registerFormValues.gender,
-        dateOfBirth: registerFormValues.dateOfBirth,
-        roleName: "RENTER",
-      };
-
-      const response = await authService.registerRequest(payload);
-
-      if (response && response.code === 200) {
-        setSuccessMessage(
-          "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.",
-        );
-        message.success(response.message || "Đăng ký thành công!");
-
-        setRegisterFormValues({
-          userName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          phone: "",
-          gender: "MALE",
-          dateOfBirth: "",
-        });
-      } else {
-        setErrorMessage(
-          response?.message || "Đăng ký thất bại. Vui lòng thử lại!",
-        );
-        message.error(
-          response?.message || "Đăng ký thất bại. Vui lòng thử lại!",
-        );
-      }
-    } catch (error: unknown) {
-      console.error("Register Error:", error);
-      const errorMsg =
-        typeof error === "object" &&
-          error !== null &&
-          "response" in error &&
-          (error as { response?: { data?: { message?: string } } }).response?.data
-            ?.message
-          ? (
-            error as {
-              response?: { data?: { message?: string } };
-            }
-          ).response!.data!.message!
-          : "Lỗi kết nối máy chủ!";
-      setErrorMessage(errorMsg);
-      message.error(errorMsg);
-    } finally {
-      setIsRegisterLoading(false);
     }
   };
 
@@ -410,24 +294,20 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                         setIsForgotPasswordMode(false);
                         resetForm();
                       }}
-                      className="absolute top-2 left-2 w-6.5 h-6.5 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                      className="absolute top-3 left-3 z-20 w-8 h-8 bg-black/30 hover:bg-black/40 rounded-full flex items-center justify-center transition-colors"
                       aria-label="Quay lại"
                     >
-                      <FaArrowLeft className="w-3 h-3 text-white" />
+                      <FaArrowLeft className="w-3.5 h-3.5 text-white" />
                     </button>
                   )}
 
-                  <div className={`flex justify-center transition-all duration-200 ease-in-out ${errorMessage || successMessage ? 'mb-0' : 'mb-0'}`}>
-                    <div className={`rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shadow-md shadow-black/20 transition-all duration-200 ease-in-out ${errorMessage || successMessage ? 'w-13 h-11' : 'w-24 h-14'}`}>
-                      {isForgotPasswordMode ? (
-                        <FaEnvelope className={errorMessage || successMessage ? "w-4 h-4" : "w-5 h-5"} />
-                      ) : (
-                        <img
-                          src={logo}
-                          alt="Learn With Vy Logo"
-                          className="w-full h-full object-contain scale-150"
-                        />
-                      )}
+                  <div className={`flex justify-center transition-all duration-200 ease-in-out ${errorMessage || successMessage ? "mb-0" : "mb-0"}`}>
+                    <div className={`rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shadow-md shadow-black/20 transition-all duration-200 ease-in-out ${errorMessage || successMessage ? "w-13 h-11" : "w-24 h-14"}`}>
+                      <img
+                        src={logo}
+                        alt="Learn With Vy Logo"
+                        className="w-full h-full object-contain scale-150"
+                      />
                     </div>
                   </div>
 
@@ -482,245 +362,17 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                   </div>
 
                   {isRegisterMode ? (
-                    <form
-                      onSubmit={handleRegisterSubmit}
-                      className="space-y-3.5"
-                    >
-                      <div className="grid grid-cols-12 gap-3">
-                        <div className="col-span-7">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaUser className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <input
-                              type="text"
-                              value={registerFormValues.userName}
-                              onChange={handleRegisterChange("userName")}
-                              placeholder=" "
-                              className="peer w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-3 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                              disabled={isRegisterLoading}
-                              required
-                            />
-                            <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                              Họ và tên
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="col-span-5">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaPhone className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <input
-                              type="tel"
-                              value={registerFormValues.phone}
-                              onChange={handleRegisterChange("phone")}
-                              placeholder=" "
-                              className="peer w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-3 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                              disabled={isRegisterLoading}
-                              pattern="^0\d{9,10}$"
-                            />
-                            <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                              SĐT
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-12 gap-3">
-                        <div className="col-span-7">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaCalendarAlt className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <input
-                              type="date"
-                              value={registerFormValues.dateOfBirth}
-                              onChange={handleRegisterChange("dateOfBirth")}
-                              className="peer date-input w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-3 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                              disabled={isRegisterLoading}
-                              required
-                            />
-                            <label
-                              className={`pointer-events-none absolute left-8 rounded-full bg-white px-1 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold ${
-                                registerFormValues.dateOfBirth
-                                  ? "top-0 -translate-y-1/2 text-[0.65rem] text-[#05386b] font-semibold border-gray-300"
-                                  : "top-1/2 -translate-y-1/2 text-sm text-gray-700"
-                              }`}
-                            >
-                              Ngày sinh
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="col-span-5">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaVenusMars className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <select
-                              value={registerFormValues.gender}
-                              onChange={handleRegisterChange("gender")}
-                              className="peer w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-3 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                              disabled={isRegisterLoading}
-                            >
-                              {/* option rỗng giữ value="" nhưng ẩn trong dropdown để không tạo khoảng trắng */}
-                              <option value="" disabled hidden>
-                                {""}
-                              </option>
-                              <option value="MALE">Nam</option>
-                              <option value="FEMALE">Nữ</option>
-                            </select>
-                            <label
-                              className={`pointer-events-none absolute left-8 rounded-full bg-white px-1 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold ${
-                                registerFormValues.gender
-                                  ? "top-0 -translate-y-1/2 text-[0.65rem] text-[#05386b] font-semibold border-gray-300"
-                                  : "top-1/2 -translate-y-1/2 text-sm text-gray-700"
-                              }`}
-                            >
-                              Giới tính
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="relative">
-                          <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                            <FaEnvelope className="w-4 h-4 text-[#379683]" />
-                          </div>
-                          <input
-                            type="email"
-                            value={registerFormValues.email}
-                            onChange={handleRegisterChange("email")}
-                            placeholder=" "
-                            className="peer w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-3 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                            disabled={isRegisterLoading}
-                            required
-                          />
-                          <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                            Email
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-12 gap-3">
-                        <div className="col-span-6">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaLock className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <input
-                              type={showRegisterPassword ? "text" : "password"}
-                              value={registerFormValues.password}
-                              onChange={handleRegisterChange("password")}
-                              placeholder=" "
-                              className="peer w-full rounded-lg border-2 border-gray-300 bg-white text-gray-900 text-sm pl-8 pr-9 py-2.5 transition-all duration-150 focus:outline-none focus:border-[#5cdb95] focus:bg-white"
-                              disabled={isRegisterLoading}
-                              required
-                              minLength={8}
-                            />
-                            <label className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm text-gray-600 border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-[#05386b] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:text-[#05386b] peer-not-placeholder-shown:font-semibold">
-                              Mật khẩu
-                            </label>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setShowRegisterPassword(!showRegisterPassword)
-                              }
-                              className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-[#379683] hover:text-[#5cdb95] focus:outline-none"
-                            >
-                              {showRegisterPassword ? (
-                                <FaEyeSlash className="w-4 h-4" />
-                              ) : (
-                                <FaEye className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="col-span-6">
-                          <div className="relative">
-                            <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                              <FaLock className="w-4 h-4 text-[#379683]" />
-                            </div>
-                            <input
-                              type={
-                                showRegisterConfirmPassword ? "text" : "password"
-                              }
-                              value={registerFormValues.confirmPassword}
-                              onChange={handleRegisterChange("confirmPassword")}
-                              placeholder=" "
-                              className={`peer w-full rounded-lg border-2 bg-white text-gray-900 text-sm pl-8 pr-9 py-2.5 transition-all duration-150 focus:outline-none focus:bg-white ${
-                                isPasswordMismatch
-                                  ? "border-red-400 focus:border-red-500"
-                                  : "border-gray-300 focus:border-[#5cdb95]"
-                              }`}
-                              disabled={isRegisterLoading}
-                              required
-                              minLength={8}
-                            />
-                            <label
-                              className={`pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 rounded-full bg-white px-1 text-sm border-2 border-transparent z-10 transition-all duration-150 peer-focus:bg-white peer-not-placeholder-shown:bg-white peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:-translate-y-1/2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:font-semibold ${
-                                isPasswordMismatch
-                                  ? "text-red-600 peer-not-placeholder-shown:border-red-400 peer-focus:border-red-500 peer-not-placeholder-shown:text-red-600"
-                                  : "text-gray-600 peer-not-placeholder-shown:border-gray-300 peer-focus:border-[#5cdb95] peer-focus:text-[#05386b] peer-not-placeholder-shown:text-[#05386b]"
-                              }`}
-                            >
-                              {isPasswordMismatch
-                                ? "Mật khẩu không khớp"
-                                : "Nhập lại mật khẩu"}
-                            </label>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setShowRegisterConfirmPassword(
-                                  !showRegisterConfirmPassword,
-                                )
-                              }
-                              className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-[#379683] hover:text-[#5cdb95] focus:outline-none"
-                            >
-                              {showRegisterConfirmPassword ? (
-                                <FaEyeSlash className="w-4 h-4" />
-                              ) : (
-                                <FaEye className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={isRegisterLoading || isPasswordMismatch || !isPasswordMatch}
-                        className={`w-full bg-[#5cdb95]/90 hover:bg-[#379683]/90 text-[#034732] font-semibold py-2 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg text-sm mt-2 ${
-                          isRegisterLoading || isPasswordMismatch || !isPasswordMatch
-                            ? "cursor-not-allowed brightness-95"
-                            : ""
-                        }`}
-                      >
-                        {isRegisterLoading ? "Đang xử lý..." : "Tiếp tục"}
-                      </button>
-
-                      <div className="mt-2 text-center">
-                        <span className="text-sm text-white">
-                          Đã có tài khoản?{" "}
-                        </span>
-                        <button
-                          type="button"
-                          disabled={isPanelAnimating}
-                          onClick={slideToLogin}
-                          className="text-sm text-[#5cdb95] hover:text-[#379683] font-semibold focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed"
-                        >
-                          Đăng nhập
-                        </button>
-                      </div>
-                    </form>
+                    <RegisterForm
+                      onSwitchToLogin={slideToLogin}
+                      isSwitchDisabled={isPanelAnimating}
+                      onErrorMessage={setErrorMessage}
+                      onSuccessMessage={setSuccessMessage}
+                      variant="dark"
+                    />
                   ) : isForgotPasswordMode ? (
                     <form
                       onSubmit={handleForgotPasswordSubmit}
-                      className="space-y-4 pt-2 pb-2"
+                      className="space-y-4 pt-12 pb-2"
                     >
                       <div>
                         <div className="relative">
@@ -752,7 +404,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                         {isLoading ? "Đang gửi..." : "Gửi link xác nhận"}
                       </button>
 
-                      <div className="text-center mt-2">
+                      <div className="text-center mt-1">
                         <button
                           type="button"
                           onClick={() => {
