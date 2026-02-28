@@ -1,8 +1,20 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { FiX, FiSearch, FiGlobe, FiChevronDown, FiMoon, FiSun } from "react-icons/fi";
+import {
+  FiX,
+  FiSearch,
+  FiGlobe,
+  FiChevronDown,
+  FiMoon,
+  FiSun,
+} from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../assets/logo.jpg";
+import {
+  useLanguage,
+  type SupportedLanguage,
+} from "../Language/LanguageContext";
+import { translate } from "../Language/translations";
 
 interface CustomerSidebarProps {
   isOpen: boolean;
@@ -12,32 +24,77 @@ interface CustomerSidebarProps {
 const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
   const location = useLocation();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("VI");
   const languageRef = useRef<HTMLDivElement>(null);
+  const { language, setLanguage } = useLanguage();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("landing_dark_mode") === "true";
   });
 
   const menuItems = useMemo(
     () => [
-      { label: "Trang chủ", path: "/", active: location.pathname === "/" },
-      { label: "Danh mục", path: "/categories", active: location.pathname === "/categories" },
-      { label: "Lớp học 1:1", path: "/classes/1-on-1", active: location.pathname.includes("/classes/1-on-1") },
-      { label: "Lớp nhóm", path: "/classes/group", active: location.pathname.includes("/classes/group") },
-      { label: "IELTS", path: "/classes/ielts", active: location.pathname.includes("/ielts") },
-      { label: "TOEIC", path: "/classes/toeic", active: location.pathname.includes("/toeic") },
-      { label: "Thiếu nhi", path: "/classes/kids", active: location.pathname.includes("/kids") },
-      { label: "Business English", path: "/classes/business", active: location.pathname.includes("/business") },
-      { label: "Về chúng tôi", path: "/about", active: location.pathname === "/about" },
-      { label: "Liên hệ", path: "/contact", active: location.pathname === "/contact" },
+      {
+        labelKey: "menu.home",
+        path: "/",
+        active: location.pathname === "/",
+      },
+      {
+        labelKey: "menu.categories",
+        path: "/categories",
+        active: location.pathname === "/categories",
+      },
+      {
+        labelKey: "menu.oneOnOne",
+        path: "/classes/1-on-1",
+        active: location.pathname.includes("/classes/1-on-1"),
+      },
+      {
+        labelKey: "menu.group",
+        path: "/classes/group",
+        active: location.pathname.includes("/classes/group"),
+      },
+      {
+        labelKey: "menu.ielts",
+        path: "/classes/ielts",
+        active: location.pathname.includes("/ielts"),
+      },
+      {
+        labelKey: "menu.toeic",
+        path: "/classes/toeic",
+        active: location.pathname.includes("/toeic"),
+      },
+      {
+        labelKey: "menu.kids",
+        path: "/classes/kids",
+        active: location.pathname.includes("/kids"),
+      },
+      {
+        labelKey: "menu.business",
+        path: "/classes/business",
+        active: location.pathname.includes("/business"),
+      },
+      {
+        labelKey: "menu.about",
+        path: "/about",
+        active: location.pathname === "/about",
+      },
+      {
+        labelKey: "menu.contact",
+        path: "/contact",
+        active: location.pathname === "/contact",
+      },
     ],
     [location.pathname]
   );
 
-  const languages = [
-    { code: "VI", label: "Tiếng Việt" },
-    { code: "EN", label: "English" },
-  ];
+  const languages: { code: SupportedLanguage; label: string; short: string }[] =
+    [
+      { code: "vi", label: "Tiếng Việt", short: "VI" },
+      { code: "en", label: "English", short: "EN" },
+      { code: "ko", label: "한국어", short: "KO" },
+      { code: "zh", label: "中文", short: "ZH" },
+    ];
+
+  const currentLanguage = languages.find((l) => l.code === language) ?? languages[0];
 
   useEffect(() => {
     if (isOpen) {
@@ -155,7 +212,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                           : "text-gray-800 hover:bg-gray-100"
                       }`}
                     >
-                      {item.label}
+                      {translate(language, item.labelKey)}
                     </Link>
                   ))}
                 </nav>
@@ -172,7 +229,9 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                         className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
                       >
                         <FiGlobe size={18} />
-                        <span className="text-sm font-medium">{selectedLanguage}</span>
+                        <span className="text-sm font-medium">
+                          {currentLanguage.short}
+                        </span>
                         <FiChevronDown
                           size={16}
                           className={`transition-transform ${isLanguageOpen ? "rotate-180" : ""}`}
@@ -186,11 +245,13 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                             <button
                               key={lang.code}
                               onClick={() => {
-                                setSelectedLanguage(lang.code);
+                                setLanguage(lang.code);
                                 setIsLanguageOpen(false);
                               }}
                               className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors ${
-                                selectedLanguage === lang.code ? "bg-gray-50 font-medium" : ""
+                                language === lang.code
+                                  ? "bg-gray-50 font-medium"
+                                  : ""
                               }`}
                             >
                               {lang.label}
@@ -237,7 +298,7 @@ const CustomerSidebar = ({ isOpen, onClose }: CustomerSidebarProps) => {
                     onClick={onClose}
                     className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                   >
-                    Chính sách
+                    {translate(language, "menu.policy")}
                   </Link>
                 </div>
               </div>
