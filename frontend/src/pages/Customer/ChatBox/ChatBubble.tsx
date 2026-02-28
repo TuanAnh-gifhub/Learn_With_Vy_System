@@ -1454,7 +1454,7 @@ const ChatBubble = () => {
           }}
           onMouseDown={handleMouseDown}
         >
-            <button
+          <button
             onClick={() => {
               // Nếu đã drag, không mở chat (để tránh mở khi đang kéo thả)
               if (hasDragged) {
@@ -1498,8 +1498,8 @@ const ChatBubble = () => {
                   <h3 className={`font-bold text-lg ${isDarkMode ? 'text-white' : 'text-black'}`}>Đoạn chat</h3>
                   <div className="flex items-center gap-2">
                     {/* Maximize/Minimize button */}
-                  <button
-                    onClick={() => setIsMinimized(!isMinimized)}
+                    <button
+                      onClick={() => setIsMinimized(!isMinimized)}
                       className={`p-1.5 rounded transition-colors ${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:text-[#379683] hover:bg-[#5cdb95]/10'}`}
                     >
                       {isMinimized ? (

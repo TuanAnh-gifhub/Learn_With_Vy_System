@@ -1,28 +1,20 @@
 import { useState, useRef, useEffect } from "react";
-import { FiMessageCircle, FiMoon, FiSun, FiMenu } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
+import { FiMessageCircle, FiMenu, FiFileText } from "react-icons/fi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoginPage from "../../pages/Customer/LoginPage/LoginPage";
 import UserMenu from "./UserMenu";
+import CustomerSidebar from "./CustomerSidebar";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.jpg";
 
 const useAuthCheck = () => {
-  const { isAuthenticated } = useAuth();
   const requireAuth = (cb: () => void) => {
-    if (!isAuthenticated) {
-      // Nếu chưa đăng nhập thì mở modal hoặc báo lỗi (tùy logic bạn muốn xử lý)
-      // Ở đây tạm thời vẫn cho chạy callback hoặc bạn có thể kích hoạt modal login
-      // Ví dụ: alert("Vui lòng đăng nhập");
-      cb();
-    } else {
-      cb();
-    }
+    cb();
   };
   return { requireAuth };
 };
 
-const useUnreadMessages = () => ({ unreadMessages: [], unreadCount: 0 });
+const useUnreadMessages = () => ({ unreadCount: 0 });
 
 const HEADER_CONFIG = { MIN_HEIGHT: 64 } as const;
 
@@ -43,10 +35,7 @@ const Header = () => {
 
   const [headerHeight, setHeaderHeight] = useState<number>(HEADER_CONFIG.MIN_HEIGHT);
   const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("landing_dark_mode") === "true";
-  });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const headerRef = useRef<HTMLElement>(null);
   const headerHeightClass = "md:h-16 py-1";
@@ -72,25 +61,26 @@ const Header = () => {
   useEffect(() => {
     const isHome = location.pathname === "/";
     
-    const shouldBeTransparent = isHome && window.scrollY < 40;
+    const updateTransparency = () => {
+      if (!isHome) {
+        setIsHeaderTransparent(false);
+      } else {
+        setIsHeaderTransparent(window.scrollY < 40);
+      }
+    };
+
+    updateTransparency();
     
-    const timeoutId = setTimeout(() => {
-      setIsHeaderTransparent(shouldBeTransparent);
-    }, 0);
     if (!isHome) {
-      return () => clearTimeout(timeoutId);
+      return;
     }
 
-    const onScroll = () => {
-      setIsHeaderTransparent(window.scrollY < 40);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", updateTransparency, { passive: true });
     return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", updateTransparency);
     };
   }, [location.pathname]);
+
 
   const displayUser = user ? {
     name: user.userName || "User",
@@ -114,13 +104,11 @@ const Header = () => {
             <div className="flex-1 flex items-center justify-start">
               <button
                 type="button"
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent("toggleSidebar"));
-                }}
+                onClick={() => setIsSidebarOpen(true)}
                 className={`${ICON_BUTTON_CLASS} ${
                   isHeaderTransparent
-                    ? "bg-transparent hover:bg-white/10"
-                    : "bg-transparent hover:bg-[#edf5e1]/60"
+                    ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
+                    : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
                 }`}
                 aria-label="Mở menu"
                 title="Menu"
@@ -128,7 +116,7 @@ const Header = () => {
                 <FiMenu
                   size={24}
                   className={`md:text-[22px] m-auto ${
-                    isHeaderTransparent ? "text-white" : "text-black"
+                    isHeaderTransparent ? "text-white" : "text-[#034732]"
                   }`}
                 />
               </button>
@@ -157,119 +145,85 @@ const Header = () => {
             </div>
 
            
-            <div className="flex-1 flex items-center justify-end gap-0.5 md:gap-1 shrink-0">
-              {(() => {
-                const iconBgClass = isHeaderTransparent
-                  ? "bg-transparent hover:bg-white/10"
-                  : "bg-transparent hover:bg-[#edf5e1]/60";
-                const wishlistBgClass = isHeaderTransparent
-                  ? iconBgClass
-                  : iconBgClass;
-                const chatBgClass = isHeaderTransparent
-                  ? iconBgClass
-                  : iconBgClass;
+            <div className="flex-1 flex items-center justify-end gap-2 md:gap-3 shrink-0">
+              <Link
+                to="/homework"
+                className={`${ICON_BUTTON_CLASS} ${
+                  isHeaderTransparent
+                    ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
+                    : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
+                }`}
+                title="Bài tập"
+              >
+                <FiFileText
+                  size={18}
+                  className={`md:text-[20px] m-auto ${
+                    isHeaderTransparent ? "text-white" : "text-[#034732]"
+                  }`}
+                />
+              </Link>
 
-                return (
-                  <>
-                    <button
-                      onClick={() => {
-                        setIsDarkMode((prev) => {
-                          const newValue = !prev;
-                          localStorage.setItem("landing_dark_mode", String(newValue));
-                          window.dispatchEvent(
-                            new CustomEvent("darkModeChanged", {
-                              detail: { isDarkMode: newValue },
-                            }),
-                          );
-                          return newValue;
-                        });
-                      }}
-                      className={`relative inline-flex items-center h-7 w-14 rounded-full transition-colors duration-300 focus:outline-none ${isHeaderTransparent
-                        ? "bg-white/10 hover:bg-white/15"
-                        : isDarkMode
-                          ? "bg-slate-700"
-                          : "bg-gray-300"
-                        }`}
-                    >
-                      <span
-                        className={`inline-flex items-center justify-center h-6 w-6 rounded-full bg-white shadow-lg transform transition-transform duration-300 ${isDarkMode ? "translate-x-7" : "translate-x-1"}`}
-                      >
-                        {isDarkMode ? (
-                          <FiMoon size={14} className="text-slate-700" />
-                        ) : (
-                          <FiSun size={14} className="text-yellow-500" />
-                        )}
-                      </span>
-                    </button>
+              <button
+                onClick={() => {
+                  requireAuth(() => {
+                    navigate("/chat");
+                  });
+                }}
+                className={`${ICON_BUTTON_CLASS} ${
+                  isHeaderTransparent
+                    ? "bg-transparent hover:bg-white/10 border-transparent hover:border-[#5cdb95]"
+                    : "bg-transparent hover:bg-[#edf5e1]/60 border-[#0ea753] hover:border-[#0ea753]"
+                }`}
+                title="Chat"
+              >
+                <FiMessageCircle
+                  size={18}
+                  className={`md:text-[20px] m-auto ${
+                    isHeaderTransparent ? "text-white" : "text-[#034732]"
+                  }`}
+                />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center animate-pulse">
+                    {unreadCount}
+                  </span>
+                )}
+              </button>
 
-                    {/* Wishlist */}
-                    <Link
-                      to="/wishlist"
-                      className={`${ICON_BUTTON_CLASS} ${wishlistBgClass}`}
-                      title="Yêu thích"
-                    >
-                      <FaHeart
-                        size={18}
-                        className="md:text-[20px] text-[#ff3b6b] m-auto"
-                      />
-                    </Link>
+              <button
+                onClick={() => requireAuth(() => navigate("/post-item"))}
+                className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-transparent ${
+                  isHeaderTransparent
+                    ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-[#5cdb95]"
+                    : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
+                }`}
+                title="Đăng tin"
+              >
+                <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Vào lớp học</span>
+              </button>
 
-                    {/* Chat */}
-                    <button
-                      onClick={() => {
-                        requireAuth(() => {
-                          navigate("/chat");
-                        });
-                      }}
-                      className={`${ICON_BUTTON_CLASS} ${chatBgClass}`}
-                      title="Chat"
-                    >
-                      <FiMessageCircle
-                        size={18}
-                        className="md:text-[20px] text-[#379683] m-auto"
-                      />
-                      {unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center animate-pulse">
-                          {unreadCount}
-                        </span>
-                      )}
-                    </button>
-
-                    {/* Đăng phòng */}
-                    <button
-                      onClick={() => requireAuth(() => navigate("/post-item"))}
-                      className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-transparent ${
-                        isHeaderTransparent
-                          ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-white/60"
-                          : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
-                      }`}
-                      title="Đăng tin"
-                    >
-                      <span className={`${BUTTON_TEXT_HOVER_CLASS} leading-none`}>Vào lớp học</span>
-                    </button>
-
-                    {/* --- 5. USER MENU MỚI --- */}
-                    {isLoading ? (
-                      // Skeleton Loader khi đang check Auth từ Context
-                      <div className="w-10 h-10 ml-2 bg-gray-200 rounded-full animate-pulse" />
-                    ) : (
-                      <UserMenu
-                        isLoggedIn={isAuthenticated}
-                        user={displayUser}
-                        onLoginClick={() => setShowLoginModal(true)}
-                        onLogoutClick={handleLogoutClick}
-                        isHeaderTransparent={isHeaderTransparent}
-                      />
-                    )}
-                  </>
-                );
-              })()}
+              {isLoading ? (
+                <div className="w-10 h-10 ml-2 bg-gray-200 rounded-full animate-pulse" />
+              ) : (
+                <UserMenu
+                  isLoggedIn={isAuthenticated}
+                  user={displayUser}
+                  onLoginClick={() => setShowLoginModal(true)}
+                  onLogoutClick={handleLogoutClick}
+                  isHeaderTransparent={isHeaderTransparent}
+                />
+              )}
             </div>
           </div>
         </div>
       </header>
 
       <div style={{ height: headerHeight }} />
+
+      {/* Customer Sidebar */}
+      <CustomerSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
 
       {/* Modal Login + Register (slide trong 1 popup) */}
       <LoginPage

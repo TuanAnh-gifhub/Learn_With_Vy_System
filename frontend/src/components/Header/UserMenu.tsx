@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUser,
@@ -10,9 +10,9 @@ import {
   FiFileText,
 } from "react-icons/fi";
 
-// Style lấy từ Header cũ của bạn để đồng bộ
+// Style lấy từ Header để đồng bộ
 const PRIMARY_BUTTON_CLASS =
-  "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border";
+  "px-1.5 md:px-4 py-1.5 md:py-2 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out border hover:border-[#5cdb95]";
 const BUTTON_TEXT_HOVER_CLASS =
   "text-xs md:text-sm whitespace-nowrap inline-block hover:scale-110 transition-transform duration-300 ease-in-out";
 
@@ -27,6 +27,7 @@ interface UserMenuProps {
 const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTransparent = false }: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   // Đóng menu khi click ra ngoài
   useEffect(() => {
@@ -44,10 +45,10 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
     return (
       <button
         onClick={onLoginClick}
-        className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 ${
+        className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center h-10 md:h-11 px-3 md:px-5 py-2 md:py-2.5 bg-transparent ${
           isHeaderTransparent
-            ? "bg-transparent hover:bg-white/10 text-white border-white/40 hover:border-white/60"
-            : "bg-transparent hover:bg-[#edf5e1]/60 text-[#034732] border-[#0ea753] hover:border-[#0ea753]"
+            ? "text-white border-white/40 hover:bg-white/10 hover:text-white hover:border-[#5cdb95]"
+            : "text-[#034732] border-[#0ea753] hover:bg-[#edf5e1]/60 hover:text-[#034732] hover:border-[#0ea753]"
         }`}
         title="Đăng nhập"
       >
@@ -67,7 +68,7 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
         className={`flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all shadow-sm ${
           isHeaderTransparent
             ? "border-white/20 bg-white/10 hover:bg-white/20 hover:border-white/30"
-            : "border-gray-200 bg-white hover:border-[#4da6ff] hover:bg-blue-50"
+            : "border-gray-200 bg-white hover:border-[#0ea753] hover:bg-[#edf5e1]/60"
         }`}
       >
         <img
@@ -106,7 +107,11 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#2563eb] transition-colors"
+              className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                location.pathname === "/profile"
+                  ? "bg-[#d4a574]/30 text-[#8b5a2b] font-semibold"
+                  : "text-gray-800 hover:bg-gray-100"
+              }`}
             >
               <FiUser className="w-4 h-4" />
               Thông tin cá nhân
@@ -115,7 +120,11 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             <Link
               to="/wishlist"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#2563eb] transition-colors"
+              className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                location.pathname === "/wishlist"
+                  ? "bg-[#d4a574]/30 text-[#8b5a2b] font-semibold"
+                  : "text-gray-800 hover:bg-gray-100"
+              }`}
             >
               <FiHeart className="w-4 h-4" />
               Phòng yêu thích
@@ -124,7 +133,11 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             <Link
               to="/wallet"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#2563eb] transition-colors"
+              className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                location.pathname === "/wallet"
+                  ? "bg-[#d4a574]/30 text-[#8b5a2b] font-semibold"
+                  : "text-gray-800 hover:bg-gray-100"
+              }`}
             >
               <FiCreditCard className="w-4 h-4" />
               Ví cá nhân
@@ -133,7 +146,11 @@ const UserMenu = ({ isLoggedIn, user, onLoginClick, onLogoutClick, isHeaderTrans
             <Link
               to="/manage-posts"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#2563eb] transition-colors"
+              className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                location.pathname === "/manage-posts"
+                  ? "bg-[#d4a574]/30 text-[#8b5a2b] font-semibold"
+                  : "text-gray-800 hover:bg-gray-100"
+              }`}
             >
               <FiFileText className="w-4 h-4" />
               Quản lý cá nhân

@@ -694,9 +694,9 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                       <button
                         type="submit"
                         disabled={isRegisterLoading || isPasswordMismatch || !isPasswordMatch}
-                        className={`w-full bg-[#5cdb95]/90 hover:bg-[#379683]/90 text-[#034732] font-semibold py-1.5 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg text-sm mt-1 ${
+                        className={`w-full bg-[#5cdb95]/90 hover:bg-[#379683]/90 text-[#034732] font-semibold py-2 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg text-sm mt-2 ${
                           isRegisterLoading || isPasswordMismatch || !isPasswordMatch
-                            ? "opacity-70 cursor-not-allowed"
+                            ? "cursor-not-allowed brightness-95"
                             : ""
                         }`}
                       >
@@ -746,7 +746,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                         type="submit"
                         disabled={isLoading || !!successMessage}
                         className={`w-full bg-[#5cdb95]/90 hover:bg-[#379683]/90 text-[#034732] font-semibold py-2 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg text-sm ${
-                          isLoading ? "opacity-70 cursor-not-allowed" : ""
+                          isLoading ? "cursor-not-allowed brightness-95" : ""
                         }`}
                       >
                         {isLoading ? "Đang gửi..." : "Gửi link xác nhận"}
@@ -837,7 +837,7 @@ const LoginPage = ({ isOpen, onClose }: LoginPageProps) => {
                           type="submit"
                           disabled={isLoading}
                           className={`w-full bg-[#5cdb95]/90 hover:bg-[#379683]/90 text-[#034732] font-semibold py-2 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg text-sm mt-2 ${
-                          isLoading ? "opacity-70 cursor-not-allowed" : ""
+                          isLoading ? "cursor-not-allowed brightness-95" : ""
                         }`}
                         >
                           {isLoading ? "Đang xử lý..." : "Đăng nhập"}
